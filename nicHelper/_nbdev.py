@@ -2,10 +2,12 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"errorString": "exception.ipynb",
+index = {"printDict": "dictUtil.ipynb",
+         "errorString": "exception.ipynb",
          "add_method": "wrappers.ipynb"}
 
-modules = ["exception.py",
+modules = ["dictUtil.py",
+           "exception.py",
            "wrappers.py"]
 
 doc_url = "https://nic.github.io/nicHelper/"
