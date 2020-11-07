@@ -10,8 +10,11 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
+      title: Title
+      url: exception.html
+    - output: web,pdf
       title: wrappers
-      url: wrapper.html
+      url: wrappers.html
     output: web
     title: nicHelper
   output: web
