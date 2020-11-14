@@ -2,7 +2,8 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"imageFromUrl": "Images.ipynb",
+index = {"imageFromS3": "Images.ipynb",
+         "imageFromUrl": "Images.ipynb",
          "imageToS3": "Images.ipynb",
          "resizeImage": "Images.ipynb",
          "showImgS3": "Images.ipynb",
