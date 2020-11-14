@@ -2,11 +2,17 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"printDict": "dictUtil.ipynb",
+index = {"imageFromUrl": "Images.ipynb",
+         "imageToS3": "Images.ipynb",
+         "resizeImage": "Images.ipynb",
+         "showImgS3": "Images.ipynb",
+         "printDict": "dictUtil.ipynb",
+         "allKeysInDict": "dictUtil.ipynb",
          "errorString": "exception.ipynb",
          "add_method": "wrappers.ipynb"}
 
-modules = ["dictUtil.py",
+modules = ["images.py",
+           "dictUtil.py",
            "exception.py",
            "wrappers.py"]
 
