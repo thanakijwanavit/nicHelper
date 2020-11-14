@@ -10,7 +10,6 @@ import requests
 
 # Cell
 def imageFromS3(bucket:str, key:str, **kwargs):
-  S3.presign()
   url=S3.presign(key,bucket=bucket,expiry=10, **kwargs)
   return imageFromUrl(url)
 
