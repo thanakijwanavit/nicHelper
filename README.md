@@ -130,3 +130,10 @@ showImgS3(bucket, key)
 
 ![png](docs/images/output_21_0.png)
 
+
+## Secrets
+
+```
+from nicHelper.secrets import getSecret
+secret = getSecret(name="removeBg", region='ap-southeast-1')
+```

@@ -9,11 +9,13 @@ index = {"imageFromUrl": "Images.ipynb",
          "printDict": "dictUtil.ipynb",
          "allKeysInDict": "dictUtil.ipynb",
          "errorString": "exception.ipynb",
+         "getSecret": "secrets.ipynb",
          "add_method": "wrappers.ipynb"}
 
 modules = ["images.py",
            "dictUtil.py",
            "exception.py",
+           "secrets.py",
            "wrappers.py"]
 
 doc_url = "https://nic.github.io/nicHelper/"

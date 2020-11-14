@@ -11,7 +11,7 @@ entries:
       url: /
     - output: web,pdf
       title: Title
-      url: exception.html
+      url: secrets.html
     - output: web,pdf
       title: wrappers
       url: wrappers.html
