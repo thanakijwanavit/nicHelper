@@ -7,11 +7,12 @@ import boto3
 import ujson as json
 
 # Cell
-def getSecret(name="removeBg", region='ap-southeast-1'):
+def getSecret(name="removeBg", region='ap-southeast-1', **kwargs):
   session = boto3.session.Session()
   client = session.client(
       service_name='secretsmanager',
-      region_name=region
+      region_name=region,
+      **kwargs
   )
   get_secret_value_response = client.get_secret_value(
       SecretId=name
