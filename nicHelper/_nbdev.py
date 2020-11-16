@@ -11,16 +11,19 @@ index = {"imageFromS3": "Images.ipynb",
          "allKeysInDict": "dictUtil.ipynb",
          "errorString": "exception.ipynb",
          "getSecret": "secrets.ipynb",
+         "shorten": "shortenLInk.ipynb",
+         "url": "shortenLInk.ipynb",
          "add_method": "wrappers.ipynb"}
 
 modules = ["images.py",
            "dictUtil.py",
            "exception.py",
            "secrets.py",
+           "shortenLink.py",
            "wrappers.py"]
 
-doc_url = "https://nic.github.io/nicHelper/"
+doc_url = "https://thanakijwanavit.github.io/nicHelper/"
 
-git_url = "https://github.com/nic/nicHelper/tree/master/"
+git_url = "https://github.com/thanakijwanavit/nicHelper/tree/master/"
 
 def custom_doc_links(name): return None

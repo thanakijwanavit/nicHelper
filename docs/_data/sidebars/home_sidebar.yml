@@ -22,6 +22,9 @@ entries:
       title: Secrets
       url: secrets.html
     - output: web,pdf
+      title: Shorten link
+      url: shortenLInk.html
+    - output: web,pdf
       title: wrappers
       url: wrappers.html
     output: web
