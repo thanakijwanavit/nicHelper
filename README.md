@@ -2,6 +2,9 @@
 > various helpers from nic gist
 
 
+full docs here
+https://thanakijwanavit.github.io/nicHelper/
+
 ```
 from nicHelper.wrappers import add_method
 ```
@@ -12,24 +15,36 @@ from nicHelper.wrappers import add_method
 
 # How to use
 
-### method module
+## method module
 
 ### add method to a class
 
 ```
 class A:
   pass
+
 @add_method(A)
 def printHello(self):
   print('hello')
-
+ 
 A().printHello()
 ```
 
     hello
 
 
+This is equivalent to 
+```
+class A:
+  def printHello(self):
+    print('hello')
+  
+```
+
 ## Dict utilities
+
+### Pretty print a dict
+print only the first 10 characters of dict key, works with deep nested dict
 
 ```
 from nicHelper.dictUtil import printDict
@@ -85,7 +100,7 @@ resizeImage(url, 400)
 
 
 
-![png](docs/images/output_15_0.png)
+![png](docs/images/output_18_0.png)
 
 
 
@@ -128,7 +143,7 @@ showImgS3(bucket, key)
 ```
 
 
-![png](docs/images/output_21_0.png)
+![png](docs/images/output_24_0.png)
 
 
 ## Secrets
