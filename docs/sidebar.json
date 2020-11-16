@@ -1,7 +1,10 @@
 {
   "nicHelper": {
     "Overview": "/",
-    "Title": "secrets.html",
+    "Image utilities": "Images.html",
+    "Dict": "dictUtil.html",
+    "Exception": "exception.html",
+    "Secrets": "secrets.html",
     "wrappers": "wrappers.html"
   }
 }

@@ -10,7 +10,16 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Title
+      title: Image utilities
+      url: Images.html
+    - output: web,pdf
+      title: Dict
+      url: dictUtil.html
+    - output: web,pdf
+      title: Exception
+      url: exception.html
+    - output: web,pdf
+      title: Secrets
       url: secrets.html
     - output: web,pdf
       title: wrappers

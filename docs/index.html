@@ -29,6 +29,14 @@ nb_path: "index.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>full docs here
+<a href="https://thanakijwanavit.github.io/nicHelper/">https://thanakijwanavit.github.io/nicHelper/</a></p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -67,7 +75,7 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="method-module">method module<a class="anchor-link" href="#method-module"> </a></h3>
+<h2 id="method-module">method module<a class="anchor-link" href="#method-module"> </a></h2>
 </div>
 </div>
 </div>
@@ -86,10 +94,11 @@ nb_path: "index.ipynb"
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
   <span class="k">pass</span>
+
 <span class="nd">@add_method</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">printHello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
-
+ 
 <span class="n">A</span><span class="p">()</span><span class="o">.</span><span class="n">printHello</span><span class="p">()</span>
 </pre></div>
 
@@ -116,7 +125,25 @@ nb_path: "index.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>This is equivalent to</p>
+
+<pre><code>class A:
+  def printHello(self):
+    print('hello')</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Dict-utilities">Dict utilities<a class="anchor-link" href="#Dict-utilities"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Pretty-print-a-dict">Pretty print a dict<a class="anchor-link" href="#Pretty-print-a-dict"> </a></h3><p>print only the first 10 characters of dict key, works with deep nested dict</p>
+
 </div>
 </div>
 </div>
