@@ -58,6 +58,26 @@ printDict({'key':'sjfhdkljhafsdlkjhdfaslkjhkljfadshklhfa', 'nestedKey':{'nestedK
       nested4 : hello
 
 
+### change all nested datetime object into timestamp for json compatibility
+
+```
+from nicHelper.dictUtil import filterDt
+filterDt({'time': {'time2':datetime.now()}, 'hello': 'world'})
+```
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-1-b8623fa4aa21> in <module>
+          1 from nicHelper.dictUtil import filterDt
+    ----> 2 filterDt({'time': {'time2':datetime.now()}, 'hello': 'world'})
+    
+
+    NameError: name 'datetime' is not defined
+
+
 ## Exception module
 
 ```
@@ -100,7 +120,7 @@ resizeImage(url, 400)
 
 
 
-![png](docs/images/output_18_0.png)
+![png](docs/images/output_20_0.png)
 
 
 
@@ -143,7 +163,7 @@ showImgS3(bucket, key)
 ```
 
 
-![png](docs/images/output_24_0.png)
+![png](docs/images/output_26_0.png)
 
 
 ## Secrets
