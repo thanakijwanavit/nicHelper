@@ -14,7 +14,9 @@ index = {"imageFromS3": "Images.ipynb",
          "getSecret": "secrets.ipynb",
          "shorten": "shortenLInk.ipynb",
          "url": "shortenLInk.ipynb",
-         "add_method": "wrappers.ipynb"}
+         "add_method": "wrappers.ipynb",
+         "add_static_method": "wrappers.ipynb",
+         "add_class_method": "wrappers.ipynb"}
 
 modules = ["images.py",
            "dictUtil.py",
