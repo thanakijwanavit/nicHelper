@@ -34,7 +34,8 @@ def stripDict(data:dict):
   return {k: v.strip() if type(v) == str else v for k,v in data.items()}
 
 # Cell
-import hashlib, pickle
+import hashlib, pickle, base64
 def hashDict(data:dict, hasher= hashlib.sha1(), encoder = pickle.dumps):
   hasher.update(encoder(data))
-  return hasher.digest()
+  rawHash = hasher.digest()
+  return base64.b64encode(rawHash).decode()
