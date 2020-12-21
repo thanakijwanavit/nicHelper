@@ -4,6 +4,7 @@
     "Image utilities": "Images.html",
     "Dict": "dictUtil.html",
     "Exception": "exception.html",
+    "pd Utils": "pdUtils.html",
     "Secrets": "secrets.html",
     "Shorten link": "shortenLInk.html",
     "wrappers": "wrappers.html"
