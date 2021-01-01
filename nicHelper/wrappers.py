@@ -20,13 +20,12 @@ def add_method(cls):
 
 # Cell
 def add_static_method(cls):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(self, *args, **kwargs):
-            return func(self, *args, **kwargs)
-        setattr(cls, func.__name__, wrapper)
-        return func # returning func means func can still be used normally
-    return decorator
+  def decorator(func):
+    @wraps(func)
+    def wrapper( *args, **kwargs):
+      return func(*args, **kwargs)
+    setattr(cls, func.__name__, wrapper)
+  return decorator
 
 # Cell
 def add_class_method(cls):
