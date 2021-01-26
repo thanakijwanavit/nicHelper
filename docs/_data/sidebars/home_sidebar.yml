@@ -22,6 +22,9 @@ entries:
       title: pd Utils
       url: pdUtils.html
     - output: web,pdf
+      title: schema
+      url: schema.html
+    - output: web,pdf
       title: Secrets
       url: secrets.html
     - output: web,pdf
