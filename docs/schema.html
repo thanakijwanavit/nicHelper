@@ -102,6 +102,95 @@ nb_path: "schema.ipynb"
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sampleProducts</span> <span class="o">=</span> <span class="p">[{</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="s1">&#39;0171670&#39;</span><span class="p">,</span> <span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="s1">&#39;0171670&#39;</span><span class="p">,</span> <span class="s1">&#39;oprcode&#39;</span><span class="p">:</span> <span class="s1">&#39;0171670&#39;</span><span class="p">,</span> <span class="s1">&#39;ordertype&#39;</span><span class="p">:</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_abb&#39;</span><span class="p">:</span> <span class="s1">&#39;JIRAPAT YOUNG KALE 2&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_active&#39;</span><span class="p">:</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_cgcode&#39;</span><span class="p">:</span> <span class="s1">&#39;05&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_code&#39;</span><span class="p">:</span> <span class="s1">&#39;0171670&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_dpcode&#39;</span><span class="p">:</span> <span class="s1">&#39;19&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_engname&#39;</span><span class="p">:</span> <span class="s1">&#39;JIRAAT YOUNG KALE 200 G.&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_ggcode&#39;</span><span class="p">:</span> <span class="s1">&#39;057&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_market&#39;</span><span class="p">:</span> <span class="s1">&#39;JIRAPAT ยอดคะน้า 200 G.&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_name&#39;</span><span class="p">:</span> <span class="s1">&#39;JIRAPAT ยอดคะน้า 200 G.&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_puqty&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_sa_method&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_sucode1&#39;</span><span class="p">:</span> <span class="s1">&#39;CM845&#39;</span><span class="p">,</span> <span class="s1">&#39;pr_suref3&#39;</span><span class="p">:</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;prtype&#39;</span><span class="p">:</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;psqty&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;pstype&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">}]</span> <span class="c1">#ProductDatabase.valueUpdate({&#39;items&#39;:sampleProducts})</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/valueUpdate.json&#39;</span>
+<span class="n">validateUrl</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">sampleProducts</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValidationError</span>                           Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-59-7be7519a8fe2&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> sampleProducts <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">{</span> <span class="ansi-blue-fg">&#39;cprcode&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;0171670&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;iprcode&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;0171670&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;oprcode&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;0171670&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;ordertype&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;Y&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_abb&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;JIRAPAT YOUNG KALE 2&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_active&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;Y&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_cgcode&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;05&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_code&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;0171670&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_dpcode&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;19&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_engname&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;JIRAAT YOUNG KALE 200 G.&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_ggcode&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;057&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_market&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;JIRAPAT ยอดคะน้า 200 G.&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_name&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;JIRAPAT ยอดคะน้า 200 G.&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_puqty&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;1&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_sa_method&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;1&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_sucode1&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;CM845&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pr_suref3&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;A&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;prtype&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;I&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;psqty&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;1&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;pstype&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">&#39;1&#39;</span><span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">]</span> <span class="ansi-red-fg">#ProductDatabase.valueUpdate({&#39;items&#39;:sampleProducts})</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> url <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/valueUpdate.json&#39;</span>
+<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg"> </span>validateUrl<span class="ansi-blue-fg">(</span>url<span class="ansi-blue-fg">,</span> sampleProducts<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-53-0225ad94444f&gt;</span> in <span class="ansi-cyan-fg">validateUrl</span><span class="ansi-blue-fg">(url, input_)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-green-fg">def</span> validateUrl<span class="ansi-blue-fg">(</span>url<span class="ansi-blue-fg">,</span>input_<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span>   schema <span class="ansi-blue-fg">=</span> requests<span class="ansi-blue-fg">.</span>get<span class="ansi-blue-fg">(</span>url<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>json<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg">   </span>res <span class="ansi-blue-fg">=</span> jsonschema<span class="ansi-blue-fg">.</span>validate<span class="ansi-blue-fg">(</span>input_<span class="ansi-blue-fg">,</span>schema<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span>   <span class="ansi-green-fg">return</span> SimpleNamespace<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">**</span>input_<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/SageMaker/.persisted_conda/python38/lib/python3.8/site-packages/jsonschema/validators.py</span> in <span class="ansi-cyan-fg">validate</span><span class="ansi-blue-fg">(instance, schema, cls, *args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    932</span>     error <span class="ansi-blue-fg">=</span> exceptions<span class="ansi-blue-fg">.</span>best_match<span class="ansi-blue-fg">(</span>validator<span class="ansi-blue-fg">.</span>iter_errors<span class="ansi-blue-fg">(</span>instance<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    933</span>     <span class="ansi-green-fg">if</span> error <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 934</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">raise</span> error
+<span class="ansi-green-intense-fg ansi-bold">    935</span> 
+<span class="ansi-green-intense-fg ansi-bold">    936</span> 
+
+<span class="ansi-red-fg">ValidationError</span>: [{&#39;cprcode&#39;: &#39;0171670&#39;, &#39;iprcode&#39;: &#39;0171670&#39;, &#39;oprcode&#39;: &#39;0171670&#39;, &#39;ordertype&#39;: &#39;Y&#39;, &#39;pr_abb&#39;: &#39;JIRAPAT YOUNG KALE 2&#39;, &#39;pr_active&#39;: &#39;Y&#39;, &#39;pr_cgcode&#39;: &#39;05&#39;, &#39;pr_code&#39;: &#39;0171670&#39;, &#39;pr_dpcode&#39;: &#39;19&#39;, &#39;pr_engname&#39;: &#39;JIRAAT YOUNG KALE 200 G.&#39;, &#39;pr_ggcode&#39;: &#39;057&#39;, &#39;pr_market&#39;: &#39;JIRAPAT ยอดคะน้า 200 G.&#39;, &#39;pr_name&#39;: &#39;JIRAPAT ยอดคะน้า 200 G.&#39;, &#39;pr_puqty&#39;: &#39;1&#39;, &#39;pr_sa_method&#39;: &#39;1&#39;, &#39;pr_sucode1&#39;: &#39;CM845&#39;, &#39;pr_suref3&#39;: &#39;A&#39;, &#39;prtype&#39;: &#39;I&#39;, &#39;psqty&#39;: &#39;1&#39;, &#39;pstype&#39;: &#39;1&#39;}] is not of type &#39;object&#39;
+
+Failed validating &#39;type&#39; in schema:
+    {&#39;$schema&#39;: &#39;http://json-schema.org/draft-06/schema#&#39;,
+     &#39;definitions&#39;: {&#39;Product&#39;: {&#39;description&#39;: &#39;Product(iprcode: int, &#39;
+                                                &#39;cprcode: int)&#39;,
+                                 &#39;properties&#39;: {&#39;cprcode&#39;: {&#39;type&#39;: &#39;integer&#39;},
+                                                &#39;iprcode&#39;: {&#39;type&#39;: &#39;integer&#39;}},
+                                 &#39;required&#39;: [&#39;iprcode&#39;, &#39;cprcode&#39;],
+                                 &#39;type&#39;: &#39;object&#39;}},
+     &#39;description&#39;: &#39;ValueUpdate(items: List[__main__.Product])&#39;,
+     &#39;properties&#39;: {&#39;items&#39;: {&#39;items&#39;: {&#39;$ref&#39;: &#39;#/definitions/Product&#39;},
+                              &#39;type&#39;: &#39;array&#39;}},
+     &#39;required&#39;: [&#39;items&#39;],
+     &#39;type&#39;: &#39;object&#39;}
+
+On instance:
+    [{&#39;cprcode&#39;: &#39;0171670&#39;,
+      &#39;iprcode&#39;: &#39;0171670&#39;,
+      &#39;oprcode&#39;: &#39;0171670&#39;,
+      &#39;ordertype&#39;: &#39;Y&#39;,
+      &#39;pr_abb&#39;: &#39;JIRAPAT YOUNG KALE 2&#39;,
+      &#39;pr_active&#39;: &#39;Y&#39;,
+      &#39;pr_cgcode&#39;: &#39;05&#39;,
+      &#39;pr_code&#39;: &#39;0171670&#39;,
+      &#39;pr_dpcode&#39;: &#39;19&#39;,
+      &#39;pr_engname&#39;: &#39;JIRAAT YOUNG KALE 200 G.&#39;,
+      &#39;pr_ggcode&#39;: &#39;057&#39;,
+      &#39;pr_market&#39;: &#39;JIRAPAT ยอดคะน้า 200 G.&#39;,
+      &#39;pr_name&#39;: &#39;JIRAPAT ยอดคะน้า 200 G.&#39;,
+      &#39;pr_puqty&#39;: &#39;1&#39;,
+      &#39;pr_sa_method&#39;: &#39;1&#39;,
+      &#39;pr_sucode1&#39;: &#39;CM845&#39;,
+      &#39;pr_suref3&#39;: &#39;A&#39;,
+      &#39;prtype&#39;: &#39;I&#39;,
+      &#39;psqty&#39;: &#39;1&#39;,
+      &#39;pstype&#39;: &#39;1&#39;}]</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 
