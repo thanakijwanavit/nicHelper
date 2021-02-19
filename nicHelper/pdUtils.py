@@ -78,3 +78,17 @@ class PandasDataFrameAttribute(Attribute):
     bio = BytesIo(bin)
     df: pd.DataFrame = pd.read_feather(bio)
     return df
+
+# Cell
+# class PandasSeriesAttribute(Attribute):
+#   attr_type = BINARY
+#   def serialize(self, value: pd.Series)->bin:
+#     bio = BytesIO()
+#     df = s.to_frame()
+#     value.to_feather(bio)
+#     data:bin = bio.getvalue()
+#     return data
+#   def deserialize(self, value: bin)->pd.DataFrame:
+#     bio = BytesIo(bin)
+#     df: pd.DataFrame = pd.read_feather(bio)
+#     return df
