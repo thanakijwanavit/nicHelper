@@ -24,7 +24,7 @@ typeMap = {'string': str, 'number': float, 'integer': int, 'object': dict, 'arra
 def getTypes(schemaUrl:str, typeMap:dict=typeMap)->dict:
   '''get python types from json schema'''
   r = requests.get(schemaUrl)
-  s = yaml.load(r.text)
+  s = yaml.load(r.text, Loader=yaml.FullLoader)
   properties = s['properties']
   dtypes = {k: typeMap.get(v['type']) for k,v in properties.items()}
   return dtypes
