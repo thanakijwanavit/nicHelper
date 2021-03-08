@@ -12,7 +12,7 @@ def validateUrl(url,input_, format_ = 'json'):
     schemaYaml = requests.get(url).text
     schema = yaml.load(schemaYaml, Loader=yaml.FullLoader)
   elif format_ == 'json':
-    schema = requests.get(url).json()
+    schema = requests.get(url,headers={'Cache-Control': 'no-cache'}).json()
   else:
     print('invalid schema format, using json')
     schema = requests.get(url).json()
