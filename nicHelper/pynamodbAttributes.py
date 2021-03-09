@@ -9,21 +9,28 @@ import pynamodb
 # Cell
 from typing import Any, Optional, Type, TypeVar
 from enum import Enum
-import requests, dpath.util, yaml, jsonschema
+import requests, dpath.util, yaml, jsonschema, json
 
 
 class SchemaAttribute(Attribute):
   attr_type = pynamodb.constants.STRING
   def __init__(self, schemaUrl:str, path:str = '/', isYaml=True, headers={'Cache-Control': 'no-cache'}, **kwargs: Any) -> None:
       """
-      :yaml::Bool:: whether the schema is in yaml or json
+      schemaUrl:str,
+      path:str = '/',
+      isYaml=True,  :yaml::Bool:: whether the schema is in yaml or json
+      headers={'Cache-Control': 'no-cache'},
       :path::str:: the path of the object of interest in schema, if the schema is at root then '/'
       """
       super().__init__(**kwargs)
-      if isYaml: # yaml schema
-        schema:dict = yaml.load(requests.get(schemaUrl, headers=headers).text, Loader = yaml.FullLoader)
-      else: # probably json
-        schema:dict = requests.get(schemaUrl, headers).json()
+      try:
+        if isYaml: # yaml schema
+          schema:dict = yaml.load(requests.get(schemaUrl, headers=headers).text, Loader = yaml.FullLoader)
+        else: # probably json
+          schema:dict = requests.get(schemaUrl, headers).json()
+      except Exception as e:
+        print(f'error parsing schema {e}')
+        schema:dict = {}
 
       self.schema = dpath.util.get(schema, path) # get to the path in schema
       print(self.schema)
