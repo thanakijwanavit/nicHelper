@@ -27,6 +27,7 @@ def allKeysInDict(inputDict:dict, keys:list):
 # Cell
 def filterDt(dtDict:dict):
   '''convert unjsonable datetime object to timestamp in the dictionary'''
+  from datetime import datetime
   return {k: (filterDt(v) if type(v) == dict else v) if type(v) != datetime else v.timestamp()
             for k,v in dtDict.items()}
 

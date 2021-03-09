@@ -9,18 +9,21 @@ import pynamodb
 # Cell
 from typing import Any, Optional, Type, TypeVar
 from enum import Enum
-import requests, dpath.util, yaml, jsonschema, json
+import requests, dpath.util, yaml, jsonschema, json, os
 
 
 class SchemaAttribute(Attribute):
   attr_type = pynamodb.constants.STRING
-  def __init__(self, schemaUrl:str, path:str = '/', isYaml=True, headers={'Cache-Control': 'no-cache'}, **kwargs: Any) -> None:
+  def __init__(self, schemaUrl:str, path:str = '/', isYaml=True,
+               headers={'Cache-Control': 'no-cache'},
+               envName = 'SCHEMA_ATTRIBUTE', **kwargs: Any) -> None:
       """
       schemaUrl:str,
       path:str = '/',
       isYaml=True,  :yaml::Bool:: whether the schema is in yaml or json
       headers={'Cache-Control': 'no-cache'},
       :path::str:: the path of the object of interest in schema, if the schema is at root then '/'
+      envName::str:: the name of schema to save to the environment
       """
       super().__init__(**kwargs)
       try:
@@ -33,12 +36,11 @@ class SchemaAttribute(Attribute):
         schema:dict = {}
 
       self.schema = dpath.util.get(schema, path) # get to the path in schema
-      print(self.schema)
+      os.environ[envName] = json.dumps(self.schema)
 
   def deserialize(self, value: str) -> dict:
     return json.loads(value)
 
   def serialize(self, value:dict) -> str:
     res = jsonschema.validate(value,self.schema)
-    print(res)
     return json.dumps(value)
