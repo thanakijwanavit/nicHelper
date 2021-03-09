@@ -5,6 +5,7 @@
     "Dict": "dictUtil.html",
     "Exception": "exception.html",
     "pd Utils": "pdUtils.html",
+    "pynamodbAttributes": "pynamodbAttributes.html",
     "schema": "schema.html",
     "Secrets": "secrets.html",
     "Shorten link": "shortenLInk.html",
