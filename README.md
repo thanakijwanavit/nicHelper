@@ -68,33 +68,10 @@ filterDt({'time': {'time2':datetime.now()}, 'hello': 'world'})
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-5-3c042eda53ab> in <module>
-          2 from datetime import datetime
-          3 
-    ----> 4 filterDt({'time': {'time2':datetime.now()}, 'hello': 'world'})
-    
-
-    /mnt/efs/pip/nicHelper/nicHelper/dictUtil.py in filterDt(dtDict)
-         28 def filterDt(dtDict:dict):
-         29   '''convert unjsonable datetime object to timestamp in the dictionary'''
-    ---> 30   return {k: (filterDt(v) if type(v) == dict else v) if type(v) != datetime else v.timestamp()
-         31             for k,v in dtDict.items()}
-         32 
 
 
-    /mnt/efs/pip/nicHelper/nicHelper/dictUtil.py in <dictcomp>(.0)
-         28 def filterDt(dtDict:dict):
-         29   '''convert unjsonable datetime object to timestamp in the dictionary'''
-    ---> 30   return {k: (filterDt(v) if type(v) == dict else v) if type(v) != datetime else v.timestamp()
-         31             for k,v in dtDict.items()}
-         32 
+    {'time': {'time2': 1615312774.297602}, 'hello': 'world'}
 
-
-    NameError: name 'datetime' is not defined
 
 
 ## Exception module
@@ -106,6 +83,14 @@ try:
 except:
   print(f'error is \n{errorString()}')
 ```
+
+    error is 
+    Traceback (most recent call last):
+      File "<ipython-input-6-86083feec525>", line 3, in <module>
+        error
+    NameError: name 'error' is not defined
+    
+
 
 ## Image utils
 
@@ -128,12 +113,26 @@ url = 'https://sites.google.com/site/funnycatmeawww/_/rsrc/1422326075261/home/69
 resizeImage(url, 400)
 ```
 
+
+
+
+![png](docs/images/output_20_0.png)
+
+
+
 ### load image from url
 
 ```python
 img = imageFromUrl(url)
 type(img)
 ```
+
+
+
+
+    PIL.JpegImagePlugin.JpegImageFile
+
+
 
 ### save Image to S3
 
@@ -142,12 +141,26 @@ imageToS3(img, bucket, key)
 S3.exist(key,bucket)
 ```
 
+    saving image to villa-remove-bg-small-output/testCat.png
+
+
+
+
+
+    True
+
+
+
 ### display image from s3
 
 ```python
 ## full test
 showImgS3(bucket, key)
 ```
+
+
+![png](docs/images/output_26_0.png)
+
 
 ## Secrets
 
@@ -165,3 +178,10 @@ from nicHelper.shortenLink import shorten
 ```python
 shorten('https://www.youtube.com/watch?v=fp85zRg2cwg')
 ```
+
+
+
+
+    'https://tenxor.sh/d3Cp'
+
+

@@ -225,7 +225,7 @@ False
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;time&#39;: {&#39;time2&#39;: 1611888553.491899}, &#39;hello&#39;: &#39;world&#39;}</pre>
+<pre>{&#39;time&#39;: {&#39;time2&#39;: 1615312778.700984}, &#39;hello&#39;: &#39;world&#39;}</pre>
 </div>
 
 </div>
@@ -311,7 +311,7 @@ False
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="hashDict" class="doc_header"><code>hashDict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L40" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hashDict</code>(<strong><code>data</code></strong>:<code>dict</code>, <strong><code>hasher</code></strong>=<em><code>&lt;sha1 HASH object @ 0x7f0f14784d70&gt;</code></em>, <strong><code>encoder</code></strong>=<em><code>dumps</code></em>)</p>
+<h4 id="hashDict" class="doc_header"><code>hashDict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L40" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hashDict</code>(<strong><code>data</code></strong>:<code>dict</code>, <strong><code>hasher</code></strong>=<em><code>&lt;sha1 HASH object @ 0x7fb5705cad70&gt;</code></em>, <strong><code>encoder</code></strong>=<em><code>dumps</code></em>)</p>
 </blockquote>
 
 </div>
@@ -352,8 +352,8 @@ False
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 33 µs, sys: 4 µs, total: 37 µs
-Wall time: 41 µs
+<pre>CPU times: user 40 µs, sys: 8 µs, total: 48 µs
+Wall time: 52.5 µs
 </pre>
 </div>
 </div>
@@ -621,31 +621,10 @@ response
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>$schema: http://json-schema.org/schema#
 properties:
-  &#39;1&#39;:
-    properties:
-      parent:
-        type: &#39;null&#39;
-    required:
-    - parent
-    type: object
-  &#39;2&#39;:
-    properties:
-      parent:
-        type: string
-    required:
-    - parent
-    type: object
-  &#39;3&#39;:
-    properties:
-      parent:
-        type: string
-    required:
-    - parent
-    type: object
+  test:
+    type: integer
 required:
-- &#39;1&#39;
-- &#39;2&#39;
-- &#39;3&#39;
+- test
 type: object
 
 </pre>
