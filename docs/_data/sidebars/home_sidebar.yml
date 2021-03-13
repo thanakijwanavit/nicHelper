@@ -22,7 +22,7 @@ entries:
       title: pd Utils
       url: pdUtils.html
     - output: web,pdf
-      title: pynamodbAttributes
+      title: pynamodb
       url: pynamodbAttributes.html
     - output: web,pdf
       title: schema
