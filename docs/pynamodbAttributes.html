@@ -29,6 +29,12 @@ nb_path: "pynamodbAttributes.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Imports">Imports<a class="anchor-link" href="#Imports"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -36,6 +42,13 @@ nb_path: "pynamodbAttributes.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="SchemaAttribute-class">SchemaAttribute class<a class="anchor-link" href="#SchemaAttribute-class"> </a></h2><p>a class which automatically parse and check data against json schema</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -47,9 +60,54 @@ nb_path: "pynamodbAttributes.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="SchemaAttribute" class="doc_header"><code>class</code> <code>SchemaAttribute</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodbAttributes.py#L15" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SchemaAttribute</code>(<strong>*<code>args</code></strong>, <strong>**<code>kwds</code></strong>) :: <code>Attribute</code></p>
+<h2 id="SchemaAttribute" class="doc_header"><code>class</code> <code>SchemaAttribute</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodbAttributes.py#L14" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SchemaAttribute</code>(<strong>*<code>args</code></strong>, <strong>**<code>kwds</code></strong>) :: <code>Attribute</code></p>
 </blockquote>
 <p>An attribute of a model</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Supermodel">Supermodel<a class="anchor-link" href="#Supermodel"> </a></h2><p>a class which add some functionalities on top of the standard pynamodb model, it sets id_ as the hash key and gives</p>
+<ul>
+<li>fromDict functions </li>
+<li>repr as a dict</li>
+</ul>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="SuperModel" class="doc_header"><code>class</code> <code>SuperModel</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodbAttributes.py#L48" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SuperModel</code>(<strong><code>hash_key</code></strong>:<code>Optional</code>[<code>Any</code>]=<em><code>None</code></em>, <strong><code>range_key</code></strong>:<code>Optional</code>[<code>Any</code>]=<em><code>None</code></em>, <strong><code>_user_instantiated</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong>**<code>attributes</code></strong>:<code>Any</code>) :: <code>Model</code></p>
+</blockquote>
+<p>Defines a <code>PynamoDB</code> Model</p>
+<p>This model is backed by a table in DynamoDB.
+You can create the table by with the <code>create_table</code> method.</p>
 
 </div>
 
@@ -81,23 +139,15 @@ nb_path: "pynamodbAttributes.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pynamodb.models</span> <span class="kn">import</span> <span class="n">Model</span>
-<span class="kn">from</span> <span class="nn">pynamodb.attributes</span> <span class="kn">import</span> <span class="n">UnicodeAttribute</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json&#39;</span>
 
-<span class="n">schemaUrl</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json&#39;</span>
-
-<span class="k">class</span> <span class="nc">TestModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">TestModel</span><span class="p">(</span><span class="n">SuperModel</span><span class="p">):</span>
   <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
     <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;colab-test-sensitive-column&quot;</span>
     <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;ap-southeast-1&#39;</span>
-  <span class="n">phoneHash</span> <span class="o">=</span> <span class="n">UnicodeAttribute</span><span class="p">(</span><span class="n">hash_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-  <span class="n">stringData</span> <span class="o">=</span> <span class="n">UnicodeAttribute</span><span class="p">()</span>
-  <span class="n">schemaThing</span> <span class="o">=</span> <span class="n">SchemaAttribute</span><span class="p">(</span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="n">schemaUrl</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1">#   data =</span>
-  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="s1">&#39;attribute_values&#39;</span><span class="p">])</span>
-  
+  <span class="n">data</span> <span class="o">=</span> <span class="n">SchemaAttribute</span><span class="p">(</span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="n">schemaUrl</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">pullOutKeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">id_</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;iprcode&#39;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -122,9 +172,8 @@ nb_path: "pynamodbAttributes.ipynb"
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
   <span class="n">TestModel</span><span class="p">(</span>
-    <span class="n">phoneHash</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
-    <span class="n">stringData</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span>
-    <span class="n">schemaThing</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="mi">123</span> <span class="p">,</span> <span class="s1">&#39;oprCode&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">}</span>
+    <span class="n">id_</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="mi">123</span> <span class="p">,</span> <span class="s1">&#39;oprCode&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">,</span> <span class="s1">&#39;orderId&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">}</span>
   <span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
@@ -142,96 +191,10 @@ nb_path: "pynamodbAttributes.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>None
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#34;schemaThing&#34;: {&#34;iprcode&#34;: 4, &#34;cprcode&#34;: 123, &#34;oprCode&#34;: &#34;123&#34;}, &#34;stringData&#34;: &#34;test&#34;}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="nested">nested<a class="anchor-link" href="#nested"> </a></h3>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/dev/order/order.yaml&#39;</span>
-<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/properties/schedule&#39;</span>
-<span class="k">class</span> <span class="nc">TestModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-  <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-    <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;colab-test-sensitive-column&quot;</span>
-    <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;ap-southeast-1&#39;</span>
-  <span class="nb">id</span> <span class="o">=</span> <span class="n">UnicodeAttribute</span><span class="p">(</span><span class="n">hash_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">SchemaAttribute</span><span class="p">(</span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="n">schemaUrl</span><span class="p">,</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="s1">&#39;attribute_values&#39;</span><span class="p">])</span>
-
-  
-<span class="k">try</span><span class="p">:</span>
-  <span class="n">TestModel</span><span class="p">(</span>
-    <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;isExpress&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="mi">123</span> <span class="p">,</span> <span class="s1">&#39;oprCode&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">}</span>
-  <span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;faulty data is rejected&#39;</span><span class="p">)</span>
-<span class="c1">#   print(e)</span>
-
-<span class="k">try</span><span class="p">:</span>
-  <span class="n">TestModel</span><span class="p">(</span>
-    <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;isExpress&#39;</span><span class="p">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="mi">123</span> <span class="p">,</span> <span class="s1">&#39;oprCode&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">}</span>
-  <span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;valid data is rejected&#39;</span><span class="p">)</span>
-<span class="c1">#   print(e)</span>
-  
-<span class="nb">next</span><span class="p">(</span><span class="n">TestModel</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">))</span>  
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>faulty data is rejected
-valid data is rejected
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{}</pre>
+<pre>{&#34;creationTime&#34;: 1615627272.324398, &#34;data&#34;: {&#34;iprcode&#34;: 4, &#34;cprcode&#34;: 123, &#34;oprCode&#34;: &#34;123&#34;, &#34;orderId&#34;: 123}, &#34;lastEdited&#34;: 1615627272.324387}</pre>
 </div>
 
 </div>
@@ -257,9 +220,7 @@ valid data is rejected
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
   <span class="n">TestModel</span><span class="p">(</span>
-    <span class="n">phoneHash</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
-    <span class="n">stringData</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span>
-    <span class="n">schemaThing</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="mi">123</span> <span class="p">,</span> <span class="s1">&#39;oprCode&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">}</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="mi">123</span> <span class="p">,</span> <span class="s1">&#39;oprCode&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">}</span>
   <span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
@@ -279,7 +240,14 @@ valid data is rejected
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Attribute phoneHash specified does not exist
+<pre>failed validation 
+ &#39;4&#39; is not of type &#39;integer&#39;
+
+Failed validating &#39;type&#39; in schema[&#39;properties&#39;][&#39;iprcode&#39;]:
+    {&#39;type&#39;: &#39;integer&#39;}
+
+On instance[&#39;iprcode&#39;]:
+    &#39;4&#39;
 </pre>
 </div>
 </div>
@@ -289,7 +257,168 @@ valid data is rejected
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{}</pre>
+<pre>{&#34;data&#34;: {&#34;type&#34;: &#34;pick up&#34;, &#34;street_address&#34;: &#34;123&#34;, &#34;id&#34;: &#34;123&#34;, &#34;city&#34;: &#34;sth&#34;, &#34;state&#34;: &#34;CA&#34;, &#34;zip&#34;: &#34;23523&#34;, &#34;capacity&#34;: 5, &#34;status&#34;: &#34;open&#34;}}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="nested">nested<a class="anchor-link" href="#nested"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="s1">&#39;https://gist.githubusercontent.com/thanakijwanavit/e2720d091ae0cef710a49b57c0c9cd4c/raw/ed2d322eac4900ee0f95b431d0f9067a40f3e0f0/squirrelOpenApiV0.0.3.yaml&#39;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/components/schemas/Location&#39;</span>
+<span class="k">class</span> <span class="nc">ProductModel</span><span class="p">(</span><span class="n">SuperModel</span><span class="p">):</span>
+  <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+    <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;colab-test-sensitive-column&quot;</span>
+    <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;ap-southeast-1&#39;</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">SchemaAttribute</span><span class="p">(</span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="n">schemaUrl</span><span class="p">,</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+  
+<span class="k">def</span> <span class="nf">test_nested</span><span class="p">():</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">ProductModel</span><span class="p">(</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;something invalid&#39;</span><span class="p">,</span> <span class="s1">&#39;street_address&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span> <span class="p">}</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+  <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;faulty data is rejected&#39;</span><span class="p">)</span>
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;errorModel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">ProductModel</span><span class="p">(</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;pick up&#39;</span><span class="p">,</span> <span class="s1">&#39;street_address&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span> <span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">:</span><span class="s1">&#39;sth&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="s1">&#39;CA&#39;</span><span class="p">,</span> <span class="s1">&#39;zip&#39;</span><span class="p">:</span><span class="s1">&#39;23523&#39;</span><span class="p">,</span> <span class="s1">&#39;capacity&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span><span class="s1">&#39;open&#39;</span><span class="p">}</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;successModel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;valid data is rejected</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;successModel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+  
+
+  <span class="k">assert</span> <span class="nb">next</span><span class="p">(</span><span class="n">TestModel</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;pick up&#39;</span><span class="p">,</span> <span class="s1">&#39;street_address&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span> <span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">:</span><span class="s1">&#39;sth&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="s1">&#39;CA&#39;</span><span class="p">,</span> <span class="s1">&#39;zip&#39;</span><span class="p">:</span><span class="s1">&#39;23523&#39;</span><span class="p">,</span> <span class="s1">&#39;capacity&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span><span class="s1">&#39;open&#39;</span><span class="p">}</span>
+  <span class="k">assert</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;successModel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;success model didnt save properly&#39;</span>
+  <span class="k">assert</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;errorModel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;error model went through&#39;</span>
+  
+<span class="n">test_nested</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>please dont foreget to override the pullOutKeys function if needed
+faulty data is rejected
+please dont foreget to override the pullOutKeys function if needed
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Standard-functions">Standard functions<a class="anchor-link" href="#Standard-functions"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="createData" class="doc_header"><code>createData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodbAttributes.py#L104" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>createData</code>(<strong><code>event</code></strong>:<code>dict</code>, <strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>, <strong><code>schemaUrl</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>schemaFormat</code></strong>:<code>str</code>=<em><code>'yaml'</code></em>, <strong>*<code>args</code></strong>)</p>
+</blockquote>
+<p>create a new basket</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;phoneHash&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">,</span><span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="mi">123</span> <span class="p">,</span> <span class="s1">&#39;oprCode&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">}</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">getInput</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">item</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">TestModel</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;123&#39;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1"># item.id_ = item.data[&#39;id&#39;]</span>
+<span class="k">if</span> <span class="n">item</span><span class="p">:</span>
+  <span class="n">item</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">create</span> <span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+  <span class="n">body</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">parseBody</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+  <span class="n">body</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;phoneHash&#39;</span><span class="p">]</span>
+  
+  <span class="n">event2</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">getInput</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+  <span class="n">hashKeyname</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span>
+  <span class="k">return</span> <span class="n">createData</span><span class="p">(</span><span class="n">event2</span><span class="p">,</span> <span class="n">hashKeyName</span><span class="o">=</span><span class="n">hashKeyname</span><span class="p">,</span> <span class="n">mainClass</span><span class="o">=</span><span class="n">TestModel</span><span class="p">)</span>
+<span class="n">create</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;body&#39;: &#39;{&#34;error&#34;:&#34;unknown error \\n \&#39;TestModel\&#39; object has no attribute \&#39;to_dict\&#39; \\n errorString())&#34;}&#39;,
+ &#39;statusCode&#39;: 400,
+ &#39;headers&#39;: {&#39;Access-Control-Allow-Headers&#39;: &#39;*&#39;,
+  &#39;Access-Control-Allow-Origin&#39;: &#39;*&#39;,
+  &#39;Access-Control-Allow-Methods&#39;: &#39;*&#39;}}</pre>
 </div>
 
 </div>
