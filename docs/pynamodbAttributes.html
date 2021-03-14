@@ -44,7 +44,7 @@ nb_path: "pynamodbAttributes.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="SchemaAttribute-class">SchemaAttribute class<a class="anchor-link" href="#SchemaAttribute-class"> </a></h2><p>a class which automatically parse and check data against json schema</p>
+<h1 id="SchemaAttribute-class">SchemaAttribute class<a class="anchor-link" href="#SchemaAttribute-class"> </a></h1><p>a class which automatically parse and check data against json schema</p>
 
 </div>
 </div>
@@ -83,7 +83,7 @@ nb_path: "pynamodbAttributes.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Supermodel">Supermodel<a class="anchor-link" href="#Supermodel"> </a></h2><p>a class which add some functionalities on top of the standard pynamodb model, it sets id_ as the hash key and gives</p>
+<h1 id="Supermodel">Supermodel<a class="anchor-link" href="#Supermodel"> </a></h1><p>a class which add some functionalities on top of the standard pynamodb model, it sets id_ as the hash key and gives</p>
 <ul>
 <li>fromDict functions </li>
 <li>repr as a dict</li>
@@ -139,6 +139,60 @@ You can create the table by with the <code>create_table</code> method.</p>
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">testSchema</span> <span class="o">=</span> <span class="s1">&#39;https://gist.githubusercontent.com/thanakijwanavit/e2720d091ae0cef710a49b57c0c9cd4c/raw/ed2d322eac4900ee0f95b431d0f9067a40f3e0f0/squirrelOpenApiV0.0.3.yaml&#39;</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">testSchema</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">Loader</span><span class="p">)</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;components/schemas/Location&#39;</span>
+<span class="n">dpath</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;type&#39;: &#39;object&#39;,
+ &#39;required&#39;: [&#39;id&#39;,
+  &#39;type&#39;,
+  &#39;street_address&#39;,
+  &#39;city&#39;,
+  &#39;state&#39;,
+  &#39;zip&#39;,
+  &#39;capacity&#39;,
+  &#39;status&#39;],
+ &#39;properties&#39;: {&#39;id&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;format&#39;: &#39;uuid&#39;},
+  &#39;type&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;enum&#39;: [&#39;pick up&#39;, &#39;drop off&#39;, &#39;overnight&#39;]},
+  &#39;street_address&#39;: {&#39;type&#39;: &#39;string&#39;},
+  &#39;city&#39;: {&#39;type&#39;: &#39;string&#39;},
+  &#39;state&#39;: {&#39;type&#39;: &#39;string&#39;,
+   &#39;pattern&#39;: &#39;^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY]))$&#39;},
+  &#39;zip&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;pattern&#39;: &#39;(^\\d{5}$)|(^\\d{5}-\\d{4}$)&#39;},
+  &#39;status&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;enum&#39;: [&#39;open&#39;, &#39;in use&#39;]},
+  &#39;created&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;format&#39;: &#39;date-time&#39;},
+  &#39;modified&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;format&#39;: &#39;date-time&#39;}}}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json&#39;</span>
 
 <span class="k">class</span> <span class="nc">TestModel</span><span class="p">(</span><span class="n">SuperModel</span><span class="p">):</span>
@@ -146,8 +200,10 @@ You can create the table by with the <code>create_table</code> method.</p>
     <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;colab-test-sensitive-column&quot;</span>
     <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;ap-southeast-1&#39;</span>
   <span class="n">data</span> <span class="o">=</span> <span class="n">SchemaAttribute</span><span class="p">(</span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="n">schemaUrl</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">cprcode</span> <span class="o">=</span> <span class="n">NumberAttribute</span><span class="p">()</span>
   <span class="k">def</span> <span class="nf">pullOutKeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">id_</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;iprcode&#39;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cprcode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;cprcode&#39;</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -194,7 +250,40 @@ You can create the table by with the <code>create_table</code> method.</p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#34;creationTime&#34;: 1615627272.324398, &#34;data&#34;: {&#34;iprcode&#34;: 4, &#34;cprcode&#34;: 123, &#34;oprCode&#34;: &#34;123&#34;, &#34;orderId&#34;: 123}, &#34;lastEdited&#34;: 1615627272.324387}</pre>
+<pre>{&#34;data&#34;: {&#34;type&#34;: &#34;pick up&#34;, &#34;street_address&#34;: &#34;123&#34;, &#34;id&#34;: &#34;123&#34;, &#34;city&#34;: &#34;sth&#34;, &#34;state&#34;: &#34;CA&#34;, &#34;zip&#34;: &#34;23523&#34;, &#34;capacity&#34;: 5, &#34;status&#34;: &#34;open&#34;}}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">next</span><span class="p">(</span><span class="n">TestModel</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#34;data&#34;: {&#34;type&#34;: &#34;pick up&#34;, &#34;street_address&#34;: &#34;123&#34;, &#34;id&#34;: &#34;123&#34;, &#34;city&#34;: &#34;sth&#34;, &#34;state&#34;: &#34;CA&#34;, &#34;zip&#34;: &#34;23523&#34;, &#34;capacity&#34;: 5, &#34;status&#34;: &#34;open&#34;}}</pre>
 </div>
 
 </div>
@@ -240,14 +329,7 @@ You can create the table by with the <code>create_table</code> method.</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>failed validation 
- &#39;4&#39; is not of type &#39;integer&#39;
-
-Failed validating &#39;type&#39; in schema[&#39;properties&#39;][&#39;iprcode&#39;]:
-    {&#39;type&#39;: &#39;integer&#39;}
-
-On instance[&#39;iprcode&#39;]:
-    &#39;4&#39;
+<pre>name &#39;ValidationError&#39; is not defined
 </pre>
 </div>
 </div>
@@ -342,7 +424,13 @@ please dont foreget to override the pullOutKeys function if needed
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Standard-functions">Standard functions<a class="anchor-link" href="#Standard-functions"> </a></h2>
+<h1 id="Standard-functions">Standard functions<a class="anchor-link" href="#Standard-functions"> </a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Create-data">Create data<a class="anchor-link" href="#Create-data"> </a></h2>
 </div>
 </div>
 </div>
@@ -357,7 +445,7 @@ please dont foreget to override the pullOutKeys function if needed
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="createData" class="doc_header"><code>createData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L104" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>createData</code>(<strong><code>event</code></strong>:<code>dict</code>, <strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>, <strong><code>schemaUrl</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>schemaFormat</code></strong>:<code>str</code>=<em><code>'yaml'</code></em>, <strong>*<code>args</code></strong>)</p>
+<h4 id="createData" class="doc_header"><code>createData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L130" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>createData</code>(<strong><code>event</code></strong>:<code>dict</code>, <strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>, <strong><code>schemaUrl</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>schemaFormat</code></strong>:<code>str</code>=<em><code>'yaml'</code></em>, <strong>*<code>args</code></strong>)</p>
 </blockquote>
 <p>create a new basket</p>
 
@@ -378,6 +466,12 @@ please dont foreget to override the pullOutKeys function if needed
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Usage-example">Usage example<a class="anchor-link" href="#Usage-example"> </a></h3>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -385,21 +479,60 @@ please dont foreget to override the pullOutKeys function if needed
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;phoneHash&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">,</span><span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="mi">123</span> <span class="p">,</span> <span class="s1">&#39;oprCode&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">}</span>
-<span class="n">event</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">getInput</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">item</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">TestModel</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;123&#39;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
-<span class="c1"># item.id_ = item.data[&#39;id&#39;]</span>
-<span class="k">if</span> <span class="n">item</span><span class="p">:</span>
-  <span class="n">item</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">create</span> <span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">create</span> <span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
   <span class="n">body</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">parseBody</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
   <span class="n">body</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;phoneHash&#39;</span><span class="p">]</span>
   
   <span class="n">event2</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">getInput</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
   <span class="n">hashKeyname</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span>
   <span class="k">return</span> <span class="n">createData</span><span class="p">(</span><span class="n">event2</span><span class="p">,</span> <span class="n">hashKeyName</span><span class="o">=</span><span class="n">hashKeyname</span><span class="p">,</span> <span class="n">mainClass</span><span class="o">=</span><span class="n">TestModel</span><span class="p">)</span>
-<span class="n">create</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Test">Test<a class="anchor-link" href="#Test"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Success">Success<a class="anchor-link" href="#Success"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json&#39;</span>
+
+<span class="k">class</span> <span class="nc">TestModel</span><span class="p">(</span><span class="n">SuperModel</span><span class="p">):</span>
+  <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+    <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;colab-test-sensitive-column&quot;</span>
+    <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;ap-southeast-1&#39;</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">SchemaAttribute</span><span class="p">(</span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="n">schemaUrl</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">pullOutKeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">id_</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;iprcode&#39;</span><span class="p">])</span>
+    
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;phoneHash&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">,</span><span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="mi">123</span> <span class="p">,</span> <span class="s1">&#39;oprCode&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">}</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">getInput</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">item</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">TestModel</span><span class="o">.</span><span class="n">queryId</span><span class="p">(</span><span class="s1">&#39;123&#39;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="c1"># delete item if exist</span>
+<span class="k">if</span> <span class="n">item</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">delete</span><span class="p">())</span>
+  
+<span class="c1"># create(event)</span>
 </pre></div>
 
     </div>
@@ -411,16 +544,11 @@ please dont foreget to override the pullOutKeys function if needed
 
 <div class="output_area">
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;body&#39;: &#39;{&#34;error&#34;:&#34;unknown error \\n \&#39;TestModel\&#39; object has no attribute \&#39;to_dict\&#39; \\n errorString())&#34;}&#39;,
- &#39;statusCode&#39;: 400,
- &#39;headers&#39;: {&#39;Access-Control-Allow-Headers&#39;: &#39;*&#39;,
-  &#39;Access-Control-Allow-Origin&#39;: &#39;*&#39;,
-  &#39;Access-Control-Allow-Methods&#39;: &#39;*&#39;}}</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#34;creationTime&#34;: 1615696017.37214, &#34;data&#34;: {&#34;phoneHash&#34;: &#34;123&#34;, &#34;iprcode&#34;: 4, &#34;cprcode&#34;: 123, &#34;oprCode&#34;: &#34;123&#34;, &#34;id&#34;: &#34;123&#34;}, &#34;lastEdited&#34;: 1615696017.37213, &#34;id_&#34;: &#34;4&#34;}
+{&#39;ConsumedCapacity&#39;: {&#39;CapacityUnits&#39;: 1.0, &#39;TableName&#39;: &#39;colab-test-sensitive-column&#39;}}
+</pre>
 </div>
-
 </div>
 
 </div>

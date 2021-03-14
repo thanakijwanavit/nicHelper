@@ -36,6 +36,100 @@ nb_path: "schema.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Get-schema-from-path">Get schema from path<a class="anchor-link" href="#Get-schema-from-path"> </a></h1>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">dpath.util</span>
+<span class="k">def</span> <span class="nf">getSchemaPath</span><span class="p">(</span><span class="n">schemaUrl</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">isYaml</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+  <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">  get a nested schema from path</span>
+<span class="sd">  schemaUrl: str: url of the schema</span>
+<span class="sd">  path: str: path of the schema, if root then path=&#39;/&#39;</span>
+<span class="sd">  isYaml: Bool: is the schema yaml (false indicates that the schema is json)</span>
+<span class="sd">  &#39;&#39;&#39;</span>
+  <span class="k">if</span> <span class="n">isYaml</span><span class="p">:</span>
+    <span class="n">schema</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">schemaUrl</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">Loader</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">schema</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">schemaUrl</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">dpath</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">testSchema</span> <span class="o">=</span> <span class="s1">&#39;https://gist.githubusercontent.com/thanakijwanavit/e2720d091ae0cef710a49b57c0c9cd4c/raw/ed2d322eac4900ee0f95b431d0f9067a40f3e0f0/squirrelOpenApiV0.0.3.yaml&#39;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;components/schemas/Location&#39;</span>
+<span class="n">getSchemaPath</span><span class="p">(</span><span class="n">testSchema</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;type&#39;: &#39;object&#39;,
+ &#39;required&#39;: [&#39;id&#39;,
+  &#39;type&#39;,
+  &#39;street_address&#39;,
+  &#39;city&#39;,
+  &#39;state&#39;,
+  &#39;zip&#39;,
+  &#39;capacity&#39;,
+  &#39;status&#39;],
+ &#39;properties&#39;: {&#39;id&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;format&#39;: &#39;uuid&#39;},
+  &#39;type&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;enum&#39;: [&#39;pick up&#39;, &#39;drop off&#39;, &#39;overnight&#39;]},
+  &#39;street_address&#39;: {&#39;type&#39;: &#39;string&#39;},
+  &#39;city&#39;: {&#39;type&#39;: &#39;string&#39;},
+  &#39;state&#39;: {&#39;type&#39;: &#39;string&#39;,
+   &#39;pattern&#39;: &#39;^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY]))$&#39;},
+  &#39;zip&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;pattern&#39;: &#39;(^\\d{5}$)|(^\\d{5}-\\d{4}$)&#39;},
+  &#39;status&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;enum&#39;: [&#39;open&#39;, &#39;in use&#39;]},
+  &#39;created&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;format&#39;: &#39;date-time&#39;},
+  &#39;modified&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;format&#39;: &#39;date-time&#39;}}}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Validate-Url">Validate Url<a class="anchor-link" href="#Validate-Url"> </a></h1>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -47,7 +141,7 @@ nb_path: "schema.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="validateUrl" class="doc_header"><code>validateUrl</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/schema.py#L10" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>validateUrl</code>(<strong><code>url</code></strong>, <strong><code>input_</code></strong>, <strong><code>format_</code></strong>=<em><code>'json'</code></em>, <strong><code>headers</code></strong>=<em><code>{'Cache-Control': 'no-cache'}</code></em>)</p>
+<h4 id="validateUrl" class="doc_header"><code>validateUrl</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/schema.py#L10" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>validateUrl</code>(<strong><code>url</code></strong>, <strong><code>input_</code></strong>, <strong><code>format_</code></strong>=<em><code>'json'</code></em>, <strong><code>headers</code></strong>=<em><code>{'Cache-Control': 'no-cache'}</code></em>, <strong><code>path</code></strong>=<em><code>'/'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -278,7 +372,7 @@ On instance:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="getTypes" class="doc_header"><code>getTypes</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/schema.py#L24" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getTypes</code>(<strong><code>schemaUrl</code></strong>:<code>str</code>, <strong><code>typeMap</code></strong>:<code>dict</code>=<em><code>{'string': &lt;class 'str'&gt;, 'number': &lt;class 'float'&gt;, 'integer': &lt;class 'int'&gt;, 'object': &lt;class 'dict'&gt;, 'array': &lt;class 'list'&gt;, 'boolean': &lt;class 'bool'&gt;, 'null': None}</code></em>)</p>
+<h4 id="getTypes" class="doc_header"><code>getTypes</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/schema.py#L23" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getTypes</code>(<strong><code>schemaUrl</code></strong>:<code>str</code>, <strong><code>typeMap</code></strong>:<code>dict</code>=<em><code>{'string': &lt;class 'str'&gt;, 'number': &lt;class 'float'&gt;, 'integer': &lt;class 'int'&gt;, 'object': &lt;class 'dict'&gt;, 'array': &lt;class 'list'&gt;, 'boolean': &lt;class 'bool'&gt;, 'null': None}</code></em>)</p>
 </blockquote>
 <p>get python types from json schema</p>
 
@@ -303,7 +397,7 @@ On instance:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="typeMapJsonSchema" class="doc_header"><code>typeMapJsonSchema</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/schema.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>typeMapJsonSchema</code>(<strong><code>url</code></strong>:<code>str</code>, <strong><code>input_</code></strong>:<code>dict</code>=<em><code>{}</code></em>, <strong><code>typeMap</code></strong>:<code>dict</code>=<em><code>{'string': &lt;class 'str'&gt;, 'number': &lt;class 'float'&gt;, 'integer': &lt;class 'int'&gt;, 'object': &lt;class 'dict'&gt;, 'array': &lt;class 'list'&gt;, 'boolean': &lt;class 'bool'&gt;, 'null': None}</code></em>, <strong><code>defaultType</code></strong>=<em><code>str</code></em>)</p>
+<h4 id="typeMapJsonSchema" class="doc_header"><code>typeMapJsonSchema</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/schema.py#L30" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>typeMapJsonSchema</code>(<strong><code>url</code></strong>:<code>str</code>, <strong><code>input_</code></strong>:<code>dict</code>=<em><code>{}</code></em>, <strong><code>typeMap</code></strong>:<code>dict</code>=<em><code>{'string': &lt;class 'str'&gt;, 'number': &lt;class 'float'&gt;, 'integer': &lt;class 'int'&gt;, 'object': &lt;class 'dict'&gt;, 'array': &lt;class 'list'&gt;, 'boolean': &lt;class 'bool'&gt;, 'null': None}</code></em>, <strong><code>defaultType</code></strong>=<em><code>str</code></em>)</p>
 </blockquote>
 <p>try to map the datatype into the one specified in url of json schema.
 if type is not found, the defaultType is used</p>
@@ -425,6 +519,12 @@ if type is not found, the defaultType is used</p>
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="get-schema-path">get schema path<a class="anchor-link" href="#get-schema-path"> </a></h1>
+</div>
+</div>
+</div>
 </div>
  
 

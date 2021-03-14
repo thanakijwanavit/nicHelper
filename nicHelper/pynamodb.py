@@ -54,9 +54,35 @@ class SuperModel(Model):
   def __repr__(self):
     return json.dumps(vars(self)['attribute_values'])
 
+  ## query override
+  @classmethod
+  def queryId(cls, hash_key, **kwargs):
+    '''
+    just like query but make resul
+    '''
+    r = cls.query(hash_key, **kwargs)
+    res = []
+    for i in r:
+      i.pullOutKeys()
+      res.append(i)
+    return iter(res)
+
+
+  ## moving to and from dict
   @classmethod
   def fromDict(cls, inputDict:dict):
+    '''
+    turn dict into class
+    note that this assume data as the only column, please override if required
+    '''
     return cls(data = inputDict)
+
+  def toDict(self):
+    '''
+    turn class into a dictionary
+    note that this is set to return self.data by default, please override if needed
+    '''
+    return self.data
 
   #### saving ####
   def pullOutKeys(self):
@@ -127,7 +153,7 @@ def createData(event:dict, hashKeyName: str,mainClass:Model, schemaUrl:Optional[
   # try to save
   try:
     item.save()
-    return Response.returnSuccess(body=item.to_dict())
+    return Response.returnSuccess(body=item.toDict())
 
   except ValidationError as e: # error validation handle
     return Response.returnError(f'validation error \n {e}')

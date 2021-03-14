@@ -7,12 +7,11 @@ import jsonschema, requests, yaml
 from types import SimpleNamespace
 
 # Cell
-def validateUrl(url,input_, format_ = 'json', headers = {'Cache-Control': 'no-cache'}):
+def validateUrl(url,input_, format_ = 'json', headers = {'Cache-Control': 'no-cache'}, path = '/'):
   if format_ == 'yaml':
-    schemaYaml = requests.get(url).text
-    schema = yaml.load(schemaYaml, Loader=yaml.FullLoader)
+    schema = getSchemaPath(url, path = path, isYaml = True)
   elif format_ == 'json':
-    schema = requests.get(url,headers=headers).json()
+    schema = getSchemaPath(url, path = path, isYaml = False)
   else:
     print('invalid schema format, using json')
     schema = requests.get(url).json()
