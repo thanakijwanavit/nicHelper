@@ -4,9 +4,9 @@ SRC = $(wildcard ./*.ipynb)
 
 all: s3bz docs
 
-s3bz: $(SRC)
+nicHelper: $(SRC)
 	nbdev_build_lib
-	touch s3bz
+	touch nicHelper
 
 sync:
 	nbdev_update_lib
@@ -26,6 +26,8 @@ release: pypi
 	nbdev_bump_version
 
 pypi: dist
+	bash build.sh
+	nbdev_bump_version
 	twine upload --repository pypi dist/*
 
 dist: clean
