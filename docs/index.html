@@ -565,6 +565,225 @@ NameError: name &#39;error&#39; is not defined
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Schema">Schema<a class="anchor-link" href="#Schema"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nicHelper.schema</span> <span class="kn">import</span> <span class="n">getSchemaPath</span><span class="p">,</span> <span class="n">validateUrl</span><span class="p">,</span> <span class="n">typeMapJsonSchema</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Get-schema-from-path">Get schema from path<a class="anchor-link" href="#Get-schema-from-path"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">testSchema</span> <span class="o">=</span> <span class="s1">&#39;https://gist.githubusercontent.com/thanakijwanavit/e2720d091ae0cef710a49b57c0c9cd4c/raw/ed2d322eac4900ee0f95b431d0f9067a40f3e0f0/squirrelOpenApiV0.0.3.yaml&#39;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;components/schemas/Location&#39;</span>
+<span class="n">getSchemaPath</span><span class="p">(</span><span class="n">testSchema</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;type&#39;: &#39;object&#39;,
+ &#39;required&#39;: [&#39;id&#39;,
+  &#39;type&#39;,
+  &#39;street_address&#39;,
+  &#39;city&#39;,
+  &#39;state&#39;,
+  &#39;zip&#39;,
+  &#39;capacity&#39;,
+  &#39;status&#39;],
+ &#39;properties&#39;: {&#39;id&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;format&#39;: &#39;uuid&#39;},
+  &#39;type&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;enum&#39;: [&#39;pick up&#39;, &#39;drop off&#39;, &#39;overnight&#39;]},
+  &#39;street_address&#39;: {&#39;type&#39;: &#39;string&#39;},
+  &#39;city&#39;: {&#39;type&#39;: &#39;string&#39;},
+  &#39;state&#39;: {&#39;type&#39;: &#39;string&#39;,
+   &#39;pattern&#39;: &#39;^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY]))$&#39;},
+  &#39;zip&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;pattern&#39;: &#39;(^\\d{5}$)|(^\\d{5}-\\d{4}$)&#39;},
+  &#39;status&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;enum&#39;: [&#39;open&#39;, &#39;in use&#39;]},
+  &#39;created&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;format&#39;: &#39;date-time&#39;},
+  &#39;modified&#39;: {&#39;type&#39;: &#39;string&#39;, &#39;format&#39;: &#39;date-time&#39;}}}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Validate-Url">Validate Url<a class="anchor-link" href="#Validate-Url"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json&#39;</span>
+<span class="n">input_</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="mi">123</span> <span class="p">,</span> <span class="s1">&#39;oprCode&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">}</span>
+<span class="n">validateUrl</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">input_</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>namespace(cprcode=123, iprcode=4, oprCode=&#39;123&#39;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Convert-type-to-comply-with-json-schema">Convert type to comply with json schema<a class="anchor-link" href="#Convert-type-to-comply-with-json-schema"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/dev-manual/inventory/inventory.yaml&#39;</span>
+<span class="n">inv</span> <span class="o">=</span> <span class="p">{</span>
+                  <span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="s1">&#39;0000009&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;brcode&#39;</span><span class="p">:</span> <span class="s1">&#39;1000&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;ib_cf_qty&#39;</span><span class="p">:</span> <span class="s1">&#39;50&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;new_ib_vs_stock_cv&#39;</span><span class="p">:</span> <span class="s1">&#39;27&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;onlineflag&#39;</span><span class="p">:</span> <span class="kc">True</span>
+                <span class="p">}</span>
+<span class="n">typeMapJsonSchema</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">input_</span><span class="o">=</span><span class="n">inv</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>typesDict is: {&#39;iprcode&#39;: &lt;class &#39;int&#39;&gt;, &#39;brcode&#39;: &lt;class &#39;int&#39;&gt;, &#39;ib_cf_qty&#39;: &lt;class &#39;int&#39;&gt;, &#39;new_ib_vs_stock_cv&#39;: &lt;class &#39;int&#39;&gt;, &#39;onlineflag&#39;: &lt;class &#39;bool&#39;&gt;}
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;iprcode&#39;: 9,
+ &#39;brcode&#39;: 1000,
+ &#39;ib_cf_qty&#39;: 50,
+ &#39;new_ib_vs_stock_cv&#39;: 27,
+ &#39;onlineflag&#39;: True}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Pynamodb">Pynamodb<a class="anchor-link" href="#Pynamodb"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nicHelper.pynamodbAttributes</span> <span class="kn">import</span> <span class="n">SchemaAttribute</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="SchemaAttribute">SchemaAttribute<a class="anchor-link" href="#SchemaAttribute"> </a></h3><p>a class which automatically parse and check data against json schema</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>SchemaAttribute(*args, **kwargs) :: Attribute</code></p>
+
+</div>
+</div>
+</div>
 </div>
  
 
