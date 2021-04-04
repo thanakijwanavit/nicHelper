@@ -26,7 +26,10 @@ def validateUrl(url,input_, format_ = 'json', headers = {'Cache-Control': 'no-ca
   '''
   validates whether the input_ matches the schema in the url or not
   url: str: url of the schema
-  input_:
+  input_: the input to be validated
+  format_: str: is the format of the schema 'yaml' or 'json' (Default = 'json')
+  headers: dict: the header
+  path: str: path of the schema, if root then path='/'
   '''
   if format_ == 'yaml':
     schema = getSchemaPath(url, path = path, isYaml = True)
