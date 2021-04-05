@@ -37,6 +37,6 @@ entries:
       title: wrappers
       url: wrappers.html
     output: web
-    title: nicHelperForked
+    title: nicHelper
   output: web
   title: Sidebar

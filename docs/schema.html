@@ -53,7 +53,7 @@ nb_path: "schema.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="getSchemaPath" class="doc_header"><code>getSchemaPath</code><a href="https://github.com/thanakijwanavit/nicHelperForked/tree/master/nicHelperForked/schema.py#L11" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getSchemaPath</code>(<strong><code>schemaUrl</code></strong>:<code>str</code>, <strong><code>path</code></strong>:<code>str</code>=<em><code>'/'</code></em>, <strong><code>isYaml</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="getSchemaPath" class="doc_header"><code>getSchemaPath</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/schema.py#L11" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getSchemaPath</code>(<strong><code>schemaUrl</code></strong>:<code>str</code>, <strong><code>path</code></strong>:<code>str</code>=<em><code>'/'</code></em>, <strong><code>isYaml</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>get a nested schema from path
 schemaUrl: str: url of the schema
@@ -147,7 +147,7 @@ isYaml: Bool: is the schema yaml (false indicates that the schema is json)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="validateUrl" class="doc_header"><code>validateUrl</code><a href="https://github.com/thanakijwanavit/nicHelperForked/tree/master/nicHelperForked/schema.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>validateUrl</code>(<strong><code>url</code></strong>, <strong><code>input_</code></strong>, <strong><code>format_</code></strong>=<em><code>'json'</code></em>, <strong><code>headers</code></strong>=<em><code>{'Cache-Control': 'no-cache'}</code></em>, <strong><code>path</code></strong>=<em><code>'/'</code></em>)</p>
+<h4 id="validateUrl" class="doc_header"><code>validateUrl</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/schema.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>validateUrl</code>(<strong><code>url</code></strong>, <strong><code>input_</code></strong>, <strong><code>format_</code></strong>=<em><code>'json'</code></em>, <strong><code>headers</code></strong>=<em><code>{'Cache-Control': 'no-cache'}</code></em>, <strong><code>path</code></strong>=<em><code>'/'</code></em>)</p>
 </blockquote>
 <p>validates whether the input<em> matches the schema in the url or not
 url: str: url of the schema
@@ -418,7 +418,7 @@ On instance:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="getTypes" class="doc_header"><code>getTypes</code><a href="https://github.com/thanakijwanavit/nicHelperForked/tree/master/nicHelperForked/schema.py#L46" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getTypes</code>(<strong><code>schemaUrl</code></strong>:<code>str</code>, <strong><code>typeMap</code></strong>:<code>dict</code>=<em><code>{'string': &lt;class 'str'&gt;, 'number': &lt;class 'float'&gt;, 'integer': &lt;class 'int'&gt;, 'object': &lt;class 'dict'&gt;, 'array': &lt;class 'list'&gt;, 'boolean': &lt;class 'bool'&gt;, 'null': None}</code></em>)</p>
+<h4 id="getTypes" class="doc_header"><code>getTypes</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/schema.py#L46" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getTypes</code>(<strong><code>schemaUrl</code></strong>:<code>str</code>, <strong><code>typeMap</code></strong>:<code>dict</code>=<em><code>{'string': &lt;class 'str'&gt;, 'number': &lt;class 'float'&gt;, 'integer': &lt;class 'int'&gt;, 'object': &lt;class 'dict'&gt;, 'array': &lt;class 'list'&gt;, 'boolean': &lt;class 'bool'&gt;, 'null': None}</code></em>)</p>
 </blockquote>
 <p>get python types from json schema</p>
 
@@ -443,7 +443,7 @@ On instance:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="typeMapJsonSchema" class="doc_header"><code>typeMapJsonSchema</code><a href="https://github.com/thanakijwanavit/nicHelperForked/tree/master/nicHelperForked/schema.py#L53" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>typeMapJsonSchema</code>(<strong><code>url</code></strong>:<code>str</code>, <strong><code>input_</code></strong>:<code>dict</code>=<em><code>{}</code></em>, <strong><code>typeMap</code></strong>:<code>dict</code>=<em><code>{'string': &lt;class 'str'&gt;, 'number': &lt;class 'float'&gt;, 'integer': &lt;class 'int'&gt;, 'object': &lt;class 'dict'&gt;, 'array': &lt;class 'list'&gt;, 'boolean': &lt;class 'bool'&gt;, 'null': None}</code></em>, <strong><code>defaultType</code></strong>=<em><code>str</code></em>)</p>
+<h4 id="typeMapJsonSchema" class="doc_header"><code>typeMapJsonSchema</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/schema.py#L53" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>typeMapJsonSchema</code>(<strong><code>url</code></strong>:<code>str</code>, <strong><code>input_</code></strong>:<code>dict</code>=<em><code>{}</code></em>, <strong><code>typeMap</code></strong>:<code>dict</code>=<em><code>{'string': &lt;class 'str'&gt;, 'number': &lt;class 'float'&gt;, 'integer': &lt;class 'int'&gt;, 'object': &lt;class 'dict'&gt;, 'array': &lt;class 'list'&gt;, 'boolean': &lt;class 'bool'&gt;, 'null': None}</code></em>, <strong><code>defaultType</code></strong>=<em><code>str</code></em>)</p>
 </blockquote>
 <p>try to map the datatype into the one specified in url of json schema.
 if type is not found, the defaultType is used</p>

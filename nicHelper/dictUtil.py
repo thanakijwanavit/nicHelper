@@ -37,7 +37,7 @@ def allKeysInDict(inputDict:dict, keys:list):
 # Cell
 def filterDt(dtDict:dict):
   '''
-  convert unjsonable datetime object to timestamp in the dictionary
+  convert unjsonable datetime object to timestamp in the dictionary, this works for nested dictionary as well
   dtDict: dict: the dictionary containing the datetime object
   '''
   from datetime import datetime
@@ -98,12 +98,12 @@ def loadStringFromFile(path:str):
 # Cell
 def genSchema(inputDict:dict, format_='yaml')->(dict,str):
   '''generate a json schema from dict,
-  format::str:
+  format::dict or str:
     default='yaml', return schema in json or yaml
     'json', return the json schema
   response
     'both', return a tuple of (json, yaml)
-    dict or string
+  inputDict: dict: the dict inputted to be used to generate the schema
   '''
   from genson import SchemaBuilder
   import yaml
