@@ -60,7 +60,7 @@ nb_path: "pynamodbAttributes.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="SchemaAttribute" class="doc_header"><code>class</code> <code>SchemaAttribute</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L19" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SchemaAttribute</code>(<strong>*<code>args</code></strong>, <strong>**<code>kwds</code></strong>) :: <code>Attribute</code></p>
+<h2 id="SchemaAttribute" class="doc_header"><code>class</code> <code>SchemaAttribute</code><a href="https://github.com/thanakijwanavit/nicHelperForked/tree/master/nicHelperForked/pynamodb.py#L19" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SchemaAttribute</code>(<strong>*<code>args</code></strong>, <strong>**<code>kwds</code></strong>) :: <code>Attribute</code></p>
 </blockquote>
 <p>An attribute of a model</p>
 
@@ -110,7 +110,7 @@ nb_path: "pynamodbAttributes.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="SuperModel" class="doc_header"><code>class</code> <code>SuperModel</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L66" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SuperModel</code>(<strong><code>hash_key</code></strong>:<code>Optional</code>[<code>Any</code>]=<em><code>None</code></em>, <strong><code>range_key</code></strong>:<code>Optional</code>[<code>Any</code>]=<em><code>None</code></em>, <strong><code>_user_instantiated</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong>**<code>attributes</code></strong>:<code>Any</code>) :: <code>Model</code></p>
+<h2 id="SuperModel" class="doc_header"><code>class</code> <code>SuperModel</code><a href="https://github.com/thanakijwanavit/nicHelperForked/tree/master/nicHelperForked/pynamodb.py#L66" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SuperModel</code>(<strong><code>hash_key</code></strong>:<code>Optional</code>[<code>Any</code>]=<em><code>None</code></em>, <strong><code>range_key</code></strong>:<code>Optional</code>[<code>Any</code>]=<em><code>None</code></em>, <strong><code>_user_instantiated</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong>**<code>attributes</code></strong>:<code>Any</code>) :: <code>Model</code></p>
 </blockquote>
 <p>Defines a <code>PynamoDB</code> Model</p>
 <p>This model is backed by a table in DynamoDB.
@@ -501,7 +501,7 @@ On instance[&#39;iprcode&#39;]:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="createData" class="doc_header"><code>createData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L161" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>createData</code>(<strong><code>event</code></strong>:<code>dict</code>, <strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>, <strong><code>schemaUrl</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>schemaFormat</code></strong>:<code>str</code>=<em><code>'yaml'</code></em>, <strong>*<code>args</code></strong>)</p>
+<h4 id="createData" class="doc_header"><code>createData</code><a href="https://github.com/thanakijwanavit/nicHelperForked/tree/master/nicHelperForked/pynamodb.py#L161" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>createData</code>(<strong><code>event</code></strong>:<code>dict</code>, <strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>, <strong><code>schemaUrl</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>schemaFormat</code></strong>:<code>str</code>=<em><code>'yaml'</code></em>, <strong>*<code>args</code></strong>)</p>
 </blockquote>
 <p>create a new row of data</p>
 
@@ -706,7 +706,7 @@ On instance[&#39;iprcode&#39;]:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="getData" class="doc_header"><code>getData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L201" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getData</code>(<strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>)</p>
+<h4 id="getData" class="doc_header"><code>getData</code><a href="https://github.com/thanakijwanavit/nicHelperForked/tree/master/nicHelperForked/pynamodb.py#L201" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getData</code>(<strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>)</p>
 </blockquote>
 <p>create a new basket</p>
 
@@ -866,7 +866,7 @@ On instance[&#39;iprcode&#39;]:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="updateData" class="doc_header"><code>updateData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L217" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>updateData</code>(<strong><code>event</code></strong>:<code>dict</code>, <strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>, <strong><code>schemaUrl</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>schemaFormat</code></strong>:<code>str</code>=<em><code>'yaml'</code></em>, <strong>*<code>args</code></strong>)</p>
+<h4 id="updateData" class="doc_header"><code>updateData</code><a href="https://github.com/thanakijwanavit/nicHelperForked/tree/master/nicHelperForked/pynamodb.py#L217" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>updateData</code>(<strong><code>event</code></strong>:<code>dict</code>, <strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>, <strong><code>schemaUrl</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>schemaFormat</code></strong>:<code>str</code>=<em><code>'yaml'</code></em>, <strong>*<code>args</code></strong>)</p>
 </blockquote>
 <p>updating data based on the new input</p>
 <p>event:dict: object gathered from apiGatewayProxy
