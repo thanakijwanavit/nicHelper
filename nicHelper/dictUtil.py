@@ -8,7 +8,12 @@ __all__ = ['printDict', 'allKeysInDict', 'filterDt', 'stripDict', 'hashDict', 's
 
 # Cell
 def printDict(d:dict, length:int = 10, space = 0):
-  '''print dictionary as first x value of values'''
+  '''
+  print dictionary as first x value of values
+  d: dict: the dictionary to be printed
+  length: int: the length of the stuff being printed?
+  space: int: space between key and value?
+  '''
   if type(d) != dict:
     print('this is not a dict')
     print(d)
@@ -22,17 +27,29 @@ def printDict(d:dict, length:int = 10, space = 0):
 
 # Cell
 def allKeysInDict(inputDict:dict, keys:list):
+  '''
+  checks whether all the keys given in the list are also keys in the inputDict dictionary
+  inputDict: dict: the dictionary inputted
+  keys: list: the list of keys
+  '''
   return all(key in inputDict for key in keys)
 
 # Cell
 def filterDt(dtDict:dict):
-  '''convert unjsonable datetime object to timestamp in the dictionary'''
+  '''
+  convert unjsonable datetime object to timestamp in the dictionary
+  dtDict: dict: the dictionary containing the datetime object
+  '''
   from datetime import datetime
   return {k: (filterDt(v) if type(v) == dict else v) if type(v) != datetime else v.timestamp()
             for k,v in dtDict.items()}
 
 # Cell
 def stripDict(data:dict):
+  '''
+  if the value in the dictionary is a string, it will 'strip' the value to make it more clear
+  data: dict: the dictionary inputted to be 'stripped'
+  '''
   return {k: v.strip() if type(v) == str else v for k,v in data.items()}
 
 # Cell
@@ -45,18 +62,36 @@ def hashDict(data:dict, hasher= hashlib.sha1(), encoder = pickle.dumps):
 # Cell
 import pickle
 def saveDictToFile(data:dict, path:str):
+  '''
+  saves the dictionary to the file directed by the path
+  data: dict: the dictionary to be saved
+  path: str: the file path to the file the dictionary is going to be saved
+  '''
   with open(path, 'wb')as f:
     pickle.dump(data,f,protocol=pickle.HIGHEST_PROTOCOL)
 
 def loadDictFromFile(path:str):
+  '''
+  returns the dictionary that is saved in the file
+  path: str: the path taken to the file of the dictionary
+  '''
   with open(path, 'rb') as f:
     return pickle.load(f)
 
 # Cell
 def saveStringToFile(data:str, path:str):
+  '''
+  saves the string to the file directed by the path
+  data: str: the string to be saved
+  path: str: the file path to the file the string is going to be saved
+  '''
   with open(path, 'w')as f:
     f.write(data)
 def loadStringFromFile(path:str):
+  '''
+  returns the string that is saved in the file
+  path: str: the path taken to the file of the string
+  '''
   with open(path, 'r')as f:
     return f.read()
 
