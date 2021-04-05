@@ -25,10 +25,10 @@ def getSchemaPath(schemaUrl:str, path:str='/', isYaml = True):
 def validateUrl(url,input_, format_ = 'json', headers = {'Cache-Control': 'no-cache'}, path = '/'):
   '''
   validates whether the input_ matches the schema in the url or not \n
-  url: str: url of the schema
-  input_: the input to be validated
-  format_: str: default = 'json', is the format of the schema 'yaml' or 'json'
-  headers: dict: the header
+  url: str: url of the schema \n
+  input_: the input to be validated \n
+  format_: str: default = 'json', is the format of the schema 'yaml' or 'json' \n
+  headers: dict: the header \n
   path: str: path of the schema, if root then path='/'
   '''
   if format_ == 'yaml':
