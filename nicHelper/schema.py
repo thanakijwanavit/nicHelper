@@ -24,7 +24,7 @@ def getSchemaPath(schemaUrl:str, path:str='/', isYaml = True):
 # Cell
 def validateUrl(url,input_, format_ = 'json', headers = {'Cache-Control': 'no-cache'}, path = '/'):
   '''
-  validates whether the input_ matches the schema in the url or not
+  validates whether the input_ matches the schema in the url or not \n
   url: str: url of the schema
   input_: the input to be validated
   format_: str: default = 'json', is the format of the schema 'yaml' or 'json'
