@@ -320,7 +320,7 @@ data: dict: the dictionary inputted to be 'stripped'</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="hashDict" class="doc_header"><code>hashDict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L57" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hashDict</code>(<strong><code>data</code></strong>:<code>dict</code>, <strong><code>hasher</code></strong>=<em><code>&lt;sha1 HASH object @ 0x7feff04f13d0&gt;</code></em>, <strong><code>encoder</code></strong>=<em><code>dumps</code></em>)</p>
+<h4 id="hashDict" class="doc_header"><code>hashDict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L57" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hashDict</code>(<strong><code>data</code></strong>:<code>dict</code>, <strong><code>hasher</code></strong>=<em><code>&lt;sha1 HASH object @ 0x7f0ccc317510&gt;</code></em>, <strong><code>encoder</code></strong>=<em><code>dumps</code></em>)</p>
 </blockquote>
 
 </div>
@@ -591,13 +591,14 @@ path: str: the path taken to the file of the string</p>
 <div class="output_markdown rendered_html output_subarea ">
 <h4 id="genSchema" class="doc_header"><code>genSchema</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L99" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>genSchema</code>(<strong><code>inputDict</code></strong>:<code>dict</code>, <strong><code>format_</code></strong>=<em><code>'yaml'</code></em>)</p>
 </blockquote>
-<p>generate a json schema from dict,
-format::dict or str:
+<p>generate a json schema from dict</p>
+<p>format::dict or str:
   default='yaml', return schema in json or yaml
   'json', return the json schema
 response
   'both', return a tuple of (json, yaml)
-inputDict: dict: the dict inputted to be used to generate the schema</p>
+  dict or string</p>
+<p>inputDict: dict: the dict inputted to be used to generate the schema</p>
 
 </div>
 

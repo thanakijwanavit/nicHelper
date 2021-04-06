@@ -97,12 +97,13 @@ def loadStringFromFile(path:str):
 
 # Cell
 def genSchema(inputDict:dict, format_='yaml')->(dict,str):
-  '''generate a json schema from dict,
+  '''generate a json schema from dict \n
   format::dict or str:
     default='yaml', return schema in json or yaml
     'json', return the json schema
   response
     'both', return a tuple of (json, yaml)
+    dict or string \n
   inputDict: dict: the dict inputted to be used to generate the schema
   '''
   from genson import SchemaBuilder

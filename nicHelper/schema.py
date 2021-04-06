@@ -24,12 +24,12 @@ def getSchemaPath(schemaUrl:str, path:str='/', isYaml = True):
 # Cell
 def validateUrl(url,input_, format_ = 'json', headers = {'Cache-Control': 'no-cache'}, path = '/'):
   '''
-  validates whether the input_ matches the schema in the url or not \n
-  url: str: url of the schema \n
+  verifies whether the input_ is valid under the schema located at path in the url \n
+  url: str: url where the schema file is located \n
   input_: the input to be validated \n
-  format_: str: default = 'json', is the format of the schema 'yaml' or 'json' \n
-  headers: dict: the header \n
-  path: str: path of the schema, if root then path='/'
+  format_: str: the format of the schema; can be 'yaml' or 'json'. default = 'json' \n
+  headers: dict: dictionary of HTTP headers to send with the get request to retrieve the schema \n
+  path: str: path of the schema within the file, if root then path='/'
   '''
   if format_ == 'yaml':
     schema = getSchemaPath(url, path = path, isYaml = True)
