@@ -9,10 +9,10 @@ __all__ = ['printDict', 'allKeysInDict', 'filterDt', 'stripDict', 'hashDict', 's
 # Cell
 def printDict(d:dict, length:int = 10, space = 0):
   '''
-  print dictionary as first x value of values
-  d: dict: the dictionary to be printed
-  length: int: the length of the stuff being printed?
-  space: int: space between key and value?
+  print dictionary as first x value of values \n
+  d: dict: the dictionary to be printed \n
+  length: int: if the value is a string, then it will print the first length letter of the value, default = 10 \n
+  space: int: the amount of additional space to be added for each nested dictionary, default = 0
   '''
   if type(d) != dict:
     print('this is not a dict')
@@ -28,8 +28,8 @@ def printDict(d:dict, length:int = 10, space = 0):
 # Cell
 def allKeysInDict(inputDict:dict, keys:list):
   '''
-  checks whether all the keys given in the list are also keys in the inputDict dictionary
-  inputDict: dict: the dictionary inputted
+  checks whether all the keys given in the list are also keys in the inputDict dictionary \n
+  inputDict: dict: the dictionary that will be used to check whether all the keys are in this dictionary \n
   keys: list: the list of keys
   '''
   return all(key in inputDict for key in keys)
@@ -37,8 +37,8 @@ def allKeysInDict(inputDict:dict, keys:list):
 # Cell
 def filterDt(dtDict:dict):
   '''
-  convert unjsonable datetime object to timestamp in the dictionary, this works for nested dictionary as well
-  dtDict: dict: the dictionary containing the datetime object
+  convert unjsonable datetime object to timestamp in the dictionary, this works for nested dictionary as well \n
+  dtDict: dict: the dictionary inputted to convert the datetime object of its value
   '''
   from datetime import datetime
   return {k: (filterDt(v) if type(v) == dict else v) if type(v) != datetime else v.timestamp()
@@ -47,7 +47,7 @@ def filterDt(dtDict:dict):
 # Cell
 def stripDict(data:dict):
   '''
-  if the value in the dictionary is a string, it will 'strip' the value to make it more clear
+  if the value in the dictionary is a string, it will 'strip' the value to make it more clear \n
   data: dict: the dictionary inputted to be 'stripped'
   '''
   return {k: v.strip() if type(v) == str else v for k,v in data.items()}
@@ -63,8 +63,8 @@ def hashDict(data:dict, hasher= hashlib.sha1(), encoder = pickle.dumps):
 import pickle
 def saveDictToFile(data:dict, path:str):
   '''
-  saves the dictionary to the file directed by the path
-  data: dict: the dictionary to be saved
+  saves the dictionary to the file directed by the path \n
+  data: dict: the dictionary to be saved \n
   path: str: the file path to the file the dictionary is going to be saved
   '''
   with open(path, 'wb')as f:
@@ -72,7 +72,7 @@ def saveDictToFile(data:dict, path:str):
 
 def loadDictFromFile(path:str):
   '''
-  returns the dictionary that is saved in the file
+  returns the dictionary that is saved in the file \n
   path: str: the path taken to the file of the dictionary
   '''
   with open(path, 'rb') as f:
@@ -81,15 +81,15 @@ def loadDictFromFile(path:str):
 # Cell
 def saveStringToFile(data:str, path:str):
   '''
-  saves the string to the file directed by the path
-  data: str: the string to be saved
+  saves the string to the file directed by the path \n
+  data: str: the string to be saved \n
   path: str: the file path to the file the string is going to be saved
   '''
   with open(path, 'w')as f:
     f.write(data)
 def loadStringFromFile(path:str):
   '''
-  returns the string that is saved in the file
+  returns the string that is saved in the file \n
   path: str: the path taken to the file of the string
   '''
   with open(path, 'r')as f:
@@ -97,13 +97,9 @@ def loadStringFromFile(path:str):
 
 # Cell
 def genSchema(inputDict:dict, format_='yaml')->(dict,str):
-  '''generate a json schema from dict \n
-  format::dict or str:
-    default='yaml', return schema in json or yaml
-    'json', return the json schema
-  response
-    'both', return a tuple of (json, yaml)
-    dict or string \n
+  '''
+  generate a json schema from dict \n
+  format: return schema in json or yaml, 'both' can be inputted to return a tuple of (json, yaml), output = dict or str, default = 'yaml' \n
   inputDict: dict: the dict inputted to be used to generate the schema
   '''
   from genson import SchemaBuilder
