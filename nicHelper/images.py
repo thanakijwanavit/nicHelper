@@ -10,18 +10,33 @@ import requests
 
 # Cell
 def imageFromS3(bucket:str, key:str, **kwargs):
+  '''
+  obtain the image url from the S3 bucket and returns it \n
+  bucket: str: the name of the bucket containing the image \n
+  key: str: the key of the image
+  '''
   url=S3.presign(key,bucket=bucket,expiry=10, **kwargs)
   return imageFromUrl(url)
 
 
 # Cell
 def imageFromUrl(url):
+  '''
+  returns the image from the inputted url \n
+  url: str: the url of the image
+  '''
   from io import BytesIO
   image = Image.open(BytesIO(requests.get(url).content))
   return image
 
 # Cell
 def imageToS3(image:Image, bucket:str, key:str):
+  '''
+  saves the image inputted to the S3 bucket \n
+  image: Image: the image that is going to be saved \n
+  bucket: str: the name of the bucket where the image will be saved \n,
+  key: str: the key of the image
+  '''
   path = '/tmp/tmpImage'
   print(f'saving image to {bucket}/{key}')
   image.save(path,format='png')
@@ -30,13 +45,23 @@ def imageToS3(image:Image, bucket:str, key:str):
 
 # Cell
 def resizeImage(url:str,width:int):
+  '''
+  resize the image from the url to the width stated \n
+  url: the url of the image \n
+  width: int: the image will be resized to this width (measured in pixels)
+  '''
   from resizeimage import resizeimage
   img = imageFromUrl(url)
   resizedImg = resizeimage.resize_width(img, 200)
   return resizedImg
 
 # Cell
-def showImgS3(bucket, key):
+def showImgS3(bucket:str, key:str):
+  '''
+  show the image obtained from the S3 bucket \n
+  bucket: str: the name of the bucket containing the image \n
+  key: str: the key of the image
+  '''
   from matplotlib.pyplot import imshow
   import time
   imageFound = False
