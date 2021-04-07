@@ -46,7 +46,7 @@ typeMap = {'string': str, 'number': float, 'integer': int, 'object': dict, 'arra
 def getTypes(schemaUrl:str, typeMap:dict=typeMap)->dict:
   '''
   get python types from json schema \n
-  schemaUrl: str: url where the schema file is located \n,
+  schemaUrl: str: url where the schema file is located \n
   typeMap: dict: the dictionary that matches the key to its corresponding data type
   '''
   r = requests.get(schemaUrl)
