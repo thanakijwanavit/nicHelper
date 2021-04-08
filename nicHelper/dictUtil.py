@@ -9,7 +9,7 @@ __all__ = ['printDict', 'allKeysInDict', 'filterDt', 'stripDict', 'hashDict', 's
 # Cell
 def printDict(d:dict, length:int = 10, space = 0):
   '''
-  print dictionary as first x value of values \n
+  print dictionary as first length value of values \n
   d: dict: the dictionary to be printed \n
   length: int: if the value is a string, then it will print the first length letter of the value, default = 10 \n
   space: int: the amount of additional space to be added for each nested dictionary, default = 0
