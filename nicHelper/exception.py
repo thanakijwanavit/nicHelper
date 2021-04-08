@@ -7,4 +7,7 @@ import traceback
 
 # Cell
 def errorString():
+  '''
+  returns a string of the exception information
+  '''
   return traceback.format_exc()

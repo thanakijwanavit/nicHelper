@@ -6,5 +6,8 @@ __all__ = ['shorten', 'url']
 from requests import post
 url = 'https://zrm4csjv5a.execute-api.ap-southeast-1.amazonaws.com/Prod/shorten'
 def shorten(longLink,url=url):
+  '''
+  shortens the link inputted in the form of tenxor.sh
+  '''
   r = post(url ,json = {'link':longLink})
   return r.json()['shortLink']
