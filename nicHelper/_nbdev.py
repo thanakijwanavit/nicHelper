@@ -47,6 +47,7 @@ index = {"imageFromS3": "Images.ipynb",
          "start_timer": "timer.ipynb",
          "reset_timer": "timer.ipynb",
          "print_time": "timer.ipynb",
+         "print_reset": "timer.ipynb",
          "add_method": "wrappers.ipynb",
          "add_static_method": "wrappers.ipynb",
          "add_class_method": "wrappers.ipynb"}
