@@ -43,6 +43,10 @@ index = {"imageFromS3": "Images.ipynb",
          "getSecret": "secrets.ipynb",
          "shorten": "shortenLInk.ipynb",
          "url": "shortenLInk.ipynb",
+         "Timer": "timer.ipynb",
+         "start_timer": "timer.ipynb",
+         "reset_timer": "timer.ipynb",
+         "print_time": "timer.ipynb",
          "add_method": "wrappers.ipynb",
          "add_static_method": "wrappers.ipynb",
          "add_class_method": "wrappers.ipynb"}
@@ -55,6 +59,7 @@ modules = ["images.py",
            "schema.py",
            "secrets.py",
            "shortenLink.py",
+           "timer.py",
            "wrappers.py"]
 
 doc_url = "https://thanakijwanavit.github.io/nicHelper/"
