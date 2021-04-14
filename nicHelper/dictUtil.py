@@ -55,6 +55,10 @@ def stripDict(data:dict):
 # Cell
 import hashlib, pickle, base64
 def hashDict(data:dict, hasher= hashlib.sha1(), encoder = pickle.dumps):
+  '''
+  hashes the dictionary inputted \n
+  data: dict: the dictionary inputted to be 'hashed'
+  '''
   hasher.update(encoder(data))
   rawHash = hasher.digest()
   return base64.b64encode(rawHash).decode()
