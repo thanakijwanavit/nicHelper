@@ -760,7 +760,9 @@ NameError: name &#39;error&#39; is not defined
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nicHelper.pynamodbAttributes</span> <span class="kn">import</span> <span class="n">SchemaAttribute</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nicHelper.pynamodbAttributes</span> <span class="kn">import</span> <span class="n">SchemaAttribute</span><span class="p">,</span> <span class="n">SuperModel</span>
+<span class="kn">from</span> <span class="nn">pynamodb.attributes</span> <span class="kn">import</span> <span class="n">Attribute</span><span class="p">,</span> <span class="n">UnicodeAttribute</span><span class="p">,</span> <span class="n">NumberAttribute</span>
+<span class="kn">from</span> <span class="nn">beartype</span> <span class="kn">import</span> <span class="n">beartype</span>
 </pre></div>
 
     </div>
@@ -784,6 +786,145 @@ NameError: name &#39;error&#39; is not defined
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Supermodel">Supermodel<a class="anchor-link" href="#Supermodel"> </a></h3><p>a class which add some functionalities on top of the standard pynamodb model</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json&#39;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="k">class</span> <span class="nc">TestModel</span><span class="p">(</span><span class="n">SuperModel</span><span class="p">):</span>
+  <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+    <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;colab-test-sensitive-column&quot;</span>
+    <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;ap-southeast-1&#39;</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">SchemaAttribute</span><span class="p">(</span><span class="n">schemaUrl</span> <span class="o">=</span> <span class="n">schemaUrl</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">phoneHash</span> <span class="o">=</span> <span class="n">UnicodeAttribute</span><span class="p">(</span><span class="n">hash_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  
+    
+  <span class="c1"># Overrides</span>
+  <span class="k">def</span> <span class="nf">pullOutKeys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">phoneHash</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;phoneHash&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;iprcode&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="p">)</span>
+
+  <span class="nd">@beartype</span>
+  <span class="k">def</span> <span class="nf">toDict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">dict</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+    
+  <span class="nd">@classmethod</span>
+  <span class="nd">@beartype</span>
+  <span class="k">def</span> <span class="nf">fromDict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">inputDict</span><span class="p">:</span><span class="nb">dict</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">inputDict</span><span class="p">)</span>
+    
+  <span class="nd">@beartype</span>  
+  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputDict</span><span class="p">:</span><span class="nb">dict</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">inputDict</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-14-eaf92ec0ab48&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> schemaUrl <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json&#39;</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-green-fg">from</span> typing <span class="ansi-green-fg">import</span> Any
+<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">class</span> TestModel<span class="ansi-blue-fg">(</span>SuperModel<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span>   <span class="ansi-green-fg">class</span> Meta<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span>     table_name<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#34;colab-test-sensitive-column&#34;</span>
+
+<span class="ansi-green-fg">~/anaconda3/envs/python38/lib/python3.8/site-packages/pynamodb/models.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, name, bases, namespace, discriminator)</span>
+<span class="ansi-green-intense-fg ansi-bold">    207</span>             <span class="ansi-green-fg">if</span> attribute<span class="ansi-blue-fg">.</span>is_hash_key<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    208</span>                 <span class="ansi-green-fg">if</span> cls<span class="ansi-blue-fg">.</span>_hash_keyname <span class="ansi-green-fg">and</span> cls<span class="ansi-blue-fg">.</span>_hash_keyname <span class="ansi-blue-fg">!=</span> attr_name<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 209</span><span class="ansi-red-fg">                     </span><span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#34;{cls.__name__} has more than one hash key: {cls._hash_keyname}, {attr_name}&#34;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    210</span>                 cls<span class="ansi-blue-fg">.</span>_hash_keyname <span class="ansi-blue-fg">=</span> attr_name
+<span class="ansi-green-intense-fg ansi-bold">    211</span>             <span class="ansi-green-fg">if</span> attribute<span class="ansi-blue-fg">.</span>is_range_key<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-red-fg">ValueError</span>: TestModel has more than one hash key: id_, phoneHash</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nicHelper.exception</span> <span class="kn">import</span> <span class="n">errorString</span>
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">test</span> <span class="o">=</span> <span class="n">TestModel</span><span class="o">.</span><span class="n">fromDict</span><span class="p">({</span><span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;cprcode&#39;</span><span class="p">:</span> <span class="mi">123</span> <span class="p">,</span> <span class="s1">&#39;oprCode&#39;</span><span class="p">:</span> <span class="s1">&#39;123&#39;</span><span class="p">,</span> <span class="s1">&#39;orderId&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">})</span>
+  <span class="n">test</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">errorString</span><span class="p">())</span>
+
+
+<span class="nb">next</span><span class="p">(</span><span class="n">TestModel</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>name &#39;TestModel&#39; is not defined
+Traceback (most recent call last):
+  File &#34;&lt;ipython-input-15-138906ed352c&gt;&#34;, line 3, in &lt;module&gt;
+    test = TestModel.fromDict({&#39;iprcode&#39;: 4, &#39;cprcode&#39;: 123 , &#39;oprCode&#39;: &#39;123&#39;, &#39;orderId&#39;: 123})
+NameError: name &#39;TestModel&#39; is not defined
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-15-138906ed352c&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      8</span> 
+<span class="ansi-green-intense-fg ansi-bold">      9</span> 
+<span class="ansi-green-fg">---&gt; 10</span><span class="ansi-red-fg"> </span>next<span class="ansi-blue-fg">(</span>TestModel<span class="ansi-blue-fg">.</span>query<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;1&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;TestModel&#39; is not defined</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 
