@@ -371,3 +371,55 @@ next(TestModel.query('1'))
 
     NameError: name 'TestModel' is not defined
 
+
+## Timer
+
+```python
+from nicHelper.timer import Timer
+```
+
+### setting start timer
+
+```python
+timer = Timer()
+timer.t0
+```
+
+
+
+
+    datetime.datetime(2021, 4, 15, 17, 3, 47, 939212)
+
+
+
+### print the time between starting time and current time
+
+```python
+timer.print_time()
+```
+
+    fuction took :0.16268 s
+
+
+
+
+
+    0.16268
+
+
+
+### print the time between starting time and current time and reset the timer
+
+```python
+timer.print_reset()
+```
+
+    function took :0.376299 s
+
+
+
+
+
+    0.376299
+
+
