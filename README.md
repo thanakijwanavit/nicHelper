@@ -271,9 +271,10 @@ typeMapJsonSchema(url, input_=inv)
 ## Pynamodb
 
 ```python
-from nicHelper.pynamodbAttributes import SchemaAttribute, SuperModel
+from nicHelper.pynamodb import SchemaAttribute, SuperModel, createData, getData, updateData
 from pynamodb.attributes import Attribute, UnicodeAttribute, NumberAttribute
 from beartype import beartype
+from awsSchema.apigateway import Event, Response
 ```
 
 ### SchemaAttribute
@@ -313,30 +314,6 @@ class TestModel(SuperModel):
     self.data.update(inputDict)
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    ValueError                                Traceback (most recent call last)
-
-    <ipython-input-14-eaf92ec0ab48> in <module>
-          1 schemaUrl = 'https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json'
-          2 from typing import Any
-    ----> 3 class TestModel(SuperModel):
-          4   class Meta:
-          5     table_name="colab-test-sensitive-column"
-
-
-    ~/anaconda3/envs/python38/lib/python3.8/site-packages/pynamodb/models.py in __init__(self, name, bases, namespace, discriminator)
-        207             if attribute.is_hash_key:
-        208                 if cls._hash_keyname and cls._hash_keyname != attr_name:
-    --> 209                     raise ValueError(f"{cls.__name__} has more than one hash key: {cls._hash_keyname}, {attr_name}")
-        210                 cls._hash_keyname = attr_name
-        211             if attribute.is_range_key:
-
-
-    ValueError: TestModel has more than one hash key: id_, phoneHash
-
-
 ```python
 from nicHelper.exception import errorString
 try:
@@ -350,26 +327,112 @@ except Exception as e:
 next(TestModel.query('1'))
 ```
 
-    name 'TestModel' is not defined
-    Traceback (most recent call last):
-      File "<ipython-input-15-138906ed352c>", line 3, in <module>
-        test = TestModel.fromDict({'iprcode': 4, 'cprcode': 123 , 'oprCode': '123', 'orderId': 123})
-    NameError: name 'TestModel' is not defined
-    
 
 
 
-    ---------------------------------------------------------------------------
+    {"data": {"type": "pick up", "street_address": "123", "id": "123", "city": "sth", "state": "CA", "zip": "23523", "capacity": 5, "status": "open"}}
 
-    NameError                                 Traceback (most recent call last)
 
-    <ipython-input-15-138906ed352c> in <module>
-          8 
-          9 
-    ---> 10 next(TestModel.query('1'))
-    
 
-    NameError: name 'TestModel' is not defined
+### createData
+create a new row of data
+
+```python
+## lambda create function
+def create (event, *args):
+  body = Event.parseBody(event)
+  body['id'] = body['phoneHash']
+  
+  event2 = Event.getInput(body)
+  r = createData(event2, hashKeyName='phoneHash', mainClass=TestModel)
+  if r.get('statusCode') != 200: return r
+  r2 = next(TestModel.query(body['phoneHash']), None)
+  if not r2: return Response.returnError('st wrong with saving, saving but didnt go through')
+  return Response.returnSuccess(r2)
+```
+
+```python
+schemaUrl = 'https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json'
+data = {'phoneHash': '123','iprcode': 4, 'cprcode': 123 , 'oprCode': '123'}
+event = Event.getInput(data)
+item = next(TestModel.queryId('123'), None)
+print('existing item is :',item)
+# delete item if exist
+if item:
+  print(item.delete())
+create(event)
+```
+
+    existing item is : {"creationTime": 1615893836.030621, "data": {"phoneHash": "123", "iprcode": 5, "cprcode": 123, "oprCode": "1234", "id": "123"}, "lastEdited": 1615894057.181481, "phoneHash": "123"}
+    {'ConsumedCapacity': {'CapacityUnits': 1.0, 'TableName': 'colab-test-sensitive-column'}}
+
+
+
+
+
+    {'body': '{"phoneHash":"123","iprcode":4,"cprcode":123,"oprCode":"123","id":"123"}',
+     'statusCode': 200,
+     'headers': {'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': '*'}}
+
+
+
+### getData
+
+```python
+def lambdaGet(event, *args):
+  query = Event.parseBody(event)
+  if 'key' not in query: return Response.returnError(f'missing key')
+  return getData(query['key'], TestModel)
+```
+
+```python
+data = {'phoneHash': '123','iprcode': 4, 'cprcode': 123 , 'oprCode': '123'}
+event = Event.getInput(data)
+create(event)
+
+lambdaGet(Event.getInput({'key': '123'}))
+```
+
+
+
+
+    {'body': '{"phoneHash":"123","iprcode":4,"cprcode":123,"oprCode":"123","id":"123"}',
+     'statusCode': 200,
+     'headers': {'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': '*'}}
+
+
+
+### updateData
+
+```python
+def update(event, *args):
+  body = Event.parseBody(event)
+  body['id'] = body['phoneHash']
+  
+  event2 = Event.getInput(body)
+  hashKeyname = 'id'
+  return updateData(event2, hashKeyName=hashKeyname, mainClass=TestModel)
+```
+
+```python
+r = create(Event.getInput({'phoneHash': '123','iprcode': 5, 'cprcode': 123 , 'oprCode': '123'}))
+r = update(Event.getInput({'phoneHash': '123','iprcode': 5, 'cprcode': 123 , 'oprCode': '1234'}))
+lambdaGet(Event.getInput({'key':'123'}))
+```
+
+
+
+
+    {'body': '{"phoneHash":"123","iprcode":5,"cprcode":123,"oprCode":"1234","id":"123"}',
+     'statusCode': 200,
+     'headers': {'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': '*'}}
+
 
 
 ## Timer
@@ -388,7 +451,7 @@ timer.t0
 
 
 
-    datetime.datetime(2021, 4, 15, 17, 3, 47, 939212)
+    datetime.datetime(2021, 4, 16, 6, 57, 1, 236974)
 
 
 
@@ -398,13 +461,13 @@ timer.t0
 timer.print_time()
 ```
 
-    fuction took :0.16268 s
+    fuction took :3.422775 s
 
 
 
 
 
-    0.16268
+    3.422775
 
 
 
