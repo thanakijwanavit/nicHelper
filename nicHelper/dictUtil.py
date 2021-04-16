@@ -116,6 +116,9 @@ def writeYaml(path:str, data:dict):
 
 # Cell
 import functools
+import json
+import ujson
+import pickle
 def hash_dict(func):
     """Transform mutable dictionnary
     Into immutable
@@ -123,7 +126,11 @@ def hash_dict(func):
     """
     class HDict(dict):
         def __hash__(self):
-            return hash(frozenset(self.items()))
+          return hash(ujson.dumps(self, sort_keys=True))
+#           return hash(tuple(frozenset(sorted(self.items()))))
+#           print(self)
+#           return hash(hashDict(self))
+#             return hash(frozenset(self.items()))
 
     @functools.wraps(func)
     def wrapped(*args, **kwargs):
