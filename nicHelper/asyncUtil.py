@@ -26,9 +26,7 @@ def asyncMap(f:Callable, data:Iterable[Any], threads:int = 5)->Any:
   return p.map(f,data)
 
 # Cell
-import nest_asyncio
 def asyncAwaitMap(f:Callable, data:Iterable[Any])->Any:
-  nest_asyncio.apply() # unlock exec
   af = async_wrap(f) # convert to async func
   async def runLoop():
     rtup = (af(i) for i in data)
