@@ -15,6 +15,9 @@ import os
 
 # Cell
 def getDfHash(df:pd.DataFrame):
+  '''
+  converts the dataframe into hash
+  '''
   df.to_feather('/tmp/feather')
   with open('/tmp/feather', 'rb') as f:
     objHash = sha1(f.read()).hexdigest()
@@ -22,6 +25,9 @@ def getDfHash(df:pd.DataFrame):
 
 # Cell
 def saveLocalCache( data:pd.DataFrame, path = '/tmp/cache'):
+  '''
+  saves the dataframe
+  '''
   saveLocalHash(data, path=path)
   return data.to_feather(path)
 def saveLocalHash( data:pd.DataFrame, path = '/tmp/hash'):
