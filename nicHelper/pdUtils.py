@@ -10,27 +10,65 @@ from .dictUtil import saveStringToFile, loadStringFromFile
 from pynamodb.constants import BINARY
 from pynamodb.attributes import Attribute, UnicodeAttribute
 from pynamodb.models import Model
+from beartype import beartype
 from s3bz.s3bz import S3
-import os
+import os, logging
 
 # Cell
-def getDfHash(df:pd.DataFrame):
-  df.to_feather('/tmp/feather')
-  with open('/tmp/feather', 'rb') as f:
-    objHash = sha1(f.read()).hexdigest()
-  return objHash
+from io import BytesIO
+from typing import Callable
+
+@beartype
+def getDfHash(df:pd.DataFrame,
+              hashingAlgorithm: Callable = lambda x: sha1(x).hexdigest())->str:
+  '''
+    get a hash of a pandas dataframe
+    this uses sha1 algorithm
+    inputs:
+      df: pd.DataFrame: a pandas dataframe
+      hashingAlgoritm: callable: a hasing function which takes bytes input
+    response:
+      string hash
+  '''
+  f:BytesIO = BytesIO()
+  df.to_feather(f)
+  return hashingAlgorithm(f.read())
+
 
 # Cell
-def saveLocalCache( data:pd.DataFrame, path = '/tmp/cache'):
-  saveLocalHash(data, path=path)
-  return data.to_feather(path)
-def saveLocalHash( data:pd.DataFrame, path = '/tmp/hash'):
+def saveLocalCache( data:pd.DataFrame, path:str = '/tmp/cache',
+                   saveHash:bool = True, force:bool = True):
+  '''
+    save cache of the dataframe to local location
+    data:pd.DataFrame: dataframe to save
+    path: str: path to save cache
+    saveHash: bool: whether to save the hash digest
+  '''
+  ##check cache
+  if not force:
+    localHash = loadLocalHash(f'{path}.hash')
+    dataHash = getDfHash(data)
+    if dataHash == localHash :
+      logging.debug('hash is the latest, skipping')
+      return True
+  ##save hash
+  if saveHash:
+    saveLocalHash(data, path=f'{path}.hash')
+  # save cache
+  logging.debug('saving cache')
+  r =  data.to_feather(path)
+  return r
+
+def saveLocalHash( data:pd.DataFrame, path = '/tmp/cache.hash', force = False):
   dataHash = getDfHash(data)
-  saveStringToFile(dataHash,path)
-def loadLocalCache( path = '/tmp/cache'):
-  if not os.path.exists(path): raise Exception('cache doesnt exist')
+  return saveStringToFile(dataHash,path)
+
+def loadLocalCache( path = '/tmp/cache', throw = True):
+  if not os.path.exists(path):
+    if throw:
+      raise Exception('cache doesnt exist')
   return pd.read_feather(path)
-def loadLocalHash( path = '/tmp/hash'):
+def loadLocalHash( path = '/tmp/cache.hash'):
   if not os.path.exists(path): raise Exception('hash doesnt exist')
   return loadStringFromFile(path)
 
