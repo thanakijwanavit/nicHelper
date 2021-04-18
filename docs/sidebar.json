@@ -2,6 +2,7 @@
   "nicHelper": {
     "Overview": "/",
     "Image utilities": "Images.html",
+    "async": "async.html",
     "Dict": "dictUtil.html",
     "Exception": "exception.html",
     "pd Utils": "pdUtils.html",
