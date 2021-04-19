@@ -49,7 +49,10 @@ nb_path: "dictUtil.ipynb"
 <div class="output_markdown rendered_html output_subarea ">
 <h4 id="printDict" class="doc_header"><code>printDict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L11" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>printDict</code>(<strong><code>d</code></strong>:<code>dict</code>, <strong><code>length</code></strong>:<code>int</code>=<em><code>10</code></em>, <strong><code>space</code></strong>=<em><code>0</code></em>)</p>
 </blockquote>
-<p>print dictionary as first x value of values</p>
+<p>print dictionary as first length value of values</p>
+<p>d: dict: the dictionary to be printed</p>
+<p>length: int: if the value is a string, then it will print the first length letter of the value, default = 10</p>
+<p>space: int: the amount of additional space to be added for each nested dictionary, default = 0</p>
 
 </div>
 
@@ -114,8 +117,11 @@ nestedKey
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="allKeysInDict" class="doc_header"><code>allKeysInDict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>allKeysInDict</code>(<strong><code>inputDict</code></strong>:<code>dict</code>, <strong><code>keys</code></strong>:<code>list</code>)</p>
+<h4 id="allKeysInDict" class="doc_header"><code>allKeysInDict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L30" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>allKeysInDict</code>(<strong><code>inputDict</code></strong>:<code>dict</code>, <strong><code>keys</code></strong>:<code>list</code>)</p>
 </blockquote>
+<p>checks whether all the keys given in the list are also keys in the inputDict dictionary</p>
+<p>inputDict: dict: the dictionary that will be used to check whether all the keys are in this dictionary</p>
+<p>keys: list: the list of keys</p>
 
 </div>
 
@@ -181,9 +187,10 @@ False
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="filterDt" class="doc_header"><code>filterDt</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>filterDt</code>(<strong><code>dtDict</code></strong>:<code>dict</code>)</p>
+<h4 id="filterDt" class="doc_header"><code>filterDt</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L39" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>filterDt</code>(<strong><code>dtDict</code></strong>:<code>dict</code>)</p>
 </blockquote>
-<p>convert unjsonable datetime object to timestamp in the dictionary</p>
+<p>convert unjsonable datetime object to timestamp in the dictionary, this works for nested dictionary as well</p>
+<p>dtDict: dict: the dictionary inputted to convert the datetime object of its value</p>
 
 </div>
 
@@ -247,8 +254,10 @@ False
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="stripDict" class="doc_header"><code>stripDict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>stripDict</code>(<strong><code>data</code></strong>:<code>dict</code>)</p>
+<h4 id="stripDict" class="doc_header"><code>stripDict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>stripDict</code>(<strong><code>data</code></strong>:<code>dict</code>)</p>
 </blockquote>
+<p>if the value in the dictionary is a string, it will 'strip' the value to make it more clear</p>
+<p>data: dict: the dictionary inputted to be 'stripped'</p>
 
 </div>
 
@@ -274,7 +283,7 @@ False
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stripDict</span><span class="p">({</span><span class="s1">&#39;sdfd&#39;</span><span class="p">:</span> <span class="s1">&#39;dsf   &#39;</span><span class="p">,</span> <span class="s1">&#39;gdsgsa&#39;</span><span class="p">:</span><span class="mi">234</span><span class="p">})</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stripDict</span><span class="p">({</span><span class="s1">&#39;sdfd&#39;</span><span class="p">:</span> <span class="s1">&#39;dsf  &#39;</span><span class="p">,</span> <span class="s1">&#39;gdsgsa  &#39;</span><span class="p">:</span><span class="mi">234</span><span class="p">})</span>
 </pre></div>
 
     </div>
@@ -289,7 +298,7 @@ False
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;sdfd&#39;: &#39;dsf&#39;, &#39;gdsgsa&#39;: 234}</pre>
+<pre>{&#39;sdfd&#39;: &#39;dsf&#39;, &#39;gdsgsa  &#39;: 234}</pre>
 </div>
 
 </div>
@@ -311,8 +320,10 @@ False
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="hashDict" class="doc_header"><code>hashDict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L41" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hashDict</code>(<strong><code>data</code></strong>:<code>dict</code>, <strong><code>hasher</code></strong>=<em><code>&lt;sha1 HASH object @ 0x7fb8a55f5f70&gt;</code></em>, <strong><code>encoder</code></strong>=<em><code>dumps</code></em>)</p>
+<h4 id="hashDict" class="doc_header"><code>hashDict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L58" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hashDict</code>(<strong><code>data</code></strong>:<code>dict</code>, <strong><code>hasher</code></strong>=<em><code>&lt;sha1 HASH object @ 0x7f1c79093fd0&gt;</code></em>, <strong><code>encoder</code></strong>=<em><code>dumps</code></em>)</p>
 </blockquote>
+<p>hashes the dictionary inputted</p>
+<p>data: dict: the dictionary inputted to be 'hashed'</p>
 
 </div>
 
@@ -385,8 +396,11 @@ Wall time: 42 µs
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="saveDictToFile" class="doc_header"><code>saveDictToFile</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L48" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>saveDictToFile</code>(<strong><code>data</code></strong>:<code>dict</code>, <strong><code>path</code></strong>:<code>str</code>)</p>
+<h4 id="saveDictToFile" class="doc_header"><code>saveDictToFile</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L69" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>saveDictToFile</code>(<strong><code>data</code></strong>:<code>dict</code>, <strong><code>path</code></strong>:<code>str</code>)</p>
 </blockquote>
+<p>saves the dictionary to the file directed by the path</p>
+<p>data: dict: the dictionary to be saved</p>
+<p>path: str: the file path to the file the dictionary is going to be saved</p>
 
 </div>
 
@@ -409,8 +423,10 @@ Wall time: 42 µs
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="loadDictFromFile" class="doc_header"><code>loadDictFromFile</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L52" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>loadDictFromFile</code>(<strong><code>path</code></strong>:<code>str</code>)</p>
+<h4 id="loadDictFromFile" class="doc_header"><code>loadDictFromFile</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L78" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>loadDictFromFile</code>(<strong><code>path</code></strong>:<code>str</code>)</p>
 </blockquote>
+<p>returns the dictionary that is saved in the file</p>
+<p>path: str: the path taken to the file of the dictionary</p>
 
 </div>
 
@@ -474,8 +490,11 @@ Wall time: 42 µs
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="saveStringToFile" class="doc_header"><code>saveStringToFile</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L57" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>saveStringToFile</code>(<strong><code>data</code></strong>:<code>str</code>, <strong><code>path</code></strong>:<code>str</code>)</p>
+<h4 id="saveStringToFile" class="doc_header"><code>saveStringToFile</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>saveStringToFile</code>(<strong><code>data</code></strong>:<code>str</code>, <strong><code>path</code></strong>:<code>str</code>)</p>
 </blockquote>
+<p>saves the string to the file directed by the path</p>
+<p>data: str: the string to be saved</p>
+<p>path: str: the file path to the file the string is going to be saved</p>
 
 </div>
 
@@ -498,8 +517,10 @@ Wall time: 42 µs
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="loadStringFromFile" class="doc_header"><code>loadStringFromFile</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L60" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>loadStringFromFile</code>(<strong><code>path</code></strong>:<code>str</code>)</p>
+<h4 id="loadStringFromFile" class="doc_header"><code>loadStringFromFile</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L95" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>loadStringFromFile</code>(<strong><code>path</code></strong>:<code>str</code>)</p>
 </blockquote>
+<p>returns the string that is saved in the file</p>
+<p>path: str: the path taken to the file of the string</p>
 
 </div>
 
@@ -570,15 +591,11 @@ Wall time: 42 µs
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="genSchema" class="doc_header"><code>genSchema</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L65" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>genSchema</code>(<strong><code>inputDict</code></strong>:<code>dict</code>, <strong><code>format_</code></strong>=<em><code>'yaml'</code></em>)</p>
+<h4 id="genSchema" class="doc_header"><code>genSchema</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L104" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>genSchema</code>(<strong><code>inputDict</code></strong>:<code>dict</code>, <strong><code>format_</code></strong>=<em><code>'yaml'</code></em>)</p>
 </blockquote>
-<p>generate a json schema from dict,
-format::str:
-  default='yaml', return schema in json or yaml
-  'json', return the json schema
-response
-  'both', return a tuple of (json, yaml)
-  dict or string</p>
+<p>generate a json schema from dict</p>
+<p>format: return schema in json or yaml, 'both' can be inputted to return a tuple of (json, yaml), output = dict or str, default = 'yaml'</p>
+<p>inputDict: dict: the dict inputted to be used to generate the schema</p>
 
 </div>
 
@@ -654,7 +671,7 @@ type: object
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="printYaml" class="doc_header"><code>printYaml</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L89" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>printYaml</code>(<strong><code>input_</code></strong>:<code>dict</code>, <strong><code>returnYaml</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="printYaml" class="doc_header"><code>printYaml</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L125" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>printYaml</code>(<strong><code>input_</code></strong>:<code>dict</code>, <strong><code>returnYaml</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -724,7 +741,7 @@ type: object
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="loadYaml" class="doc_header"><code>loadYaml</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L97" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>loadYaml</code>(<strong><code>path</code></strong>:<code>str</code>, <strong><code>loader</code></strong>=<em><code>FullLoader</code></em>)</p>
+<h4 id="loadYaml" class="doc_header"><code>loadYaml</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L133" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>loadYaml</code>(<strong><code>path</code></strong>:<code>str</code>, <strong><code>loader</code></strong>=<em><code>FullLoader</code></em>)</p>
 </blockquote>
 <p>load yaml string
 input:
@@ -803,7 +820,7 @@ return:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="writeYaml" class="doc_header"><code>writeYaml</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L111" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>writeYaml</code>(<strong><code>path</code></strong>:<code>str</code>, <strong><code>data</code></strong>:<code>dict</code>)</p>
+<h4 id="writeYaml" class="doc_header"><code>writeYaml</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L147" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>writeYaml</code>(<strong><code>path</code></strong>:<code>str</code>, <strong><code>data</code></strong>:<code>dict</code>)</p>
 </blockquote>
 
 </div>
@@ -876,7 +893,7 @@ return:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="hash_dict" class="doc_header"><code>hash_dict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L122" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hash_dict</code>(<strong><code>func</code></strong>)</p>
+<h4 id="hash_dict" class="doc_header"><code>hash_dict</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/dictUtil.py#L158" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hash_dict</code>(<strong><code>func</code></strong>)</p>
 </blockquote>
 <p>Transform mutable dictionnary
 Into immutable
