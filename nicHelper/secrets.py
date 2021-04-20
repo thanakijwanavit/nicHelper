@@ -8,6 +8,9 @@ import ujson as json
 
 # Cell
 def getSecret(name="removeBg", region='ap-southeast-1', **kwargs):
+  '''
+  retrieve secret information from Amazon's secret manager without revealing the secret
+  '''
   session = boto3.session.Session()
   client = session.client(
       service_name='secretsmanager',
