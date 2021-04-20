@@ -486,3 +486,150 @@ timer.print_reset()
     0.376299
 
 
+
+## Pd Utils
+
+```python
+import pandas as pd
+from nicHelper.pdUtils import getDfHash, saveLocalCache, saveLocalHash, loadLocalHash, loadLocalCache
+```
+
+```python
+df = pd.DataFrame({'hello':[1,2,3,4,5,5]})
+df
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hello</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+### Get a hash of a pandas dataframe
+
+```python
+getDfHash(df)
+```
+
+
+
+
+    'da39a3ee5e6b4b0d3255bfef95601890afd80709'
+
+
+
+### Save and load local cache and hash
+
+```python
+saveLocalCache(df,force = True)
+saveLocalHash(df)
+print(loadLocalHash())
+loadLocalCache()
+```
+
+    da39a3ee5e6b4b0d3255bfef95601890afd80709
+
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hello</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+

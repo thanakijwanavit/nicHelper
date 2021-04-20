@@ -142,6 +142,9 @@ def loadRemoteHash(key='', bucket='', **kwargs):
 
 # Cell
 class PandasDataFrameAttribute(Attribute):
+  '''
+  pynamo attributes for pandas dataframe
+  '''
   attr_type = BINARY
   def serialize(self, value: pd.DataFrame)->bin:
     bio = BytesIO()
@@ -172,6 +175,12 @@ from .schema import getTypes
 
 # Cell
 def forceType(url:str, df:pd.DataFrame, defaultType=str)->pd.DataFrame:
+  '''
+  force the data type in the dataframe to be the data type specified in the schema \n
+  url: str: the url of the schema \n
+  df: pd.DataFrame: a pandas dataframe \n
+  defaultType: the default type of data if type of data is not specified, default = str
+  '''
   typeDict = getTypes(url)
   typeList = {col:typeDict.get(col) for col in df.columns}
   print(typeList)
