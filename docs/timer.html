@@ -55,6 +55,7 @@ nb_path: "timer.ipynb"
 <div class="output_markdown rendered_html output_subarea ">
 <h2 id="Timer" class="doc_header"><code>class</code> <code>Timer</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/timer.py#L10" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Timer</code>()</p>
 </blockquote>
+<p>This is the class that will be used for the timer</p>
 
 </div>
 
@@ -90,8 +91,9 @@ nb_path: "timer.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="start_timer" class="doc_header"><code>start_timer</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/timer.py#L17" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>start_timer</code>()</p>
+<h4 id="start_timer" class="doc_header"><code>start_timer</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/timer.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>start_timer</code>()</p>
 </blockquote>
+<p>this method sets the starting time t0 to the current time</p>
 
 </div>
 
@@ -114,8 +116,9 @@ nb_path: "timer.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="reset_timer" class="doc_header"><code>reset_timer</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/timer.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reset_timer</code>()</p>
+<h4 id="reset_timer" class="doc_header"><code>reset_timer</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/timer.py#L26" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reset_timer</code>()</p>
 </blockquote>
+<p>this method resets t0 to the current time</p>
 
 </div>
 
@@ -163,7 +166,7 @@ nb_path: "timer.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>datetime.datetime(2021, 4, 14, 16, 2, 45, 948086)</pre>
+<pre>datetime.datetime(2021, 4, 15, 16, 23, 18, 982465)</pre>
 </div>
 
 </div>
@@ -191,8 +194,10 @@ nb_path: "timer.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="print_time" class="doc_header"><code>print_time</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/timer.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>print_time</code>(<strong><code>description</code></strong>=<em><code>'fuction took'</code></em>)</p>
+<h4 id="print_time" class="doc_header"><code>print_time</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/timer.py#L34" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>print_time</code>(<strong><code>description</code></strong>=<em><code>'fuction took'</code></em>)</p>
 </blockquote>
+<p>this method subtracts the current time by t0 and prints the value in seconds to find out time between start timer and this method</p>
+<p>description: str: this is the string to be added before the value of time taken, default = 'function took'</p>
 
 </div>
 
@@ -231,7 +236,7 @@ nb_path: "timer.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>fuction took :4.10037 s
+<pre>fuction took :72.319804 s
 </pre>
 </div>
 </div>
@@ -241,7 +246,7 @@ nb_path: "timer.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>4.10037</pre>
+<pre>72.319804</pre>
 </div>
 
 </div>
@@ -269,11 +274,10 @@ nb_path: "timer.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="print_reset" class="doc_header"><code>print_reset</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/timer.py#L32" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>print_reset</code>(<strong><code>description</code></strong>=<em><code>'function took'</code></em>)</p>
+<h4 id="print_reset" class="doc_header"><code>print_reset</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/timer.py#L45" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>print_reset</code>(<strong><code>description</code></strong>=<em><code>'function took'</code></em>)</p>
 </blockquote>
-<p>print_reset(self, description = 'function took')
-print and reset timer
-description: str: description of the item to print</p>
+<p>print and reset timer</p>
+<p>description: str: description of the item to print</p>
 
 </div>
 
@@ -312,7 +316,7 @@ description: str: description of the item to print</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>test took :14.207977 s
+<pre>test took :1.942628 s
 </pre>
 </div>
 </div>
@@ -322,7 +326,7 @@ description: str: description of the item to print</p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>14.207977</pre>
+<pre>1.942628</pre>
 </div>
 
 </div>

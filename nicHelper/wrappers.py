@@ -8,18 +8,24 @@ from functools import wraps # This convenience func preserves name and docstring
 
 # Cell
 def add_method(cls):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(self, *args, **kwargs):
-            return func(self, *args, **kwargs)
-        setattr(cls, func.__name__, wrapper)
-        # Note we are not binding func, but wrapper which accepts self but does exactly the same as func
-        return func # returning func means func can still be used normally
-    return decorator
+  '''
+  a decorator that allows you to add methods to a class
+  '''
+  def decorator(func):
+      @wraps(func)
+      def wrapper(self, *args, **kwargs):
+          return func(self, *args, **kwargs)
+      setattr(cls, func.__name__, wrapper)
+      # Note we are not binding func, but wrapper which accepts self but does exactly the same as func
+      return func # returning func means func can still be used normally
+  return decorator
 
 
 # Cell
 def add_static_method(cls):
+  '''
+  a decorator that allows you to add static methods to a class
+  '''
   def decorator(func):
     @wraps(func)
     def wrapper( *args, **kwargs):
@@ -29,12 +35,15 @@ def add_static_method(cls):
 
 # Cell
 def add_class_method(cls):
-    def decorator(func):
-        @wraps(func)
-        @classmethod
-        def wrapper(cls, *args, **kwargs):
-            return func( cls, *args, **kwargs)
-        setattr(cls, func.__name__, wrapper)
-        # Note we are not binding func, but wrapper which accepts self but does exactly the same as func
-        return func # returning func means func can still be used normally
-    return decorator
+  '''
+  a decorator that allows you to add class method to a class
+  '''
+  def decorator(func):
+      @wraps(func)
+      @classmethod
+      def wrapper(cls, *args, **kwargs):
+          return func( cls, *args, **kwargs)
+      setattr(cls, func.__name__, wrapper)
+      # Note we are not binding func, but wrapper which accepts self but does exactly the same as func
+      return func # returning func means func can still be used normally
+  return decorator
