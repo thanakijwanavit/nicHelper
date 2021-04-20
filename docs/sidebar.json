@@ -4,6 +4,7 @@
     "Image utilities": "Images.html",
     "async": "async.html",
     "Dict": "dictUtil.html",
+    "encrypt": "encrypt.html",
     "Exception": "exception.html",
     "pd Utils": "pdUtils.html",
     "pynamodb": "pynamodbAttributes.html",

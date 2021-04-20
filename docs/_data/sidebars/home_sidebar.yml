@@ -19,6 +19,9 @@ entries:
       title: Dict
       url: dictUtil.html
     - output: web,pdf
+      title: encrypt
+      url: encrypt.html
+    - output: web,pdf
       title: Exception
       url: exception.html
     - output: web,pdf
