@@ -491,7 +491,8 @@ timer.print_reset()
 
 ```python
 import pandas as pd
-from nicHelper.pdUtils import getDfHash, saveLocalCache, saveLocalHash, loadLocalHash, loadLocalCache
+from nicHelper.pdUtils import getDfHash, saveLocalCache, saveLocalHash, loadLocalHash, loadLocalCache, saveRemoteHash, saveRemoteCache, loadRemoteCache, loadRemoteHash, forceType
+from nicHelper.schema import getTypes
 ```
 
 ```python
@@ -632,4 +633,120 @@ loadLocalCache()
 </table>
 </div>
 
+
+
+### Save and load remote cache and hash (from S3 bucket)
+
+```python
+testKey = 'testKey'
+testBucket = 'villa-clipboard'
+saveRemoteCache(df, key = testKey, bucket = testBucket)
+print(loadRemoteHash(testKey, testBucket))
+loadRemoteCache(key = testKey, bucket = testBucket)
+```
+
+    hashKey is testKey-hash
+    saving hash to s3
+    saved hash da39a3ee5e6b4b0d3255bfef95601890afd80709
+    loading hashkey testKey-hash
+    loaded hash is da39a3ee5e6b4b0d3255bfef95601890afd80709
+    da39a3ee5e6b4b0d3255bfef95601890afd80709
+
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hello</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+### PandasDataFrameAttribute
+pynamodb attributes for pandas dataframe
+
+```class PandasDataFrameAttribute(Attribute)```
+
+### forceType
+
+```python
+url = 'https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/dev-manual/inventory/inventory.yaml'
+inv = {
+                  'iprcode': '0000009',
+                  'brcode': '1000',
+                  'ib_cf_qty': '50',
+                  'new_ib_vs_stock_cv': '27',
+                  'onlineflag': True
+                }
+getTypes(url)
+```
+
+
+
+
+    {'iprcode': int,
+     'brcode': int,
+     'ib_cf_qty': int,
+     'new_ib_vs_stock_cv': int,
+     'onlineflag': bool}
+
+
+
+```python
+forceType(url, pd.DataFrame([inv]))
+```
+
+    {'iprcode': <class 'int'>, 'brcode': <class 'int'>, 'ib_cf_qty': <class 'int'>, 'new_ib_vs_stock_cv': <class 'int'>, 'onlineflag': <class 'bool'>}
+    iprcode               int64
+    brcode                int64
+    ib_cf_qty             int64
+    new_ib_vs_stock_cv    int64
+    onlineflag             bool
+    dtype: object
 

@@ -1271,7 +1271,8 @@ NameError: name &#39;error&#39; is not defined
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">nicHelper.pdUtils</span> <span class="kn">import</span> <span class="n">getDfHash</span><span class="p">,</span> <span class="n">saveLocalCache</span><span class="p">,</span> <span class="n">saveLocalHash</span><span class="p">,</span> <span class="n">loadLocalHash</span><span class="p">,</span> <span class="n">loadLocalCache</span>
+<span class="kn">from</span> <span class="nn">nicHelper.pdUtils</span> <span class="kn">import</span> <span class="n">getDfHash</span><span class="p">,</span> <span class="n">saveLocalCache</span><span class="p">,</span> <span class="n">saveLocalHash</span><span class="p">,</span> <span class="n">loadLocalHash</span><span class="p">,</span> <span class="n">loadLocalCache</span><span class="p">,</span> <span class="n">saveRemoteHash</span><span class="p">,</span> <span class="n">saveRemoteCache</span><span class="p">,</span> <span class="n">loadRemoteCache</span><span class="p">,</span> <span class="n">loadRemoteHash</span><span class="p">,</span> <span class="n">forceType</span>
+<span class="kn">from</span> <span class="nn">nicHelper.schema</span> <span class="kn">import</span> <span class="n">getTypes</span>
 </pre></div>
 
     </div>
@@ -1490,6 +1491,211 @@ NameError: name &#39;error&#39; is not defined
 </div>
 </div>
 
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Save-and-load-remote-cache-and-hash-(from-S3-bucket)">Save and load remote cache and hash (from S3 bucket)<a class="anchor-link" href="#Save-and-load-remote-cache-and-hash-(from-S3-bucket)"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">testKey</span> <span class="o">=</span> <span class="s1">&#39;testKey&#39;</span>
+<span class="n">testBucket</span> <span class="o">=</span> <span class="s1">&#39;villa-clipboard&#39;</span>
+<span class="n">saveRemoteCache</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">testKey</span><span class="p">,</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">testBucket</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">loadRemoteHash</span><span class="p">(</span><span class="n">testKey</span><span class="p">,</span> <span class="n">testBucket</span><span class="p">))</span>
+<span class="n">loadRemoteCache</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">testKey</span><span class="p">,</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">testBucket</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>hashKey is testKey-hash
+saving hash to s3
+saved hash da39a3ee5e6b4b0d3255bfef95601890afd80709
+loading hashkey testKey-hash
+loaded hash is da39a3ee5e6b4b0d3255bfef95601890afd80709
+da39a3ee5e6b4b0d3255bfef95601890afd80709
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hello</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="PandasDataFrameAttribute">PandasDataFrameAttribute<a class="anchor-link" href="#PandasDataFrameAttribute"> </a></h3><p>pynamodb attributes for pandas dataframe</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>class PandasDataFrameAttribute(Attribute)</code></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="forceType">forceType<a class="anchor-link" href="#forceType"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/dev-manual/inventory/inventory.yaml&#39;</span>
+<span class="n">inv</span> <span class="o">=</span> <span class="p">{</span>
+                  <span class="s1">&#39;iprcode&#39;</span><span class="p">:</span> <span class="s1">&#39;0000009&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;brcode&#39;</span><span class="p">:</span> <span class="s1">&#39;1000&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;ib_cf_qty&#39;</span><span class="p">:</span> <span class="s1">&#39;50&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;new_ib_vs_stock_cv&#39;</span><span class="p">:</span> <span class="s1">&#39;27&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;onlineflag&#39;</span><span class="p">:</span> <span class="kc">True</span>
+                <span class="p">}</span>
+<span class="n">getTypes</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;iprcode&#39;: int,
+ &#39;brcode&#39;: int,
+ &#39;ib_cf_qty&#39;: int,
+ &#39;new_ib_vs_stock_cv&#39;: int,
+ &#39;onlineflag&#39;: bool}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">forceType</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">inv</span><span class="p">]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;iprcode&#39;: &lt;class &#39;int&#39;&gt;, &#39;brcode&#39;: &lt;class &#39;int&#39;&gt;, &#39;ib_cf_qty&#39;: &lt;class &#39;int&#39;&gt;, &#39;new_ib_vs_stock_cv&#39;: &lt;class &#39;int&#39;&gt;, &#39;onlineflag&#39;: &lt;class &#39;bool&#39;&gt;}
+iprcode               int64
+brcode                int64
+ib_cf_qty             int64
+new_ib_vs_stock_cv    int64
+onlineflag             bool
+dtype: object
+</pre>
+</div>
 </div>
 
 </div>

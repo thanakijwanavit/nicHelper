@@ -143,7 +143,7 @@ def loadRemoteHash(key='', bucket='', **kwargs):
 # Cell
 class PandasDataFrameAttribute(Attribute):
   '''
-  pynamo attributes for pandas dataframe
+  pynamodb attributes for pandas dataframe
   '''
   attr_type = BINARY
   def serialize(self, value: pd.DataFrame)->bin:
