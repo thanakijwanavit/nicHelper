@@ -101,9 +101,9 @@ def autoSetupAws(path, profile=None, region='ap-southeast-1', mockup = False, pa
     return setupStrings
   for setupString in setupStrings:
     if isColab:
-      print(f'executing {setupString}')
+      print(f'executing {setupString[:-5]}')
       os.system(setupString)
     else:
       print('Not running on CoLab')
-      print(setupString)
+      print(setupString[:=5])
 
