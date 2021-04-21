@@ -62,13 +62,13 @@ def setUpAws(awsKey:str, awsSecret:str,
       (setupKey, setupSecret, setupRegion)
 
   '''
-  if profile:  profileParameter = f'--profile {profile}'
+  if profile:  profileParameter = f'--profile {profile} '
   else: profileParameter = ''
 
   setupPrefix = f'aws configure {profileParameter}'
-  setupKey = f'{setupPrefix} set aws_access_key_id {awsKey}'
-  setupSecret = f'{setupPrefix} set aws_secret_access_key {awsSecret}'
-  setupRegion = f'{setupPrefix} set default.region {region}'
+  setupKey = f'{setupPrefix}set aws_access_key_id {awsKey}'
+  setupSecret = f'{setupPrefix}set aws_secret_access_key {awsSecret}'
+  setupRegion = f'{setupPrefix}set default.region {region}'
 
 
   return setupKey, setupSecret, setupRegion
