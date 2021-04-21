@@ -3,6 +3,7 @@
     "Overview": "/",
     "Image utilities": "Images.html",
     "async": "async.html",
+    "colab": "colab.html",
     "Dict": "dictUtil.html",
     "encrypt": "encrypt.html",
     "Exception": "exception.html",
