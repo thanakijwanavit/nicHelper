@@ -9,7 +9,7 @@ from getpass import getpass
 from functools import partial
 from typing import Tuple, Optional
 from getpass import getpass
-import subprocess, pickle
+import subprocess, pickle, os
 
 # Cell
 @beartype
@@ -83,7 +83,7 @@ def autoSetupAws(path, profile=None, region='ap-southeast-1', mockup = False, pa
     print('cant decode key and secret, maybe the password is wrong')
     return
 
-  print(key,secret)
+#   print(key,secret)
   setupStrings = setUpAws(awsKey=key,
                           awsSecret=secret,
                           profile=profile,
@@ -101,8 +101,8 @@ def autoSetupAws(path, profile=None, region='ap-southeast-1', mockup = False, pa
     return setupStrings
   for setupString in setupStrings:
     if isColab:
-      exec(setupString)
       print(f'executing {setupString}')
+      os.system(setupString)
     else:
       print('Not running on CoLab')
       print(setupString)
