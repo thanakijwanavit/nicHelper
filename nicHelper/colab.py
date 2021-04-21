@@ -105,5 +105,5 @@ def autoSetupAws(path, profile=None, region='ap-southeast-1', mockup = False, pa
       os.system(setupString)
     else:
       print('Not running on CoLab')
-      print(setupString[:=5])
+      print(setupString[:-5])
 
