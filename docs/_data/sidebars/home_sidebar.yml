@@ -16,8 +16,14 @@ entries:
       title: async
       url: async.html
     - output: web,pdf
+      title: colab
+      url: colab.html
+    - output: web,pdf
       title: Dict
       url: dictUtil.html
+    - output: web,pdf
+      title: encrypt
+      url: encrypt.html
     - output: web,pdf
       title: Exception
       url: exception.html
