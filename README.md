@@ -5,7 +5,7 @@
 full docs here
 https://thanakijwanavit.github.io/nicHelper/
 
-```
+```python
 from nicHelper.wrappers import add_method
 ```
 
@@ -19,7 +19,7 @@ from nicHelper.wrappers import add_method
 
 ### add method to a class
 
-```
+```python
 class A:
   pass
 
@@ -46,7 +46,7 @@ class A:
 ### Pretty print a dict
 print only the first 10 characters of dict key, works with deep nested dict
 
-```
+```python
 from nicHelper.dictUtil import printDict
 printDict({'key':'sjfhdkljhafsdlkjhdfaslkjhkljfadshklhfa', 'nestedKey':{'nestedKey2':'938023840843', 'nested3':{'nested4':'hello'}}})
 ```
@@ -60,7 +60,7 @@ printDict({'key':'sjfhdkljhafsdlkjhdfaslkjhkljfadshklhfa', 'nestedKey':{'nestedK
 
 ### change all nested datetime object into timestamp for json compatibility
 
-```
+```python
 from nicHelper.dictUtil import filterDt
 from datetime import datetime
 
@@ -76,7 +76,7 @@ filterDt({'time': {'time2':datetime.now()}, 'hello': 'world'})
 
 ## Exception module
 
-```
+```python
 from nicHelper.exception import errorString
 try:
   error
@@ -94,12 +94,12 @@ except:
 
 ## Image utils
 
-```
+```python
 from nicHelper.images import imageFromUrl, imageToS3, showImgS3, resizeImage
 from s3bz.s3bz import S3
 ```
 
-```
+```python
 ## test variables
 key = 'testCat.png'
 path = '/tmp/testCat.png'
@@ -109,7 +109,7 @@ url = 'https://sites.google.com/site/funnycatmeawww/_/rsrc/1422326075261/home/69
 
 ### Resize images
 
-```
+```python
 resizeImage(url, 400)
 ```
 
@@ -122,7 +122,7 @@ resizeImage(url, 400)
 
 ### load image from url
 
-```
+```python
 img = imageFromUrl(url)
 type(img)
 ```
@@ -136,7 +136,7 @@ type(img)
 
 ### save Image to S3
 
-```
+```python
 imageToS3(img, bucket, key)
 S3.exist(key,bucket)
 ```
@@ -153,7 +153,7 @@ S3.exist(key,bucket)
 
 ### display image from s3
 
-```
+```python
 ## full test
 showImgS3(bucket, key)
 ```
@@ -164,18 +164,18 @@ showImgS3(bucket, key)
 
 ## Secrets
 
-```
+```python
 from nicHelper.secrets import getSecret
 secret = getSecret(name="removeBg", region='ap-southeast-1')
 ```
 
 ## Shorten link with tenxor.sh
 
-```
+```python
 from nicHelper.shortenLink import shorten
 ```
 
-```
+```python
 shorten('https://www.youtube.com/watch?v=fp85zRg2cwg')
 ```
 
@@ -188,13 +188,13 @@ shorten('https://www.youtube.com/watch?v=fp85zRg2cwg')
 
 ## Schema
 
-```
+```python
 from nicHelper.schema import getSchemaPath, validateUrl, typeMapJsonSchema
 ```
 
 ### Get schema from path 
 
-```
+```python
 testSchema = 'https://gist.githubusercontent.com/thanakijwanavit/e2720d091ae0cef710a49b57c0c9cd4c/raw/ed2d322eac4900ee0f95b431d0f9067a40f3e0f0/squirrelOpenApiV0.0.3.yaml'
 path = 'components/schemas/Location'
 getSchemaPath(testSchema, path)
@@ -227,7 +227,7 @@ getSchemaPath(testSchema, path)
 
 ### Validate Url
 
-```
+```python
 url = 'https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json'
 input_ = {'iprcode': 4, 'cprcode': 123 , 'oprCode': '123'}
 validateUrl(url, input_)
@@ -242,7 +242,7 @@ validateUrl(url, input_)
 
 ### Convert type to comply with json schema 
 
-```
+```python
 url = 'https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/dev-manual/inventory/inventory.yaml'
 inv = {
                   'iprcode': '0000009',
@@ -270,7 +270,7 @@ typeMapJsonSchema(url, input_=inv)
 
 ## Pynamodb
 
-```
+```python
 from nicHelper.pynamodb import SchemaAttribute, SuperModel, createData, getData, updateData
 from pynamodb.attributes import Attribute, UnicodeAttribute, NumberAttribute
 from beartype import beartype
@@ -285,7 +285,7 @@ a class which automatically parse and check data against json schema
 ### Supermodel
 a class which add some functionalities on top of the standard pynamodb model
 
-```
+```python
 schemaUrl = 'https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json'
 from typing import Any
 class TestModel(SuperModel):
@@ -314,7 +314,7 @@ class TestModel(SuperModel):
     self.data.update(inputDict)
 ```
 
-```
+```python
 from nicHelper.exception import errorString
 try:
   test = TestModel.fromDict({'iprcode': 4, 'cprcode': 123 , 'oprCode': '123', 'orderId': 123})
@@ -337,7 +337,7 @@ next(TestModel.query('1'))
 ### createData
 create a new row of data
 
-```
+```python
 ## lambda create function
 def create (event, *args):
   body = Event.parseBody(event)
@@ -351,7 +351,7 @@ def create (event, *args):
   return Response.returnSuccess(r2)
 ```
 
-```
+```python
 schemaUrl = 'https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/master/Product.json'
 data = {'phoneHash': '123','iprcode': 4, 'cprcode': 123 , 'oprCode': '123'}
 event = Event.getInput(data)
@@ -380,14 +380,14 @@ create(event)
 
 ### getData
 
-```
+```python
 def lambdaGet(event, *args):
   query = Event.parseBody(event)
   if 'key' not in query: return Response.returnError(f'missing key')
   return getData(query['key'], TestModel)
 ```
 
-```
+```python
 data = {'phoneHash': '123','iprcode': 4, 'cprcode': 123 , 'oprCode': '123'}
 event = Event.getInput(data)
 create(event)
@@ -408,7 +408,7 @@ lambdaGet(Event.getInput({'key': '123'}))
 
 ### updateData
 
-```
+```python
 def update(event, *args):
   body = Event.parseBody(event)
   body['id'] = body['phoneHash']
@@ -418,7 +418,7 @@ def update(event, *args):
   return updateData(event2, hashKeyName=hashKeyname, mainClass=TestModel)
 ```
 
-```
+```python
 r = create(Event.getInput({'phoneHash': '123','iprcode': 5, 'cprcode': 123 , 'oprCode': '123'}))
 r = update(Event.getInput({'phoneHash': '123','iprcode': 5, 'cprcode': 123 , 'oprCode': '1234'}))
 lambdaGet(Event.getInput({'key':'123'}))
@@ -437,13 +437,13 @@ lambdaGet(Event.getInput({'key':'123'}))
 
 ## Timer
 
-```
+```python
 from nicHelper.timer import Timer
 ```
 
 ### setting start timer
 
-```
+```python
 timer = Timer()
 timer.t0
 ```
@@ -457,7 +457,7 @@ timer.t0
 
 ### print the time between starting time and current time
 
-```
+```python
 timer.print_time()
 ```
 
@@ -473,7 +473,7 @@ timer.print_time()
 
 ### print the time between starting time and current time and reset the timer
 
-```
+```python
 timer.print_reset()
 ```
 
@@ -489,13 +489,13 @@ timer.print_reset()
 
 ## Pd Utils
 
-```
+```python
 import pandas as pd
 from nicHelper.pdUtils import getDfHash, saveLocalCache, saveLocalHash, loadLocalHash, loadLocalCache, saveRemoteHash, saveRemoteCache, loadRemoteCache, loadRemoteHash, forceType
 from nicHelper.schema import getTypes
 ```
 
-```
+```python
 df = pd.DataFrame({'hello':[1,2,3,4,5,5]})
 df
 ```
@@ -557,7 +557,7 @@ df
 
 ### Get a hash of a pandas dataframe
 
-```
+```python
 getDfHash(df)
 ```
 
@@ -570,7 +570,7 @@ getDfHash(df)
 
 ### Save and load local cache and hash
 
-```
+```python
 saveLocalCache(df,force = True)
 saveLocalHash(df)
 print(loadLocalHash())
@@ -637,7 +637,7 @@ loadLocalCache()
 
 ### Save and load remote cache and hash (from S3 bucket)
 
-```
+```python
 testKey = 'testKey'
 testBucket = 'villa-clipboard'
 saveRemoteCache(df, key = testKey, bucket = testBucket)
@@ -715,7 +715,7 @@ pynamodb attributes for pandas dataframe
 
 ### forceType
 
-```
+```python
 url = 'https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/dev-manual/inventory/inventory.yaml'
 inv = {
                   'iprcode': '0000009',
@@ -738,7 +738,7 @@ getTypes(url)
 
 
 
-```
+```python
 forceType(url, pd.DataFrame([inv]))
 ```
 

@@ -32,7 +32,7 @@ def reset_timer(self):
 
 # Cell
 @add_method(Timer)
-def print_time(self, description = 'fuction took'):
+def print_time(self, description = 'function took'):
   '''
   this method subtracts the current time by t0 and prints the value in seconds to find out time between start timer and this method \n
   description: str: this is the string to be added before the value of time taken, default = 'function took'

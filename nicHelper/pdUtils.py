@@ -22,13 +22,13 @@ from typing import Callable
 def getDfHash(df:pd.DataFrame,
               hashingAlgorithm: Callable = lambda x: sha1(x).hexdigest())->str:
   '''
-    get a hash of a pandas dataframe
-    this uses sha1 algorithm
-    inputs:
-      df: pd.DataFrame: a pandas dataframe
-      hashingAlgoritm: callable: a hasing function which takes bytes input
-    response:
-      string hash
+    get a hash of a pandas dataframe\n
+    this uses sha1 algorithm\n
+    inputs:\n
+      df: pd.DataFrame: a pandas dataframe\n
+      hashingAlgoritm: callable: a hashing function which takes bytes input\n
+    response:\n
+      string hash\n
   '''
   f:BytesIO = BytesIO()
   df.to_feather(f)
