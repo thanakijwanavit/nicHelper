@@ -25,6 +25,9 @@ entries:
       title: encrypt
       url: encrypt.html
     - output: web,pdf
+      title: Save and load aws credentials
+      url: saveAndLoadAwsPwDemo.html
+    - output: web,pdf
       title: Exception
       url: exception.html
     - output: web,pdf
@@ -48,6 +51,9 @@ entries:
     - output: web,pdf
       title: wrappers
       url: wrappers.html
+    - output: web,pdf
+      title: yamlUtil
+      url: yaml.html
     output: web
     title: nicHelper
   output: web

@@ -6,6 +6,7 @@
     "colab": "colab.html",
     "Dict": "dictUtil.html",
     "encrypt": "encrypt.html",
+    "Save and load aws credentials": "saveAndLoadAwsPwDemo.html",
     "Exception": "exception.html",
     "pd Utils": "pdUtils.html",
     "pynamodb": "pynamodbAttributes.html",
@@ -13,6 +14,7 @@
     "Secrets": "secrets.html",
     "Shorten link": "shortenLInk.html",
     "timer": "timer.html",
-    "wrappers": "wrappers.html"
+    "wrappers": "wrappers.html",
+    "yamlUtil": "yaml.html"
   }
 }

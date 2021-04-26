@@ -69,7 +69,8 @@ index = {"imageFromS3": "Images.ipynb",
          "print_reset": "timer.ipynb",
          "add_method": "wrappers.ipynb",
          "add_static_method": "wrappers.ipynb",
-         "add_class_method": "wrappers.ipynb"}
+         "add_class_method": "wrappers.ipynb",
+         "loadYamlUrl": "yaml.ipynb"}
 
 modules = ["images.py",
            "asyncUtil.py",
@@ -83,7 +84,8 @@ modules = ["images.py",
            "secrets.py",
            "shortenLink.py",
            "timer.py",
-           "wrappers.py"]
+           "wrappers.py",
+           "yamlUtil.py"]
 
 doc_url = "https://thanakijwanavit.github.io/nicHelper/"
 
