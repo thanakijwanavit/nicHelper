@@ -19,6 +19,9 @@ entries:
       title: colab
       url: colab.html
     - output: web,pdf
+      title: compress
+      url: compress.html
+    - output: web,pdf
       title: datetime
       url: datetime.html
     - output: web,pdf

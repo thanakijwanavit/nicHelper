@@ -4,6 +4,7 @@
     "Image utilities": "Images.html",
     "async": "async.html",
     "colab": "colab.html",
+    "compress": "compress.html",
     "datetime": "datetime.html",
     "Dict": "dictUtil.html",
     "encrypt": "encrypt.html",
