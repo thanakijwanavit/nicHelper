@@ -35,3 +35,5 @@ dist: clean
 
 clean:
 	rm -rf dist
+build:
+	bash build.sh

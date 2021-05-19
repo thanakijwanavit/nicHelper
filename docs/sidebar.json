@@ -3,6 +3,7 @@
     "Overview": "/",
     "Image utilities": "Images.html",
     "async": "async.html",
+    "cloudfront": "cloudfront.html",
     "colab": "colab.html",
     "compress": "compress.html",
     "datetime": "datetime.html",

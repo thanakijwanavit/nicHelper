@@ -16,6 +16,9 @@ entries:
       title: async
       url: async.html
     - output: web,pdf
+      title: cloudfront
+      url: cloudfront.html
+    - output: web,pdf
       title: colab
       url: colab.html
     - output: web,pdf
