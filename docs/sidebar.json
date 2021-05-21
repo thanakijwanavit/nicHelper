@@ -10,6 +10,7 @@
     "Dict": "dictUtil.html",
     "encrypt": "encrypt.html",
     "Exception": "exception.html",
+    "github": "github.html",
     "pd Utils": "pdUtils.html",
     "pynamodb": "pynamodbAttributes.html",
     "schema": "schema.html",

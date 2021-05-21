@@ -37,6 +37,9 @@ entries:
       title: Exception
       url: exception.html
     - output: web,pdf
+      title: github
+      url: github.html
+    - output: web,pdf
       title: pd Utils
       url: pdUtils.html
     - output: web,pdf
