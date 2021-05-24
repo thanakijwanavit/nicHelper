@@ -141,4 +141,4 @@ def forceType(url:str, df:pd.DataFrame, defaultType=str)->pd.DataFrame:
   print(typeList)
   df = df.astype(typeList)
   print(df.dtypes)
-  df
+  return df

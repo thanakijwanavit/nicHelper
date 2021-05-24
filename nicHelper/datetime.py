@@ -8,8 +8,7 @@ from beartype import beartype
 # Cell
 from datetime import datetime, timezone
 @beartype
-def datestamp(dt:datetime = datetime.now())->int:
-  dt = datetime.utcnow()
+def datestamp(dt:datetime = datetime.utcnow())->int:
   datestamp = datetime(day=dt.day,month=dt.month,year=dt.year,tzinfo=timezone.utc).timestamp()
   return int(datestamp)
 

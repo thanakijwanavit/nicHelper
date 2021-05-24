@@ -167,7 +167,7 @@ def createData(event:dict, hashKeyName: str,mainClass:Model, schemaUrl:Optional[
 
   # check schema if provided
   if schemaUrl:
-    try: validateUrl(schemaUrl,format_ = schemaFormat)
+    try: validateUrl(schemaUrl, query, format_ = schemaFormat)
     except ValidationError as e: return Response.returnSuccess(f'{e}')
 
   # check for key

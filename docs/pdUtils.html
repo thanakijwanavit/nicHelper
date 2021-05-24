@@ -226,7 +226,7 @@ response:
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>2.62 ms ± 141 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<pre>2.04 ms ± 114 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre>
 </div>
 </div>
@@ -259,7 +259,7 @@ response:
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>17.9 ms ± 48.2 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<pre>15 ms ± 266 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre>
 </div>
 </div>
@@ -294,7 +294,7 @@ response:
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>2.44 ms ± 31.6 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<pre>1.89 ms ± 56.8 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
 </pre>
 </div>
 </div>
@@ -441,15 +441,15 @@ saveHash: bool: whether to save the hash digest</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 1.56 ms, sys: 323 µs, total: 1.88 ms
-Wall time: 1.59 ms
-CPU times: user 514 µs, sys: 106 µs, total: 620 µs
-Wall time: 1.41 ms
+<pre>CPU times: user 0 ns, sys: 2.91 ms, total: 2.91 ms
+Wall time: 5.12 ms
+CPU times: user 1 ms, sys: 110 µs, total: 1.11 ms
+Wall time: 897 µs
 da39a3ee5e6b4b0d3255bfef95601890afd80709
-CPU times: user 572 µs, sys: 119 µs, total: 691 µs
-Wall time: 527 µs
-CPU times: user 2.75 ms, sys: 0 ns, total: 2.75 ms
-Wall time: 2.53 ms
+CPU times: user 297 µs, sys: 33 µs, total: 330 µs
+Wall time: 272 µs
+CPU times: user 2.22 ms, sys: 0 ns, total: 2.22 ms
+Wall time: 3.41 ms
 </pre>
 </div>
 </div>
@@ -866,33 +866,57 @@ dtype: object
 </div>
 </div>
 
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>iprcode</th>
+      <th>brcode</th>
+      <th>ib_cf_qty</th>
+      <th>new_ib_vs_stock_cv</th>
+      <th>onlineflag</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9</td>
+      <td>1000</td>
+      <td>50</td>
+      <td>27</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
 </div>
     {% endraw %}
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><span style="color:red">**<<<<<<< local**</span></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><span style="color:red">**=======**</span></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><span style="color:red">**>>>>>>> remote**</span></p>
-
-</div>
-</div>
-</div>
 </div>
  
 
