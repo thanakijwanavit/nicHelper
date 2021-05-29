@@ -9,6 +9,7 @@
     "compress": "compress.html",
     "datetime": "datetime.html",
     "Dict": "dictUtil.html",
+    "distance": "distance.html",
     "encrypt": "encrypt.html",
     "Exception": "exception.html",
     "github": "github.html",

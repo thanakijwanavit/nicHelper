@@ -34,6 +34,9 @@ entries:
       title: Dict
       url: dictUtil.html
     - output: web,pdf
+      title: distance
+      url: distance.html
+    - output: web,pdf
       title: encrypt
       url: encrypt.html
     - output: web,pdf
