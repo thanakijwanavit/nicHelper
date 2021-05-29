@@ -1,6 +1,7 @@
 {
   "nicHelper": {
     "Overview": "/",
+    "Save and load aws credentials": "saveAndLoadAwsPwDemo.html",
     "Image utilities": "Images.html",
     "async": "async.html",
     "cloudfront": "cloudfront.html",

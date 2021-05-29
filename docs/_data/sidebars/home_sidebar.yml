@@ -10,6 +10,9 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
+      title: Save and load aws credentials
+      url: saveAndLoadAwsPwDemo.html
+    - output: web,pdf
       title: Image utilities
       url: Images.html
     - output: web,pdf
