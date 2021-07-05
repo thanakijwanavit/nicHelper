@@ -2,7 +2,7 @@
 SHELL := /bin/bash
 SRC = $(wildcard ./*.ipynb)
 
-all: s3bz docs
+all: docs
 
 nicHelper: $(SRC)
 	nbdev_build_lib
@@ -21,17 +21,17 @@ docs: $(SRC)
 test:
 	nbdev_test_nbs
 
-release: pypi
-	nbdev_conda_package
-	nbdev_bump_version
-
 pypi: dist
 	twine upload --repository pypi dist/*
 
-dist: clean
+dist: build
 	nbdev_bump_version
-	bash build.sh
 	python setup.py sdist bdist_wheel
 
 clean:
-	rm -rf dist
+	rm -rf dist build build.bak
+    
+build: clean
+	nbdev_build_lib
+	nbdev_build_docs --mk_readme true
+	nbdev_clean_nbs

@@ -10,23 +10,41 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
+      title: Save and load aws credentials
+      url: saveAndLoadAwsPwDemo.html
+    - output: web,pdf
       title: Image utilities
       url: Images.html
     - output: web,pdf
       title: async
       url: async.html
     - output: web,pdf
+      title: cloudfront
+      url: cloudfront.html
+    - output: web,pdf
       title: colab
       url: colab.html
     - output: web,pdf
+      title: compress
+      url: compress.html
+    - output: web,pdf
+      title: datetime
+      url: datetime.html
+    - output: web,pdf
       title: Dict
       url: dictUtil.html
+    - output: web,pdf
+      title: distance
+      url: distance.html
     - output: web,pdf
       title: encrypt
       url: encrypt.html
     - output: web,pdf
       title: Exception
       url: exception.html
+    - output: web,pdf
+      title: github
+      url: github.html
     - output: web,pdf
       title: pd Utils
       url: pdUtils.html
@@ -48,6 +66,9 @@ entries:
     - output: web,pdf
       title: wrappers
       url: wrappers.html
+    - output: web,pdf
+      title: yamlUtil
+      url: yaml.html
     output: web
     title: nicHelper
   output: web
