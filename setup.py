@@ -24,6 +24,10 @@ requirements = cfg.get('requirements','').split()
 lic = licenses[cfg['license']]
 min_python = cfg['min_python']
 
+# read long description from readme
+with open('README.md') as f:
+  long_description = f.read()
+
 setuptools.setup(
     name = cfg['lib_name'],
     license = lic[0],
@@ -39,7 +43,7 @@ setuptools.setup(
     install_requires = requirements,
     dependency_links = cfg.get('dep_links','').split(),
     python_requires  = '>=' + cfg['min_python'],
-    long_description = open('README.md').read(),
+    long_description = long_description,
     long_description_content_type = 'text/markdown',
     zip_safe = False,
     entry_points = { 'console_scripts': cfg.get('console_scripts','').split() },
