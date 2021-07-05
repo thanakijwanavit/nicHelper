@@ -28,7 +28,7 @@ def getDistanceOsrm(lat1:float, lon1:float, lat2:float, lon2:float,
 @beartype
 def getDistBing(origin:Tuple[float,float]
                 ,destinations:List[Tuple[float,float]],
-                 bingApiKey = '')->pd.DataFrame:
+                 bingApiKey:str = '')->pd.DataFrame:
   '''
     accept a list of tuple origins and destinations, return a dataframe
     input:
@@ -53,8 +53,5 @@ def getDistBing(origin:Tuple[float,float]
   destinationsDf.columns = ['lat', 'long']
   results = pd.concat([results,destinationsDf],axis=1).reindex(
     ['travelDistance','travelDuration', 'lat','long'], axis = 1)
-  results.columns
-#   return results
-#   return [(result['travelDistance'], result['travelDuration'])for result in results]
-#   return [result['travelDistance'] for result in results], [result['travelDuration'] for result in results]
-
+  results.columns  = ['dist', 'dur', 'lat', 'long']
+  return results
