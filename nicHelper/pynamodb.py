@@ -9,7 +9,7 @@ from typing import Any, Optional, Type, TypeVar
 from enum import Enum
 import requests, dpath.util, yaml, jsonschema, json, os, pynamodb, pytest
 from pynamodb.models import Model
-from datetime import datetime
+from datetime import datetime, ti
 from awsSchema.apigateway import Event, Response
 from jsonschema import ValidationError
 from typing import Optional
@@ -132,11 +132,11 @@ class SuperModel(Model):
     print('please dont foreget to override the pullOutKeys function if needed')
     self.id_ = self.data['id']
 
-  def recordTime(self):
+  def recordTime(self, tz=timezone.utc):
     '''record last edited and creation time'''
-    self.lastEdited = datetime.now().timestamp() # record last edited
+    self.lastEdited = datetime.now(tz=tz).timestamp() # record last edited
     if not self.creationTime: # record creation time
-      self.creationTime = datetime.now().timestamp()
+      self.creationTime = datetime.now(tz=tz).timestamp()
 
   def save(self):
     '''
