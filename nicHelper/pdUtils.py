@@ -137,7 +137,7 @@ from .schema import getTypes
 # Cell
 def forceType(url:str, df:pd.DataFrame, defaultType=str)->pd.DataFrame:
   typeDict = getTypes(url)
-  typeList = {col:typeDict.get(col) for col in df.columns}
+  typeList = {col:typeDict.get(col, str) for col in df.columns}
   print(typeList)
   df = df.astype(typeList)
   print(df.dtypes)
