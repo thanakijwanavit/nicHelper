@@ -52,7 +52,7 @@ def getTypes(schemaUrl:str, typeMap:dict=typeMap)->dict:
   r = requests.get(schemaUrl)
   s = yaml.load(r.text, Loader=yaml.FullLoader)
   properties = s['properties']
-  dtypes = {k: typeMap.get(v['type']) for k,v in properties.items()}
+  dtypes = {k: typeMap.get(v['type']) for k,v in properties.items(), 'Unidentifiable Type'}
   return dtypes
 
 # Cell
