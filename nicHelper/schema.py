@@ -5,6 +5,7 @@ __all__ = ['getSchemaPath', 'validateUrl', 'getTypes', 'typeMap', 'typeMapJsonSc
 # Cell
 import jsonschema, requests, yaml
 from types import SimpleNamespace
+from typing import Any
 
 # Cell
 import dpath.util
@@ -52,7 +53,7 @@ def getTypes(schemaUrl:str, typeMap:dict=typeMap)->dict:
   r = requests.get(schemaUrl)
   s = yaml.load(r.text, Loader=yaml.FullLoader)
   properties = s['properties']
-  dtypes = {k: typeMap.get(v['type'], 'Unidentifiable Type') for k,v in properties.items()}
+  dtypes = {k: typeMap.get(v['type'], Any) for k,v in properties.items()}
   return dtypes
 
 # Cell
