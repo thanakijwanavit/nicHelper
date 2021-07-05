@@ -53,7 +53,7 @@ nb_path: "nbs/distance.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="getDistanceOsrm" class="doc_header"><code>getDistanceOsrm</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/distance.py#L11" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getDistanceOsrm</code>(<strong><code>lat1</code></strong>:<code>float</code>, <strong><code>lon1</code></strong>:<code>float</code>, <strong><code>lat2</code></strong>:<code>float</code>, <strong><code>lon2</code></strong>:<code>float</code>, <strong><code>osrmEndpoint</code></strong>=<em><code>'http://router.project-osrm.org'</code></em>)</p>
+<h4 id="getDistanceOsrm" class="doc_header"><code>getDistanceOsrm</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/distance.py#L12" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getDistanceOsrm</code>(<strong><code>lat1</code></strong>:<code>float</code>, <strong><code>lon1</code></strong>:<code>float</code>, <strong><code>lat2</code></strong>:<code>float</code>, <strong><code>lon2</code></strong>:<code>float</code>, <strong><code>osrmEndpoint</code></strong>=<em><code>'http://router.project-osrm.org'</code></em>)</p>
 </blockquote>
 <p>get driving distance between 2 points using osrm url</p>
 
@@ -82,6 +82,7 @@ nb_path: "nbs/distance.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+<span class="c1">#example</span>
 <span class="n">testData</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
 <span class="s1">lat1 : 13.732048</span>
 <span class="s1">lon1 : 100.567623</span>
@@ -102,8 +103,8 @@ nb_path: "nbs/distance.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 831 µs, sys: 3.55 ms, total: 4.38 ms
-Wall time: 335 ms
+<pre>CPU times: user 5.17 ms, sys: 260 µs, total: 5.43 ms
+Wall time: 881 ms
 </pre>
 </div>
 </div>
@@ -133,28 +134,138 @@ Wall time: 335 ms
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="getDistBing" class="doc_header"><code>getDistBing</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/distance.py#L28" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getDistBing</code>(<strong><code>origin</code></strong>:<code>Tuple</code>[<code>float</code>, <code>float</code>], <strong><code>destinations</code></strong>:<code>List</code>[<code>Tuple</code>[<code>float</code>, <code>float</code>]], <strong><code>bingApiKey</code></strong>=<em><code>''</code></em>)</p>
+</blockquote>
+<p>accept a list of tuple origins and destinations, return a dataframe
+input:
+  origin :: Tuple[float,float] : (lat,long) of the origin
+  destinations:: List[Tuple[float,float]]: [(lat,long),(lat,long)] of the destinations
+  bingApiKey:str:: apikey from bing map
+response:
+  pd.DataFrame with [dist, dur, lat, long] as indexes, all in float,
+      all distances in m and time in s</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@beartype</span>
-<span class="k">def</span> <span class="nf">getDistBing</span><span class="p">(</span><span class="n">origin</span><span class="p">:</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span><span class="nb">float</span><span class="p">]</span>
-                <span class="p">,</span><span class="n">destinations</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span><span class="nb">float</span><span class="p">]],</span>
-                 <span class="n">bingApiKey</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
-  
-  <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;origins&#39;</span> <span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;destinations&#39;</span> <span class="p">:</span> <span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">destinations</span><span class="p">),</span>
-    <span class="s1">&#39;travelMode&#39;</span> <span class="p">:</span> <span class="s1">&#39;driving&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">bingApiKey</span>
-  <span class="p">}</span>
-  <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix&#39;</span>
-  <span class="n">r</span> <span class="o">=</span>  <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-  <span class="n">results</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;resourceSets&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;resources&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;results&#39;</span><span class="p">]</span>
-  <span class="k">return</span> <span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;travelDistance&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">],</span> <span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;travelDuration&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nicHelper.secrets</span> <span class="kn">import</span> <span class="n">getSecret</span>
+<span class="n">testData</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">origin:</span>
+<span class="s1">  !!python/tuple</span>
+<span class="s1">  - 13.732048</span>
+<span class="s1">  - 100.567623</span>
+<span class="s1">destinations:</span>
+<span class="s1">  -  !!python/tuple</span>
+<span class="s1">    - 13.856271</span>
+<span class="s1">    - 100.546467</span>
+<span class="s1">  -  !!python/tuple</span>
+<span class="s1">    - 13.856444</span>
+<span class="s1">    - 100.549487</span>
+<span class="s1">  - !!python/tuple</span>
+<span class="s1">    - 13.857444</span>
+<span class="s1">    - 100.549487</span>
+<span class="s1">&#39;&#39;&#39;</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">testData</span><span class="p">,</span> <span class="n">Loader</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+
+<span class="n">apikey</span> <span class="o">=</span> <span class="n">getSecret</span><span class="p">(</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;webApiKeys&#39;</span><span class="p">)[</span><span class="s1">&#39;bing&#39;</span><span class="p">]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">getDistBing</span><span class="p">(</span> <span class="o">**</span><span class="n">i</span><span class="p">,</span> <span class="n">bingApiKey</span> <span class="o">=</span> <span class="n">apikey</span> <span class="p">)</span>
+<span class="n">results</span>
+<span class="c1"># print(f&#39;distances are {dist}, time taken are {timetaken}&#39;)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>travelDistance</th>
+      <th>travelDuration</th>
+      <th>lat</th>
+      <th>long</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>18.208</td>
+      <td>25.7167</td>
+      <td>13.856271</td>
+      <td>100.546467</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>18.812</td>
+      <td>27.2167</td>
+      <td>13.856444</td>
+      <td>100.549487</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>19.490</td>
+      <td>29.3833</td>
+      <td>13.857444</td>
+      <td>100.549487</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 

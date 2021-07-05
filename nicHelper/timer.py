@@ -5,6 +5,7 @@ __all__ = ['logger', 'Timer', 'start_timer', 'reset_timer', 'print_time', 'print
 # Cell
 from .wrappers import add_class_method,add_method,add_static_method
 from datetime import datetime, timedelta
+import pytz
 import logging
 logger = logging.getLogger(name='timer')
 
@@ -14,6 +15,7 @@ class Timer:
   This is the class that will be used for the timer
   '''
   def __init__(self):
+    self.timezone = pytz.timezone("UTC")
     self.start_timer()
   pass
 
@@ -24,13 +26,13 @@ def start_timer(self):
   '''
   this method sets the starting time t0 to the current time
   '''
-  self.t0 = datetime.now()
+  self.t0 = datetime.now(tz=self.timezone)
 @add_method(Timer)
 def reset_timer(self):
   '''
   this method resets t0 to the current time
   '''
-  self.t0 = datetime.now()
+  self.t0 = datetime.now(tz=self.timezone)
 
 # Cell
 @add_method(Timer)
@@ -39,7 +41,7 @@ def print_time(self, description = 'function took'):
   this method subtracts the current time by t0 and prints the value in seconds to find out time between start timer and this method \n
   description: str: this is the string to be added before the value of time taken, default = 'function took'
   '''
-  t1:timedelta = datetime.now() - self.t0
+  t1:timedelta = datetime.now(tz=self.timezone) - self.t0
   print(f'{description} :{t1.total_seconds()} s')
   return t1.total_seconds()
 
@@ -66,7 +68,7 @@ def log_time(self, description = 'fuction took', logger = logger.debug):
   response:
     time:float:: time in second
   '''
-  t1:timedelta = datetime.now() - self.t0
+  t1:timedelta = datetime.now(tz=self.timezone) - self.t0
   logger(f'{description} :{t1.total_seconds()} s')
   return t1.total_seconds()
 
