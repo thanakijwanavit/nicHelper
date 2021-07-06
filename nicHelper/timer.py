@@ -4,7 +4,7 @@ __all__ = ['logger', 'Timer', 'start_timer', 'reset_timer', 'print_time', 'print
 
 # Cell
 from .wrappers import add_class_method,add_method,add_static_method
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import logging
 import pytz
 logger = logging.getLogger(name='timer')
@@ -14,8 +14,8 @@ class Timer:
   '''
   This is the class that will be used for the timer
   '''
-  def __init__(self):
-    self.timezone = pytz.timezone("UTC")
+  def __init__(self, tz=timezone.utc):
+    self.timezone = tz
     self.start_timer()
   pass
 
