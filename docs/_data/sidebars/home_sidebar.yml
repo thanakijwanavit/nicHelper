@@ -50,7 +50,7 @@ entries:
       url: pdUtils.html
     - output: web,pdf
       title: pynamodb
-      url: pynamodbAttributes.html
+      url: pynamodb.html
     - output: web,pdf
       title: schema
       url: schema.html
@@ -68,7 +68,7 @@ entries:
       url: wrappers.html
     - output: web,pdf
       title: yamlUtil
-      url: yaml.html
+      url: yamlUtil.html
     output: web
     title: nicHelper
   output: web

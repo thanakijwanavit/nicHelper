@@ -82,6 +82,9 @@ nb_path: "nbs/async.ipynb"
 <span class="c1">## async func execute</span>
 <span class="kn">import</span> <span class="nn">nest_asyncio</span><span class="o">,</span> <span class="nn">time</span>
 <span class="n">nest_asyncio</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
 <span class="k">async</span> <span class="k">def</span> <span class="nf">runASlowFunc</span><span class="p">(</span><span class="n">input_</span><span class="p">):</span>
   <span class="k">return</span> <span class="k">await</span> <span class="n">aSlowFunc</span><span class="p">(</span><span class="n">input_</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">runLoop</span><span class="p">():</span>
@@ -101,7 +104,7 @@ nb_path: "nbs/async.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 7.07 ms, sys: 0 ns, total: 7.07 ms
+<pre>CPU times: user 2.78 ms, sys: 3.69 ms, total: 6.47 ms
 Wall time: 4.01 s
 </pre>
 </div>
@@ -115,6 +118,41 @@ Wall time: 4.01 s
 <pre>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</pre>
 </div>
 
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>hello
+</pre>
+</div>
 </div>
 
 </div>
@@ -182,8 +220,8 @@ Wall time: 4.01 s
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 25.2 ms, sys: 1 ms, total: 26.2 ms
-Wall time: 1.02 s
+<pre>CPU times: user 12.3 ms, sys: 8.86 ms, total: 21.1 ms
+Wall time: 1.03 s
 </pre>
 </div>
 </div>
@@ -244,7 +282,7 @@ Wall time: 1.02 s
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 4.57 ms, sys: 4.95 ms, total: 9.52 ms
+<pre>CPU times: user 7.04 ms, sys: 268 µs, total: 7.31 ms
 Wall time: 20 s
 </pre>
 </div>
@@ -369,7 +407,7 @@ Wall time: 20 s
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 22.2 ms, sys: 7.76 ms, total: 30 ms
+<pre>CPU times: user 21 ms, sys: 4.2 ms, total: 25.2 ms
 Wall time: 17 s
 </pre>
 </div>
@@ -496,7 +534,7 @@ Wall time: 17 s
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 11.3 ms, sys: 0 ns, total: 11.3 ms
+<pre>CPU times: user 9.18 ms, sys: 1.04 ms, total: 10.2 ms
 Wall time: 10 s
 </pre>
 </div>
@@ -580,7 +618,7 @@ Wall time: 10 s
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 30.2 ms, sys: 54.3 ms, total: 84.5 ms
+<pre>CPU times: user 24.6 ms, sys: 50.9 ms, total: 75.6 ms
 Wall time: 10.1 s
 </pre>
 </div>
