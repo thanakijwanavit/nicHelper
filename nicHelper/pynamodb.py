@@ -9,7 +9,7 @@ from typing import Any, Optional, Type, TypeVar
 from enum import Enum
 import requests, dpath.util, yaml, jsonschema, json, os, pynamodb, pytest
 from pynamodb.models import Model
-from datetime import datetime, ti
+from datetime import datetime, timezone
 from awsSchema.apigateway import Event, Response
 from jsonschema import ValidationError
 from typing import Optional
