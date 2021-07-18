@@ -14,12 +14,12 @@
     "Exception": "exception.html",
     "github": "github.html",
     "pd Utils": "pdUtils.html",
-    "pynamodb": "pynamodbAttributes.html",
+    "pynamodb": "pynamodb.html",
     "schema": "schema.html",
     "Secrets": "secrets.html",
     "Shorten link": "shortenLInk.html",
     "timer": "timer.html",
     "wrappers": "wrappers.html",
-    "yamlUtil": "yaml.html"
+    "yamlUtil": "yamlUtil.html"
   }
 }
