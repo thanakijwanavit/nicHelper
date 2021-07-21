@@ -87,7 +87,8 @@ index = {"imageFromS3": "Images.ipynb",
          "add_method": "wrappers.ipynb",
          "add_static_method": "wrappers.ipynb",
          "add_class_method": "wrappers.ipynb",
-         "loadYamlUrl": "yamlUtil.ipynb"}
+         "loadYamlUrl": "yamlUtil.ipynb",
+         "saveYaml": "yamlUtil.ipynb"}
 
 modules = ["images.py",
            "asyncUtil.py",
