@@ -28,6 +28,9 @@ entries:
       title: compress
       url: compress.html
     - output: web,pdf
+      title: dataclassUtil
+      url: dataclassUtil.html
+    - output: web,pdf
       title: datetime
       url: datetime.html
     - output: web,pdf

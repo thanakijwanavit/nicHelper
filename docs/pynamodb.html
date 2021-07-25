@@ -146,6 +146,121 @@ nb_path: "nbs/pynamodb.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Dataclass-Attribute">Dataclass Attribute<a class="anchor-link" href="#Dataclass-Attribute"> </a></h1>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="DataclassJsonAttribute" class="doc_header"><code>class</code> <code>DataclassJsonAttribute</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L60" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DataclassJsonAttribute</code>(<strong>*<code>args</code></strong>, <strong>**<code>kwds</code></strong>) :: <code>Attribute</code></p>
+</blockquote>
+<p>An attribute of a model</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pynamodb.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">pynamodb.attributes</span> <span class="kn">import</span> <span class="n">NumberAttribute</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">dataclasses_json</span> <span class="kn">import</span> <span class="n">dataclass_json</span>
+<span class="kn">from</span> <span class="nn">nicHelper.dataclassUtil</span> <span class="kn">import</span> <span class="n">enforce_types</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="nd">@enforce_types</span>
+<span class="nd">@dataclass_json</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Product</span><span class="p">:</span>
+  <span class="n">code</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">id_</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<span class="k">class</span> <span class="nc">Table</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+  <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+    <span class="n">table_name</span><span class="o">=</span><span class="s1">&#39;test-please-delete&#39;</span>
+    <span class="n">region_name</span><span class="o">=</span><span class="s1">&#39;ap-southeast-1&#39;</span>
+  <span class="n">id_</span><span class="o">=</span> <span class="n">NumberAttribute</span><span class="p">(</span><span class="n">hash_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">product</span> <span class="o">=</span> <span class="n">DataclassJsonAttribute</span><span class="p">(</span><span class="n">customDataClass</span><span class="o">=</span><span class="n">Product</span><span class="p">)</span>
+  
+
+<span class="n">Table</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="n">billing_mode</span><span class="o">=</span><span class="s1">&#39;PAY_PER_REQUEST&#39;</span><span class="p">)</span>
+
+
+<span class="n">Table</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span><span class="n">product</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;code&#39;</span><span class="p">:</span><span class="s1">&#39;123&#39;</span><span class="p">,</span><span class="s1">&#39;id_&#39;</span><span class="p">:</span><span class="mi">123</span> <span class="p">})</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
+  <span class="n">Table</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span><span class="n">product</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;code&#39;</span><span class="p">:</span><span class="mi">123</span><span class="p">,</span><span class="s1">&#39;id_&#39;</span><span class="p">:</span><span class="mi">123</span> <span class="p">})</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+  <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;type error should occur&#39;</span><span class="p">)</span>
+
+<span class="n">Table</span><span class="o">.</span><span class="n">delete_table</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;TableDescription&#39;: {&#39;BillingModeSummary&#39;: {&#39;BillingMode&#39;: &#39;PAY_PER_REQUEST&#39;,
+   &#39;LastUpdateToPayPerRequestDateTime&#39;: 1627188940.125},
+  &#39;ItemCount&#39;: 0,
+  &#39;ProvisionedThroughput&#39;: {&#39;NumberOfDecreasesToday&#39;: 0,
+   &#39;ReadCapacityUnits&#39;: 0,
+   &#39;WriteCapacityUnits&#39;: 0},
+  &#39;TableArn&#39;: &#39;arn:aws:dynamodb:us-east-1:394922924679:table/test-please-delete&#39;,
+  &#39;TableId&#39;: &#39;4abd3fd9-1114-470f-9569-b03c005cc3d6&#39;,
+  &#39;TableName&#39;: &#39;test-please-delete&#39;,
+  &#39;TableSizeBytes&#39;: 0,
+  &#39;TableStatus&#39;: &#39;DELETING&#39;,
+  &#39;TableThroughputModeSummary&#39;: {&#39;LastUpdateToPayPerRequestDateTime&#39;: 1627188940.125,
+   &#39;TableThroughputMode&#39;: &#39;PAY_PER_REQUEST&#39;}}}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Supermodel">Supermodel<a class="anchor-link" href="#Supermodel"> </a></h1><p>a class which add some functionalities on top of the standard pynamodb model, it sets id_ as the hash key and gives</p>
 <ul>
 <li>fromDict functions </li>
@@ -173,7 +288,7 @@ nb_path: "nbs/pynamodb.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="SuperModel" class="doc_header"><code>class</code> <code>SuperModel</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L73" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SuperModel</code>(<strong><code>hash_key</code></strong>:<code>Optional</code>[<code>Any</code>]=<em><code>None</code></em>, <strong><code>range_key</code></strong>:<code>Optional</code>[<code>Any</code>]=<em><code>None</code></em>, <strong><code>_user_instantiated</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong>**<code>attributes</code></strong>:<code>Any</code>) :: <code>Model</code></p>
+<h2 id="SuperModel" class="doc_header"><code>class</code> <code>SuperModel</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L90" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SuperModel</code>(<strong><code>hash_key</code></strong>:<code>Optional</code>[<code>Any</code>]=<em><code>None</code></em>, <strong><code>range_key</code></strong>:<code>Optional</code>[<code>Any</code>]=<em><code>None</code></em>, <strong><code>_user_instantiated</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong>**<code>attributes</code></strong>:<code>Any</code>) :: <code>Model</code></p>
 </blockquote>
 <p>Defines a <code>PynamoDB</code> Model</p>
 <p>This model is backed by a table in DynamoDB.
@@ -564,7 +679,7 @@ On instance[&#39;iprcode&#39;]:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="createData" class="doc_header"><code>createData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L168" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>createData</code>(<strong><code>event</code></strong>:<code>dict</code>, <strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>, <strong><code>schemaUrl</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>schemaFormat</code></strong>:<code>str</code>=<em><code>'yaml'</code></em>, <strong>*<code>args</code></strong>)</p>
+<h4 id="createData" class="doc_header"><code>createData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L185" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>createData</code>(<strong><code>event</code></strong>:<code>dict</code>, <strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>, <strong><code>schemaUrl</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>schemaFormat</code></strong>:<code>str</code>=<em><code>'yaml'</code></em>, <strong>*<code>args</code></strong>)</p>
 </blockquote>
 <p>create a new row of data</p>
 
@@ -657,7 +772,7 @@ On instance[&#39;iprcode&#39;]:
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>existing item is : {&#34;lastEdited&#34;: 1625508893.420898, &#34;creationTime&#34;: 1625508893.330854, &#34;data&#34;: {&#34;phoneHash&#34;: &#34;123&#34;, &#34;iprcode&#34;: 5, &#34;cprcode&#34;: 123, &#34;oprCode&#34;: &#34;1234&#34;, &#34;id&#34;: &#34;123&#34;}, &#34;phoneHash&#34;: &#34;123&#34;}
+<pre>existing item is : {&#34;lastEdited&#34;: 1627188189.287273, &#34;creationTime&#34;: 1627188189.190346, &#34;data&#34;: {&#34;phoneHash&#34;: &#34;123&#34;, &#34;iprcode&#34;: 5, &#34;cprcode&#34;: 123, &#34;oprCode&#34;: &#34;1234&#34;, &#34;id&#34;: &#34;123&#34;}, &#34;phoneHash&#34;: &#34;123&#34;}
 {&#39;ConsumedCapacity&#39;: {&#39;CapacityUnits&#39;: 1.0, &#39;TableName&#39;: &#39;colab-test-sensitive-column&#39;}}
 </pre>
 </div>
@@ -706,7 +821,7 @@ On instance[&#39;iprcode&#39;]:
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#34;lastEdited&#34;: 1626617229.393203, &#34;creationTime&#34;: 1626617229.393216, &#34;data&#34;: {&#34;phoneHash&#34;: &#34;123&#34;, &#34;iprcode&#34;: 4, &#34;cprcode&#34;: 123, &#34;oprCode&#34;: &#34;123&#34;, &#34;id&#34;: &#34;123&#34;}}</pre>
+<pre>{&#34;lastEdited&#34;: 1627189085.221547, &#34;creationTime&#34;: 1627189085.22156, &#34;data&#34;: {&#34;phoneHash&#34;: &#34;123&#34;, &#34;iprcode&#34;: 4, &#34;cprcode&#34;: 123, &#34;oprCode&#34;: &#34;123&#34;, &#34;id&#34;: &#34;123&#34;}}</pre>
 </div>
 
 </div>
@@ -742,7 +857,7 @@ On instance[&#39;iprcode&#39;]:
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#34;lastEdited&#34;: 1626617229.432975, &#34;creationTime&#34;: 1626617229.432986, &#34;data&#34;: {&#34;phoneHash&#34;: &#34;123&#34;, &#34;iprcode&#34;: 4, &#34;cprcode&#34;: 123, &#34;oprCode&#34;: &#34;123&#34;}}</pre>
+<pre>{&#34;lastEdited&#34;: 1627189085.631451, &#34;creationTime&#34;: 1627189085.631462, &#34;data&#34;: {&#34;phoneHash&#34;: &#34;123&#34;, &#34;iprcode&#34;: 4, &#34;cprcode&#34;: 123, &#34;oprCode&#34;: &#34;123&#34;}}</pre>
 </div>
 
 </div>
@@ -770,7 +885,7 @@ On instance[&#39;iprcode&#39;]:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="getData" class="doc_header"><code>getData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L208" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getData</code>(<strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>)</p>
+<h4 id="getData" class="doc_header"><code>getData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L225" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>getData</code>(<strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>)</p>
 </blockquote>
 <p>create a new basket</p>
 
@@ -930,7 +1045,7 @@ On instance[&#39;iprcode&#39;]:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="updateData" class="doc_header"><code>updateData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L224" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>updateData</code>(<strong><code>event</code></strong>:<code>dict</code>, <strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>, <strong><code>schemaUrl</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>schemaFormat</code></strong>:<code>str</code>=<em><code>'yaml'</code></em>, <strong>*<code>args</code></strong>)</p>
+<h4 id="updateData" class="doc_header"><code>updateData</code><a href="https://github.com/thanakijwanavit/nicHelper/tree/master/nicHelper/pynamodb.py#L241" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>updateData</code>(<strong><code>event</code></strong>:<code>dict</code>, <strong><code>hashKeyName</code></strong>:<code>str</code>, <strong><code>mainClass</code></strong>:<code>Model</code>, <strong><code>schemaUrl</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>schemaFormat</code></strong>:<code>str</code>=<em><code>'yaml'</code></em>, <strong>*<code>args</code></strong>)</p>
 </blockquote>
 <p>updating data based on the new input</p>
 <p>event:dict: object gathered from apiGatewayProxy
