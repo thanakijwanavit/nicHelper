@@ -18,6 +18,7 @@
     "pynamodb": "pynamodb.html",
     "schema": "schema.html",
     "Secrets": "secrets.html",
+    "sentryUtil": "sentryUtil.html",
     "Shorten link": "shortenLInk.html",
     "timer": "timer.html",
     "wrappers": "wrappers.html",
