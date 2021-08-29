@@ -1,9 +1,9 @@
-repository: fastai/s3bz
+repository: thanakijwanavit/nicHelper
 output: web
-topnav_title: s3bz
-site_title: s3bz
+topnav_title: nicHelper
+site_title: nicHelper
 company_name: Tenxor
-description: for saving dictionaries using s3 with bz2 compression
+description: various helper functions for aws-sam, sentry, pandas, pynamodb, and many others
 # Set to false to disable KaTeX math
 use_math: true
 # Add Google analytics id if you have one and want to use it here
