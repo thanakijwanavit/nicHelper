@@ -5,9 +5,10 @@ __all__ = ['logSentry']
 # Cell
 from sentry_sdk import add_breadcrumb, capture_exception, capture_message
 from .exception import traceback
+from typing import Any
 
 # Cell
-def logSentry(message:str, data:dict = (lambda :{})(), level:str = 'info', section:str='main'):
+def logSentry(message:str, data:Any = (lambda :{})(), level:str = 'info', section:str='main'):
   '''
     just add docs for ease of logging to sentry
     Input:
@@ -21,7 +22,7 @@ def logSentry(message:str, data:dict = (lambda :{})(), level:str = 'info', secti
   try:
     add_breadcrumb(
       category=section,
-      data=data,
+      data={'data':data},
       level=level,
       message=message
     )
