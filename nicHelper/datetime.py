@@ -6,10 +6,11 @@ __all__ = ['datestamp', 'stringToTimestamp']
 from beartype import beartype
 
 # Cell
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 @beartype
 def datestamp(dt:datetime = datetime.utcnow(), tz=timezone.utc)->int:
-  datestamp = datetime(day=dt.day,month=dt.month,year=dt.year,tzinfo=tz).timestamp()
+  adt:dt = dt.astimezone(tz)
+  datestamp = datetime(day=adt.day,month=adt.month,year=adt.year, tzinfo=tz).timestamp()
   return int(datestamp)
 
 # Cell
