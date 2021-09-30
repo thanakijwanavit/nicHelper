@@ -6,6 +6,7 @@ __all__ = ['logSentry']
 from sentry_sdk import add_breadcrumb, capture_exception, capture_message
 from .exception import traceback
 from typing import Any
+from copy import deepcopy
 
 # Cell
 def logSentry(message:str, data:Any = (lambda :{})(), level:str = 'info', section:str='main'):
@@ -22,7 +23,7 @@ def logSentry(message:str, data:Any = (lambda :{})(), level:str = 'info', sectio
   try:
     add_breadcrumb(
       category=section,
-      data={'data':data},
+      data={'data':deepcopy(data)},
       level=level,
       message=message
     )
