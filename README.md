@@ -116,7 +116,9 @@ resizeImage(url, 400)
 
 
 
+    
 ![png](docs/images/output_20_0.png)
+    
 
 
 
@@ -159,7 +161,9 @@ showImgS3(bucket, key)
 ```
 
 
+    
 ![png](docs/images/output_26_0.png)
+    
 
 
 ## Secrets

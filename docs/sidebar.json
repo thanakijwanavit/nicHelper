@@ -14,6 +14,7 @@
     "encrypt": "encrypt.html",
     "Exception": "exception.html",
     "github": "github.html",
+    "Jupyter": "jupyter.html",
     "pd Utils": "pdUtils.html",
     "pynamodb": "pynamodb.html",
     "schema": "schema.html",
