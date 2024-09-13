@@ -1,9 +1,10 @@
 {
   "nicHelper": {
     "Overview": "/",
-    "Save and load aws credentials": "saveAndLoadAwsPwDemo.html",
+    "saveAndLoadAwsPwDemo": "saveAndLoadAwsPwDemo.html",
     "Image utilities": "Images.html",
     "async": "async.html",
+    "awsUtil": "awsUtil.html",
     "cloudfront": "cloudfront.html",
     "colab": "colab.html",
     "compress": "compress.html",
@@ -14,14 +15,14 @@
     "encrypt": "encrypt.html",
     "Exception": "exception.html",
     "github": "github.html",
-    "Jupyter": "jupyter.html",
+    "jupyter": "jupyter.html",
     "pd Utils": "pdUtils.html",
     "pynamodb": "pynamodb.html",
     "schema": "schema.html",
     "Secrets": "secrets.html",
     "sentryUtil": "sentryUtil.html",
     "Shorten link": "shortenLInk.html",
-    "String": "string.html",
+    "string": "string.html",
     "timer": "timer.html",
     "wrappers": "wrappers.html",
     "yamlUtil": "yamlUtil.html"

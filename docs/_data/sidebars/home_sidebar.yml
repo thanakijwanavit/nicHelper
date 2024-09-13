@@ -10,7 +10,7 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Save and load aws credentials
+      title: saveAndLoadAwsPwDemo
       url: saveAndLoadAwsPwDemo.html
     - output: web,pdf
       title: Image utilities
@@ -18,6 +18,9 @@ entries:
     - output: web,pdf
       title: async
       url: async.html
+    - output: web,pdf
+      title: awsUtil
+      url: awsUtil.html
     - output: web,pdf
       title: cloudfront
       url: cloudfront.html
@@ -49,7 +52,7 @@ entries:
       title: github
       url: github.html
     - output: web,pdf
-      title: Jupyter
+      title: jupyter
       url: jupyter.html
     - output: web,pdf
       title: pd Utils
@@ -70,7 +73,7 @@ entries:
       title: Shorten link
       url: shortenLInk.html
     - output: web,pdf
-      title: String
+      title: string
       url: string.html
     - output: web,pdf
       title: timer
