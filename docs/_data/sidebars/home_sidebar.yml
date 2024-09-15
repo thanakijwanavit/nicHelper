@@ -52,6 +52,9 @@ entries:
       title: github
       url: github.html
     - output: web,pdf
+      title: jsonUtil
+      url: jsonUtil.html
+    - output: web,pdf
       title: jupyter
       url: jupyter.html
     - output: web,pdf
