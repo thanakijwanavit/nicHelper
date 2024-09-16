@@ -9,175 +9,195 @@ import yaml
 from beartype import beartype
 
 # Cell
-def printDict(d:dict, length:int = 10, space = 0):
-  '''
-  print dictionary as first length value of values \n
-  d: dict: the dictionary to be printed \n
-  length: int: if the value is a string, then it will print the first length letter of the value, default = 10 \n
-  space: int: the amount of additional space to be added for each nested dictionary, default = 0
-  '''
-  if type(d) != dict:
-    print('this is not a dict')
-    print(d)
-  else:
-    for k, v in d.items():
-      if type(v) == dict:
-        print(f"{' '*space}{k}")
-        printDict(v, space=space+1)
-      else:
-        print(f"{' '*space}{k} : {v[:length] if type(v)==str else v}")
+def printDict(d: dict, length: int = 10, space=0):
+    """
+    print dictionary as first length value of values \n
+    d: dict: the dictionary to be printed \n
+    length: int: if the value is a string, then it will print the first length letter of the value, default = 10 \n
+    space: int: the amount of additional space to be added for each nested dictionary, default = 0
+    """
+    if type(d) != dict:
+        print("this is not a dict")
+        print(d)
+    else:
+        for k, v in d.items():
+            if type(v) == dict:
+                print(f"{' '*space}{k}")
+                printDict(v, space=space + 1)
+            else:
+                print(f"{' '*space}{k} : {v[:length] if type(v)==str else v}")
 
 # Cell
-def allKeysInDict(inputDict:dict, keys:list):
-  '''
-  checks whether all the keys given in the list are also keys in the inputDict dictionary \n
-  inputDict: dict: the dictionary that will be used to check whether all the keys are in this dictionary \n
-  keys: list: the list of keys
-  '''
-  return all(key in inputDict for key in keys)
+def allKeysInDict(inputDict: dict, keys: list):
+    """
+    checks whether all the keys given in the list are also keys in the inputDict dictionary \n
+    inputDict: dict: the dictionary that will be used to check whether all the keys are in this dictionary \n
+    keys: list: the list of keys
+    """
+    return all(key in inputDict for key in keys)
 
 # Cell
-def filterDt(dtDict:dict):
-  '''
-  convert unjsonable datetime object to timestamp in the dictionary, this works for nested dictionary as well \n
-  dtDict: dict: the dictionary inputted to convert the datetime object of its value
-  '''
-  from datetime import datetime
-  return {k: (filterDt(v) if type(v) == dict else v) if type(v) != datetime else v.timestamp()
-            for k,v in dtDict.items()}
+def filterDt(dtDict: dict):
+    """
+    convert unjsonable datetime object to timestamp in the dictionary, this works for nested dictionary as well \n
+    dtDict: dict: the dictionary inputted to convert the datetime object of its value
+    """
+    from datetime import datetime
+
+    return {
+        k: (
+            (filterDt(v) if type(v) == dict else v)
+            if type(v) != datetime
+            else v.timestamp()
+        )
+        for k, v in dtDict.items()
+    }
 
 # Cell
-def stripDict(data:dict):
-  '''
-  if the value in the dictionary is a string, it will 'strip' the value to make it more clear \n
-  data: dict: the dictionary inputted to be 'stripped'
-  '''
-  return {k: v.strip() if type(v) == str else v for k,v in data.items()}
+def stripDict(data: dict):
+    """
+    if the value in the dictionary is a string, it will 'strip' the value to make it more clear \n
+    data: dict: the dictionary inputted to be 'stripped'
+    """
+    return {k: v.strip() if type(v) == str else v for k, v in data.items()}
 
 # Cell
 import hashlib, pickle, base64
-def hashDict(data:dict, hasher= hashlib.sha1(), encoder = pickle.dumps):
-  '''
-  hashes the dictionary inputted \n
-  data: dict: the dictionary inputted to be 'hashed'
-  '''
-  hasher.update(encoder(data))
-  rawHash = hasher.digest()
-  return base64.b64encode(rawHash).decode()
+
+
+def hashDict(data: dict, hasher=hashlib.sha1(), encoder=pickle.dumps):
+    """
+    hashes the dictionary inputted \n
+    data: dict: the dictionary inputted to be 'hashed'
+    """
+    hasher.update(encoder(data))
+    rawHash = hasher.digest()
+    return base64.b64encode(rawHash).decode()
 
 # Cell
 import pickle
-def saveDictToFile(data:dict, path:str):
-  '''
-  saves the dictionary to the file directed by the path \n
-  data: dict: the dictionary to be saved \n
-  path: str: the file path to the file the dictionary is going to be saved
-  '''
-  with open(path, 'wb')as f:
-    pickle.dump(data,f,protocol=pickle.HIGHEST_PROTOCOL)
 
-def loadDictFromFile(path:str):
-  '''
-  returns the dictionary that is saved in the file \n
-  path: str: the path taken to the file of the dictionary
-  '''
-  with open(path, 'rb') as f:
-    return pickle.load(f)
 
-# Cell
-def saveStringToFile(data:str, path:str):
-  '''
-  saves the string to the file directed by the path \n
-  data: str: the string to be saved \n
-  path: str: the file path to the file the string is going to be saved
-  '''
-  with open(path, 'w')as f:
-    f.write(data)
-def loadStringFromFile(path:str):
-  '''
-  returns the string that is saved in the file \n
-  path: str: the path taken to the file of the string
-  '''
-  with open(path, 'r')as f:
-    return f.read()
+def saveDictToFile(data: dict, path: str):
+    """
+    saves the dictionary to the file directed by the path \n
+    data: dict: the dictionary to be saved \n
+    path: str: the file path to the file the dictionary is going to be saved
+    """
+    with open(path, "wb") as f:
+        pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+
+def loadDictFromFile(path: str):
+    """
+    returns the dictionary that is saved in the file \n
+    path: str: the path taken to the file of the dictionary
+    """
+    with open(path, "rb") as f:
+        return pickle.load(f)
 
 # Cell
-def genSchema(inputDict:dict, format_='yaml')->(dict,str):
-  '''
-  generate a json schema from dict \n
-  format: return schema in json or yaml, 'both' can be inputted to return a tuple of (json, yaml), output = dict or str, default = 'yaml' \n
-  inputDict: dict: the dict inputted to be used to generate the schema
-  '''
-  from genson import SchemaBuilder
-  import yaml
-  builder = SchemaBuilder()
-  builder.add_object(inputDict)
-  schema = builder.to_schema()
-  if format_=='yaml':
-    return yaml.dump(schema)
-  elif format_ == 'json':
-    return schema
-  elif format_ == 'both':
-    return schema, yaml.dump(schema)
-  else:
-    return schema, yaml.dump(schema)
+def saveStringToFile(data: str, path: str):
+    """
+    saves the string to the file directed by the path \n
+    data: str: the string to be saved \n
+    path: str: the file path to the file the string is going to be saved
+    """
+    with open(path, "w") as f:
+        f.write(data)
+
+
+def loadStringFromFile(path: str):
+    """
+    returns the string that is saved in the file \n
+    path: str: the path taken to the file of the string
+    """
+    with open(path, "r") as f:
+        return f.read()
+
+# Cell
+def genSchema(inputDict: dict, format_="yaml") -> (dict, str):
+    """
+    generate a json schema from dict \n
+    format: return schema in json or yaml, 'both' can be inputted to return a tuple of (json, yaml), output = dict or str, default = 'yaml' \n
+    inputDict: dict: the dict inputted to be used to generate the schema
+    """
+    from genson import SchemaBuilder
+    import yaml
+
+    builder = SchemaBuilder()
+    builder.add_object(inputDict)
+    schema = builder.to_schema()
+    if format_ == "yaml":
+        return yaml.dump(schema)
+    elif format_ == "json":
+        return schema
+    elif format_ == "both":
+        return schema, yaml.dump(schema)
+    else:
+        return schema, yaml.dump(schema)
+
+# Cell
+def printYaml(input_: dict, returnYaml=False) -> (str, None):
+    yamlStr: str = yaml.dump(input_)
+    print(yamlStr)
+    if returnYaml:
+        return yamlStr
 
 # Cell
 @beartype
-def printYaml(input_:dict, returnYaml = False)->(str, None):
-  yamlStr:str =  yaml.dump(input_)
-  print(yamlStr)
-  if returnYaml:
-    return yamlStr
-
-# Cell
-@beartype
-def loadYaml(path:str, loader = yaml.FullLoader)->dict:
-  '''load yaml string
+def loadYaml(path: str, loader=yaml.FullLoader) -> dict:
+    """load yaml string
     input:
       path:str: path of the data to load
     return:
       diet of the yaml
 
-  '''
-  with open(path) as f:
-    r = yaml.load(f.read(), Loader = loader)
-  return r
+    """
+    with open(path) as f:
+        r = yaml.load(f.read(), Loader=loader)
+    return r
 
 # Cell
 @beartype
-def writeYaml(path:str, data:dict):
-  with open(path, 'w') as f:
-    f.write(yaml.dump(data))
-
+def writeYaml(path: str, data: dict):
+    with open(path, "w") as f:
+        f.write(yaml.dump(data))
 
 # Cell
 import functools
 import json
 import ujson
 import pickle
+
+
 def hash_dict(func):
     """Transform mutable dictionnary
     Into immutable
     Useful to be compatible with cache
     """
+
     class HDict(dict):
         def __hash__(self):
-          return hash(ujson.dumps(self, sort_keys=True))
-#           return hash(tuple(frozenset(sorted(self.items()))))
-#           print(self)
-#           return hash(hashDict(self))
-#             return hash(frozenset(self.items()))
+            return hash(ujson.dumps(self, sort_keys=True))
+
+    #           return hash(tuple(frozenset(sorted(self.items()))))
+    #           print(self)
+    #           return hash(hashDict(self))
+    #             return hash(frozenset(self.items()))
 
     @functools.wraps(func)
     def wrapped(*args, **kwargs):
         args = tuple([HDict(arg) if isinstance(arg, dict) else arg for arg in args])
         kwargs = {k: HDict(v) if isinstance(v, dict) else v for k, v in kwargs.items()}
         return func(*args, **kwargs)
+
     return wrapped
 
 # Cell
 import collections
+
+
 def deepUpdate(d, u):
     for k, v in u.items():
         if isinstance(d, collections.Mapping):
