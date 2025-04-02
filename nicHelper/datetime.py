@@ -4,7 +4,7 @@ __all__ = ["datestamp", "stringToTimestamp"]
 
 
 # Cell
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 
 
 def datestamp(dt: datetime = datetime.now(timezone.utc), tz=timezone.utc) -> int:
