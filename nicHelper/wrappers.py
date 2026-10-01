@@ -39,7 +39,6 @@ def add_class_method(cls):
   a decorator that allows you to add class method to a class
   '''
   def decorator(func):
-      @wraps(func)
       @classmethod
       def wrapper(cls, *args, **kwargs):
           return func( cls, *args, **kwargs)

@@ -41,8 +41,11 @@ def githubGetYaml(url:str, token:Optional[str])->dict:
 # Cell
 @beartype
 def githubImportModule(url:str, token:Optional[str], path='/tmp/inputfile', sourceName='schema')->Any:
-  import imp
+  import importlib.util
   r = requests.get(url, headers={'Authorization': 'token '+token})
   with open(path, 'w') as f:
     f.write(r.text)
-  return imp.load_source(sourceName, path)
+  spec = importlib.util.spec_from_file_location(sourceName, path)
+  module = importlib.util.module_from_spec(spec)
+  spec.loader.exec_module(module)
+  return module

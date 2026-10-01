@@ -1,8 +1,35 @@
+#!/usr/bin/env python3
+"""
+Tests for the github module.
+"""
+
 import pytest
 import json
 import yaml
 import os
+from unittest.mock import Mock
+from requests.models import Response
 from nicHelper.github import githubGet, githubGetYaml, githubImportModule
+
+
+class MockResponse(Response):
+    def __init__(self, content, status_code=200):
+        super().__init__()
+        self._content = content
+        self.status_code = status_code
+        self._text = content.decode() if isinstance(content, bytes) else str(content)
+    
+    @property
+    def text(self):
+        return self._text
+    
+    @property
+    def content(self):
+        return self._content
+    
+    def json(self):
+        import json
+        return json.loads(self.text)
 
 
 def test_github_get(monkeypatch):

@@ -1,24 +1,43 @@
+#!/usr/bin/env python3
+"""
+Tests for the yamlUtil module.
+"""
+
 import pytest
 import yaml
+import tempfile
 import os
-from nicHelper.yamlUtil import loadYamlUrl, loadYaml, saveYaml
+from nicHelper.yamlUtil import saveYaml, loadYaml, loadYamlUrl
 
 
-def test_save_yaml(temp_yaml_file):
+class MockResponse:
+    def __init__(self, content, status_code=200):
+        self.content = content
+        self.status_code = status_code
+    
+    def json(self):
+        import json
+        return json.loads(self.content)
+
+
+def test_save_yaml(tmp_path):
     """Test saving a dictionary to a YAML file"""
     test_data = {"key1": "value1", "key2": {"nested_key": [1, 2, 3]}}
-
+    
+    # Create a temporary file path
+    temp_yaml_file = tmp_path / "test.yaml"
+    
     # Save to YAML file
-    saveYaml(test_data, temp_yaml_file)
-
+    saveYaml(test_data, str(temp_yaml_file))
+    
     # Verify file exists and has content
-    assert os.path.exists(temp_yaml_file)
-    assert os.path.getsize(temp_yaml_file) > 0
-
-    # Load YAML from file using Python's yaml library for verification
-    with open(temp_yaml_file, "r") as f:
+    assert temp_yaml_file.exists()
+    assert temp_yaml_file.stat().st_size > 0
+    
+    # Load and verify content
+    with open(temp_yaml_file, 'r') as f:
         loaded_data = yaml.safe_load(f)
-
+    
     assert loaded_data == test_data
 
 

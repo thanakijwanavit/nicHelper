@@ -10,6 +10,8 @@ __all__ = [
     "createData",
     "getData",
     "updateData",
+    "DaxModelWrapper",
+    "pynamodbdax",
 ]
 
 # Cell
@@ -24,6 +26,7 @@ from jsonschema import ValidationError
 from typing import Optional
 from .schema import validateUrl
 from beartype import beartype
+from functools import wraps
 
 
 # Cell
@@ -331,3 +334,534 @@ def updateData(
 
     except Exception as e:  # error handle
         return Response.returnError(f"unknown error \n {e} \n errorString())")
+
+
+
+
+"""
+DAX Model Wrapper for PynamoDB
+Provides automatic DAX caching with fallback to PynamoDB
+"""
+# Safe DAX imports - these won't prevent the module from loading
+_DAX_AVAILABLE = False
+_AmazonDaxClient = None
+_sentry_sdk = None
+
+try:
+    from amazondax import AmazonDaxClient as _AmazonDaxClient
+    import sentry_sdk as _sentry_sdk
+    _DAX_AVAILABLE = True
+except (ImportError, ModuleNotFoundError) as e:
+    # DAX dependencies not available - this is normal and expected
+    if "typing.io" in str(e):
+        print(f"Warning: amazon-dax-client not compatible with Python 3.13: {e}")
+    _DAX_AVAILABLE = False
+except Exception as e:
+    # Handle other compatibility issues
+    print(f"Warning: amazon-dax-client import failed: {e}")
+    _DAX_AVAILABLE = False
+
+T = TypeVar("T", bound=Model)
+
+
+def _pynamodbdax_decorator():
+    """
+    Decorator to add DAX functionality to any PynamoDB model.
+
+    Usage:
+        @pynamodbdax
+        class MyModel(Model):
+            class Meta:
+                table_name = "my-table"
+                region = "ap-southeast-1"
+                dax_endpoint = "my-dax-endpoint.amazonaws.com:8111"
+            ...
+    """
+    def decorator(model_class):
+        if not issubclass(model_class, Model):
+            raise TypeError("pynamodbdax decorator can only be applied to PynamoDB Model classes")
+
+        # Get DAX configuration from Meta class
+        meta = getattr(model_class, "Meta", None)
+        
+        if not meta or not hasattr(meta, "dax_endpoint"):
+            raise ValueError("DAX endpoint must be specified in Meta.dax_endpoint")
+        
+        # Use Meta class configuration
+        model_class.DAX_ENDPOINT = getattr(meta, "dax_endpoint")
+        model_class.DAX_REGION = getattr(meta, "region", "us-east-1")  # Default region if not specified
+
+        # Store original save method
+        original_save = model_class.save
+
+        def save_with_dax_invalidation(self, **kwargs):
+            # Call recordTime if the model has it (like SuperModel)
+            if hasattr(self, 'recordTime'):
+                self.recordTime()
+            
+            if not _DAX_AVAILABLE:
+                result = original_save(self, **kwargs)
+                return result
+            
+            try:
+                # Use DAX for saving
+                dax_client = _AmazonDaxClient.resource(
+                    endpoint_url=self.DAX_ENDPOINT,
+                    region_name=self.DAX_REGION,
+                )
+                table = dax_client.Table(self.Meta.table_name)
+                
+                # Build item dictionary from model attributes
+                item_dict = {}
+                for attr_name, attr in self._attributes.items():
+                    if hasattr(self, attr_name):
+                        value = getattr(self, attr_name)
+                        if value is not None:
+                            item_dict[attr_name] = value
+                
+                # Use put_item for saving
+                table.put_item(Item=item_dict)
+                return self
+                
+            except Exception as e:
+                if _sentry_sdk:
+                    _sentry_sdk.capture_exception(e)
+                print(f"DAX save failed, falling back to PynamoDB: {e}")
+                # Fallback to PynamoDB
+                result = original_save(self, **kwargs)
+                return result
+
+        def _invalidate_dax_cache(self):
+            if not _DAX_AVAILABLE:
+                return
+            try:
+                dax_client = _AmazonDaxClient.resource(
+                    endpoint_url=self.DAX_ENDPOINT,
+                    region_name=self.DAX_REGION,
+                )
+                table = dax_client.Table(self.Meta.table_name)
+                hash_key_name = self._hash_keyname
+                hash_key_value = getattr(self, hash_key_name)
+                range_key_name = self._range_keyname
+                key_dict = {hash_key_name: hash_key_value}
+                if range_key_name:
+                    range_key_value = getattr(self, range_key_name)
+                    key_dict[range_key_name] = range_key_value
+                table.get_item(Key=key_dict)
+            except Exception as e:
+                if _sentry_sdk:
+                    _sentry_sdk.capture_exception(e)
+                print(f"DAX cache invalidation failed: {e}")
+
+        @classmethod
+        def get_with_dax(cls: Type[T], hash_key: Any, range_key: Optional[Any] = None) -> Optional[T]:
+            if not _DAX_AVAILABLE:
+                return cls.get(hash_key, range_key=range_key)
+            try:
+                dax_client = _AmazonDaxClient.resource(
+                    endpoint_url=cls.DAX_ENDPOINT,
+                    region_name=cls.DAX_REGION,
+                )
+                table = dax_client.Table(cls.Meta.table_name)
+                hash_key_name = cls._hash_keyname
+                key_dict = {hash_key_name: hash_key}
+                if range_key is not None:
+                    range_key_name = cls._range_keyname
+                    if range_key_name:
+                        key_dict[range_key_name] = range_key
+                response = table.get_item(Key=key_dict)
+                if "Item" in response:
+                    item = response["Item"]
+                    print(f"[DAX DEBUG] DAX item: {item}")
+                    # Create instance and set attributes manually
+                    instance = cls()
+                    for attr_name, attr_value in item.items():
+                        if hasattr(instance, attr_name):
+                            setattr(instance, attr_name, attr_value)
+                    print(f"[DAX DEBUG] Instance after DAX: {instance}")
+                    return instance
+                else:
+                    return None
+            except Exception as e:
+                if _sentry_sdk:
+                    _sentry_sdk.capture_exception(e)
+                print(f"DAX read failed, falling back to PynamoDB: {e}")
+                return cls.get(hash_key, range_key=range_key)
+
+        @classmethod
+        def query_with_dax(cls: Type[T], hash_key: Any, **kwargs) -> list[T]:
+            if not _DAX_AVAILABLE:
+                return list(cls.query(hash_key, **kwargs))
+            try:
+                dax_client = _AmazonDaxClient.resource(
+                    endpoint_url=cls.DAX_ENDPOINT,
+                    region_name=cls.DAX_REGION,
+                )
+                table = dax_client.Table(cls.Meta.table_name)
+                hash_key_name = cls._hash_keyname
+                query_params = {
+                    "KeyConditionExpression": f"{hash_key_name} = :hash_key",
+                    "ExpressionAttributeValues": {":hash_key": hash_key},
+                }
+                if "range_key_condition" in kwargs:
+                    query_params["KeyConditionExpression"] += f' AND {kwargs["range_key_condition"]}'
+                if "filter_expression" in kwargs:
+                    query_params["FilterExpression"] = kwargs["filter_expression"]
+                if "limit" in kwargs:
+                    query_params["Limit"] = kwargs["limit"]
+                response = table.query(**query_params)
+                instances = []
+                for item in response.get("Items", []):
+                    instance = cls()
+                    for attr_name, attr_value in item.items():
+                        if hasattr(instance, attr_name):
+                            setattr(instance, attr_name, attr_value)
+                    instances.append(instance)
+                return instances
+            except Exception as e:
+                if _sentry_sdk:
+                    _sentry_sdk.capture_exception(e)
+                print(f"DAX query failed, falling back to PynamoDB: {e}")
+                return list(cls.query(hash_key, **kwargs))
+
+        @classmethod
+        def scan_with_dax(cls: Type[T], **kwargs) -> list[T]:
+            if not _DAX_AVAILABLE:
+                return list(cls.scan(**kwargs))
+            try:
+                dax_client = _AmazonDaxClient.resource(
+                    endpoint_url=cls.DAX_ENDPOINT,
+                    region_name=cls.DAX_REGION,
+                )
+                table = dax_client.Table(cls.Meta.table_name)
+                scan_params = {}
+                if "filter_expression" in kwargs:
+                    scan_params["FilterExpression"] = kwargs["filter_expression"]
+                if "limit" in kwargs:
+                    scan_params["Limit"] = kwargs["limit"]
+                response = table.scan(**scan_params)
+                instances = []
+                for item in response.get("Items", []):
+                    instance = cls()
+                    for attr_name, attr_value in item.items():
+                        if hasattr(instance, attr_name):
+                            setattr(instance, attr_name, attr_value)
+                    instances.append(instance)
+                return instances
+            except Exception as e:
+                if _sentry_sdk:
+                    _sentry_sdk.capture_exception(e)
+                print(f"DAX scan failed, falling back to PynamoDB: {e}")
+                return list(cls.scan(**kwargs))
+
+        model_class.save = save_with_dax_invalidation
+        model_class._invalidate_dax_cache = _invalidate_dax_cache
+        model_class.get_with_dax = get_with_dax
+        model_class.query_with_dax = query_with_dax
+        model_class.scan_with_dax = scan_with_dax
+        return model_class
+    return decorator
+
+def pynamodbdax(model_class):
+    """
+    Decorator to add DAX functionality to any PynamoDB model.
+    
+    The model must have dax_endpoint specified in its Meta class.
+    
+    Example:
+        @pynamodbdax
+        class MyModel(Model):
+            class Meta:
+                table_name = "my-table"
+                region = "us-east-1"
+                dax_endpoint = "my-dax-cluster.dax.us-east-1.cache.amazonaws.com:8111"
+    """
+    return _pynamodbdax_decorator()(model_class)
+
+
+class DaxModelWrapper(Model):
+    """
+    Wrapper for PynamoDB Model that provides automatic DAX caching.
+    
+    This class is now deprecated in favor of the @pynamodbdax decorator.
+    Use the decorator pattern instead:
+    
+    @pynamodbdax
+    class MyModel(Model):
+        class Meta:
+            table_name = "my-table"
+            region = "us-east-1"
+            dax_endpoint = "my-dax-endpoint.amazonaws.com:8111"
+        # Your model definition here
+        pass
+    """
+
+    # DAX configuration - must be overridden in your model's Meta class
+    # DAX_ENDPOINT and DAX_REGION will be set from Meta class
+
+    def save(self, **kwargs):
+        """Override save to use DAX when available, with fallback to PynamoDB"""
+        if not _DAX_AVAILABLE:
+            return super().save(**kwargs)
+        
+        try:
+            # Get DAX configuration from Meta class
+            dax_endpoint = getattr(self.Meta, "dax_endpoint", None)
+            if not dax_endpoint:
+                raise ValueError("DAX endpoint must be specified in Meta.dax_endpoint")
+            
+            dax_region = getattr(self.Meta, "region", "us-east-1")
+            
+            # Use DAX for saving
+            dax_client = _AmazonDaxClient.resource(
+                endpoint_url=dax_endpoint,
+                region_name=dax_region,
+            )
+            table = dax_client.Table(self.Meta.table_name)
+            
+            # Build item dictionary from model attributes
+            item_dict = {}
+            for attr_name, attr in self._attributes.items():
+                if hasattr(self, attr_name):
+                    value = getattr(self, attr_name)
+                    if value is not None:
+                        item_dict[attr_name] = value
+            
+            # Use put_item for saving
+            table.put_item(Item=item_dict)
+            return self
+            
+        except Exception as e:
+            if _sentry_sdk:
+                _sentry_sdk.capture_exception(e)
+            print(f"DAX save failed, falling back to PynamoDB: {e}")
+            # Fallback to PynamoDB
+            return super().save(**kwargs)
+
+    def _invalidate_dax_cache(self):
+        """Invalidate DAX cache for this item"""
+        if not _DAX_AVAILABLE:
+            return
+
+        try:
+            # Get DAX configuration from Meta class
+            dax_endpoint = getattr(self.Meta, "dax_endpoint", None)
+            if not dax_endpoint:
+                return  # No DAX endpoint configured
+            
+            dax_region = getattr(self.Meta, "region", "us-east-1")
+            
+            dax_client = _AmazonDaxClient.resource(
+                endpoint_url=dax_endpoint,
+                region_name=dax_region,
+            )
+            table = dax_client.Table(self.Meta.table_name)
+
+            # Get the hash key value
+            hash_key_name = self._get_hash_key_name()
+            hash_key_value = getattr(self, hash_key_name)
+
+            # Get range key if it exists
+            range_key_name = self._get_range_key_name()
+            key_dict = {hash_key_name: hash_key_value}
+
+            if range_key_name:
+                range_key_value = getattr(self, range_key_name)
+                key_dict[range_key_name] = range_key_value
+
+            # This will invalidate the cache for this specific item
+            table.get_item(Key=key_dict)
+
+        except Exception as e:
+            if _sentry_sdk:
+                _sentry_sdk.capture_exception(e)
+            print(f"DAX cache invalidation failed: {e}")
+
+    @classmethod
+    def get_with_dax(
+        cls: Type[T], hash_key: Any, range_key: Optional[Any] = None
+    ) -> Optional[T]:
+        """
+        Get item using DAX for caching, with fallback to PynamoDB
+
+        Args:
+            hash_key: The hash key value
+            range_key: The range key value (if applicable)
+
+        Returns:
+            Model instance or None if not found
+        """
+        if not _DAX_AVAILABLE:
+            # Fallback to PynamoDB
+            return cls.get(hash_key, range_key=range_key)
+
+        try:
+            # Get DAX configuration from Meta class
+            dax_endpoint = getattr(cls.Meta, "dax_endpoint", None)
+            if not dax_endpoint:
+                raise ValueError("DAX endpoint must be specified in Meta.dax_endpoint")
+            
+            dax_region = getattr(cls.Meta, "region", "us-east-1")
+            
+            dax_client = _AmazonDaxClient.resource(
+                endpoint_url=dax_endpoint,
+                region_name=dax_region,
+            )
+            table = dax_client.Table(cls.Meta.table_name)
+
+            # Build key dictionary
+            hash_key_name = cls._get_hash_key_name()
+            key_dict = {hash_key_name: hash_key}
+
+            if range_key is not None:
+                range_key_name = cls._get_range_key_name()
+                if range_key_name:
+                    key_dict[range_key_name] = range_key
+
+            response = table.get_item(Key=key_dict)
+
+            if "Item" in response:
+                item = response["Item"]
+                # Create instance and populate from DAX response
+                instance = cls()
+                for attr_name, attr_value in item.items():
+                    if hasattr(instance, attr_name):
+                        setattr(instance, attr_name, attr_value)
+                return instance
+            else:
+                return None
+
+        except Exception as e:
+            if _sentry_sdk:
+                _sentry_sdk.capture_exception(e)
+            print(f"DAX read failed, falling back to PynamoDB: {e}")
+            # Fallback to PynamoDB
+            return cls.get(hash_key, range_key=range_key)
+
+    @classmethod
+    def query_with_dax(cls: Type[T], hash_key: Any, **kwargs) -> list[T]:
+        """
+        Query items using DAX for caching, with fallback to PynamoDB
+
+        Args:
+            hash_key: The hash key value
+            **kwargs: Additional query parameters
+
+        Returns:
+            List of model instances
+        """
+        if not _DAX_AVAILABLE:
+            # Fallback to PynamoDB
+            return list(cls.query(hash_key, **kwargs))
+
+        try:
+            # Get DAX configuration from Meta class
+            dax_endpoint = getattr(cls.Meta, "dax_endpoint", None)
+            if not dax_endpoint:
+                raise ValueError("DAX endpoint must be specified in Meta.dax_endpoint")
+            
+            dax_region = getattr(cls.Meta, "region", "us-east-1")
+            
+            dax_client = _AmazonDaxClient.resource(
+                endpoint_url=dax_endpoint,
+                region_name=dax_region,
+            )
+            table = dax_client.Table(cls.Meta.table_name)
+
+            hash_key_name = cls._get_hash_key_name()
+
+            # Build query parameters
+            query_params = {
+                "KeyConditionExpression": f"{hash_key_name} = :hash_key",
+                "ExpressionAttributeValues": {":hash_key": hash_key},
+            }
+
+            # Add additional kwargs to query params
+            if "range_key_condition" in kwargs:
+                query_params[
+                    "KeyConditionExpression"
+                ] += f' AND {kwargs["range_key_condition"]}'
+
+            if "filter_expression" in kwargs:
+                query_params["FilterExpression"] = kwargs["filter_expression"]
+
+            if "limit" in kwargs:
+                query_params["Limit"] = kwargs["limit"]
+
+            response = table.query(**query_params)
+
+            # Convert DAX response to model instances
+            instances = []
+            for item in response.get("Items", []):
+                instance = cls()
+                for attr_name, attr_value in item.items():
+                    if hasattr(instance, attr_name):
+                        setattr(instance, attr_name, attr_value)
+                instances.append(instance)
+
+            return instances
+
+        except Exception as e:
+            if _sentry_sdk:
+                _sentry_sdk.capture_exception(e)
+            print(f"DAX query failed, falling back to PynamoDB: {e}")
+            # Fallback to PynamoDB
+            return list(cls.query(hash_key, **kwargs))
+
+    @classmethod
+    def scan_with_dax(cls: Type[T], **kwargs) -> list[T]:
+        """
+        Scan items using DAX for caching, with fallback to PynamoDB
+
+        Args:
+            **kwargs: Additional scan parameters
+
+        Returns:
+            List of model instances
+        """
+        if not _DAX_AVAILABLE:
+            # Fallback to PynamoDB
+            return list(cls.scan(**kwargs))
+
+        try:
+            # Get DAX configuration from Meta class
+            dax_endpoint = getattr(cls.Meta, "dax_endpoint", None)
+            if not dax_endpoint:
+                raise ValueError("DAX endpoint must be specified in Meta.dax_endpoint")
+            
+            dax_region = getattr(cls.Meta, "region", "us-east-1")
+            
+            dax_client = _AmazonDaxClient.resource(
+                endpoint_url=dax_endpoint,
+                region_name=dax_region,
+            )
+            table = dax_client.Table(cls.Meta.table_name)
+
+            # Build scan parameters
+            scan_params = {}
+
+            if "filter_expression" in kwargs:
+                scan_params["FilterExpression"] = kwargs["filter_expression"]
+
+            if "limit" in kwargs:
+                scan_params["Limit"] = kwargs["limit"]
+
+            response = table.scan(**scan_params)
+
+            # Convert DAX response to model instances
+            instances = []
+            for item in response.get("Items", []):
+                instance = cls()
+                for attr_name, attr_value in item.items():
+                    if hasattr(instance, attr_name):
+                        setattr(instance, attr_name, attr_value)
+                instances.append(instance)
+
+            return instances
+
+        except Exception as e:
+            if _sentry_sdk:
+                _sentry_sdk.capture_exception(e)
+            print(f"DAX scan failed, falling back to PynamoDB: {e}")
+            # Fallback to PynamoDB
+            return list(cls.scan(**kwargs))

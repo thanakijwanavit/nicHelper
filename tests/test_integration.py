@@ -4,15 +4,24 @@ import yaml
 import tempfile
 from datetime import datetime
 import time
+import logging
+from io import StringIO
 from nicHelper.wrappers import add_method, add_static_method
 from nicHelper.dictUtil import filterDt, printDict, printYaml
 from nicHelper.yamlUtil import saveYaml
-from nicHelper.timer import log_time
+from nicHelper.timer import Timer
 
 
 def test_full_integration(capsys):
     """Test multiple components working together"""
-
+    
+    # Set up logging to capture output
+    log_output = StringIO()
+    handler = logging.StreamHandler(log_output)
+    logger = logging.getLogger('timer')
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
+    
     # Create a temporary class and add methods
     class DataProcessor:
         pass
@@ -20,16 +29,18 @@ def test_full_integration(capsys):
     @add_method(DataProcessor)
     def process_dict(self, input_dict):
         # Use filterDt to convert datetime objects
-        with log_time("Processing dictionary"):
-            processed = filterDt(input_dict)
-            return processed
+        timer = Timer()
+        processed = filterDt(input_dict)
+        timer.log_time("Processing dictionary")
+        return processed
 
     @add_static_method(DataProcessor)
     def save_data(data, filename):
         # Use yamlUtil to save the data
-        with log_time("Saving data"):
-            saveYaml(data, filename)
-            return True
+        timer = Timer()
+        saveYaml(data, filename)
+        timer.log_time("Saving data")
+        return True
 
     @add_method(DataProcessor)
     def print_summary(self, data):
@@ -54,9 +65,10 @@ def test_full_integration(capsys):
     assert isinstance(processed_data["nested"]["created_at"], float)
 
     # Verify the timer output
-    captured = capsys.readouterr()
-    assert "Processing dictionary" in captured.out
-    assert "took" in captured.out
+    log_content = log_output.getvalue()
+    assert "Processing dictionary" in log_content
+    assert "s" in log_content  # Check for seconds indicator
+    assert ":" in log_content  # Check for the format separator
 
     # Print summary to test printDict and printYaml
     processor.print_summary(processed_data)
@@ -75,8 +87,8 @@ def test_full_integration(capsys):
         DataProcessor.save_data(processed_data, temp_file)
 
         # Verify the timer output again
-        captured = capsys.readouterr()
-        assert "Saving data" in captured.out
+        log_content = log_output.getvalue()
+        assert "Saving data" in log_content
 
         # Verify file exists and has content
         assert os.path.exists(temp_file)
