@@ -11,7 +11,7 @@ import yaml, requests
 # Cell
 @beartype
 def getDistanceOsrm(lat1:float, lon1:float, lat2:float, lon2:float,
-                    osrmEndpoint = 'http://router.project-osrm.org')->float:
+                    osrmEndpoint = 'https://router.project-osrm.org')->float:
   '''
     get driving distance between 2 points using osrm url
   '''

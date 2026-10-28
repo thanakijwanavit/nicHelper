@@ -35,14 +35,15 @@ def githubGetYaml(url:str, token:Optional[str])->dict:
   '''
   import yaml
   r = githubGet(url, token)
-  return yaml.load(r.text,Loader=yaml.FullLoader)
+  return yaml.safe_load(r.text)
 
 
 # Cell
 @beartype
 def githubImportModule(url:str, token:Optional[str], path='/tmp/inputfile', sourceName='schema')->Any:
-  import imp
-  r = requests.get(url, headers={'Authorization': 'token '+token})
-  with open(path, 'w') as f:
-    f.write(r.text)
-  return imp.load_source(sourceName, path)
+  '''
+    removed: this used to download a python file from github and run it.
+    vendor the module into your package and import it instead.
+  '''
+  raise NotImplementedError('githubImportModule was removed because it downloaded and ran remote code; '
+                            'vendor the module into your package and import it instead')

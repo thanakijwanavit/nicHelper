@@ -37,6 +37,7 @@ def loadAwsPw(path = '/content/drive/MyDrive/.awskey',
               password:Optional[bytes] = b'' )->Optional[Tuple[bytes,bytes]]:
   '''
     load key and secret from path
+    the file is unpickled: only load the file you saved yourself with saveAwsPw, never untrusted input
   '''
   print( f'loading password from {path}')
 

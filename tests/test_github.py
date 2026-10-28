@@ -46,30 +46,16 @@ def test_github_get_yaml(monkeypatch, yaml_content):
 
 
 def test_github_import_module(monkeypatch, tmp_path):
-    """Test the githubImportModule function"""
-    # Create a test Python file content
-    py_content = """
-def test_function():
-    return "Hello from imported module"
-    
-CONSTANT = "Test Constant"
-"""
+    """githubImportModule no longer downloads and runs remote code"""
 
-    # Mock the requests.get function
     def mock_get(*args, **kwargs):
-        return MockResponse(py_content.encode())
+        raise AssertionError("githubImportModule must not fetch anything")
 
-    # Apply the monkeypatch
     monkeypatch.setattr("requests.get", mock_get)
+    test_path = tmp_path / "test_module.py"
 
-    # Test path for the module
-    test_path = str(tmp_path / "test_module.py")
-
-    # Test the function
-    module = githubImportModule(
-        "https://example.com", "fake_token", path=test_path, sourceName="test_module"
-    )
-
-    # Verify the module was imported correctly
-    assert module.test_function() == "Hello from imported module"
-    assert module.CONSTANT == "Test Constant"
+    with pytest.raises(NotImplementedError):
+        githubImportModule(
+            "https://example.com", "fake_token", path=str(test_path), sourceName="test_module"
+        )
+    assert not test_path.exists()

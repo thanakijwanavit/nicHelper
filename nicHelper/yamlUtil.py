@@ -7,7 +7,7 @@ from beartype import beartype
 import yaml, requests
 
 # Cell
-def loadYamlUrl(url:str, headers:dict = {}, loader=yaml.FullLoader)->dict:
+def loadYamlUrl(url:str, headers:dict = {}, loader=yaml.SafeLoader)->dict:
   '''
     load yaml from url as a dictionary for example:
       testUrl = 'https://raw.githubusercontent.com/thanakijwanavit/villaMasterSchema/dev/coupon/testData/buyXGetY.yaml'
@@ -15,7 +15,7 @@ def loadYamlUrl(url:str, headers:dict = {}, loader=yaml.FullLoader)->dict:
     input:
       url:str: url of the file
       headers:Optional[dict]:headers
-      loader:yaml.Loader: optional yaml loader default is yaml.FullLoader
+      loader:yaml.Loader: optional yaml loader default is yaml.SafeLoader
     response:
       dict: yaml load of the file
   '''
@@ -26,7 +26,7 @@ def loadYamlUrl(url:str, headers:dict = {}, loader=yaml.FullLoader)->dict:
 # Cell
 @beartype
 def loadYaml(path:str)->dict:
-  return yaml.load(open(path).read(), Loader=yaml.FullLoader)
+  return yaml.safe_load(open(path).read())
 
 # Cell
 @beartype

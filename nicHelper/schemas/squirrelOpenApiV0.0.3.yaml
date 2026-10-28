@@ -1,0 +1,678 @@
+openapi: '3.0.0'
+info:
+  title: SquirrelVL API
+  description: >
+    SquirrelVL API is a collection of endpoints that support the Squirrel
+    VanLife application.
+  version: '0.0.1'
+servers:
+  - url: https://api.nicesquirrel.com
+    description: Production API server
+paths:
+  '/locations':
+    get:
+      tags:
+        - Locations
+      summary: Retrieves all locations
+      description: Retrieves a complete set of locations
+      operationId: getLocations
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+  '/location/{id}':
+    get:
+      tags:
+        - Locations
+      summary: Retrieve a single location
+      description: Retrieves the location with the given id
+      operationId: getLocation
+      parameters:
+        - in: path
+          name: id
+          description: UUID of the location to retrieve
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '400':
+          description: 'Invalid id supplied'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: 'Location not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+  '/location':
+    post: 
+      tags: 
+        - Locations
+      summary: Create a new location
+      description: Creates a new location with the given properties
+      operationId: createLocation
+      requestBody:
+        description: "Location object that needs to be created"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Location"
+      responses:
+        '201':
+          description: 'Location {id} created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '422':
+          description: 'Validation exception'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+    put: 
+      tags: 
+        - Locations
+      summary: Update an existing location
+      description: Updates an existing location, if found by the given id
+      operationId: updateLocation
+      requestBody:
+          description: "Location object that needs to be updated"
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Location"
+      responses:
+        '204':
+          description: 'Location updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: 'Invalid id supplied'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: 'Location not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '422':
+          description: 'Validation exception'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+  '/reservations':
+    get:
+      tags:
+        - Reservations
+      summary: Retrieves all reservations
+      description: Retrieves a complete set of reservations
+      operationId: getReservations
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservation'
+  '/reservation/{id}':
+    get:
+      tags:
+        - Reservations
+      summary: Retrieve a single reservations
+      description: Retrieves the reservations with the given id
+      operationId: getReservation
+      parameters:
+        - in: path
+          name: id
+          description: UUID of the reservation to retrieve
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 'OK'
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '400':
+          description: 'Invalid id supplied'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: 'Location not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+  '/reservation':
+    post: 
+      tags: 
+        - Reservations
+      summary: Create a new reservation
+      description: Creates a new reservation with the given properties
+      operationId: createReservation
+      requestBody:
+        description: "Reservation object that needs to be created"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Reservation"
+      responses:
+        '201':
+          description: 'Reservation {id} created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '422':
+          description: 'Validation exception'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+    put: 
+      tags: 
+        - Reservations
+      summary: Update an existing reservation
+      description: Updates an existing reservation, if found by the given id
+      operationId: updateReservation
+      requestBody:
+        description: "Reservation object that needs to be updated"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Reservation"
+      responses:
+        '204':
+          description: 'Reservation updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: 'Invalid id supplied'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: 'Reservation not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '422':
+          description: 'Validation exception'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+  '/users':
+    get:
+      tags:
+        - Users
+      summary: Retrieves all users
+      description: Retrieves a complete set of users
+      operationId: getUsers
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  '/user/{id}':
+    get:
+      tags:
+        - Users
+      summary: Retrieve a single user
+      description: Retrieves the user with the given id
+      operationId: getUser
+      parameters:
+        - in: path
+          name: id
+          description: UUID of the user to retrieve
+          required: true
+          content:
+            application/json:
+              schema:
+                type: string
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'Invalid id supplied'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: 'User not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+  '/user':
+    post: 
+      tags: 
+        - Users
+      summary: Create a new user
+      description: Creates a new user with the given properties
+      operationId: createUser
+      requestBody:
+        description: "User object that needs to be created"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        '201':
+          description: 'User created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '422':
+          description: 'Validation exception'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+    put: 
+      tags: 
+        - Users
+      summary: Update an existing user
+      description: Updates an existing user, if found by the given id
+      operationId: updateUser
+      requestBody:
+        description: "User object that needs to be updated"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        '204':
+          description: 'User updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: 'Invalid id supplied'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: 'User not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '422':
+          description: 'Validation exception'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+  '/vans':
+    get:
+      tags:
+        - Vans
+      summary: Retrieves all vans
+      description: Retrieves a complete set of vans
+      operationId: getVans
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Van'
+  '/van/{id}':
+    get:
+      tags:
+        - Vans
+      summary: Retrieve a single van
+      description: Retrieves the van with the given id
+      operationId: getVan
+      parameters:
+        - in: path
+          name: id
+          description: UUID of the van to retrieve
+          required: true
+          content:
+            application/json:
+              schema:
+                type: string
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Van'
+        '400':
+          description: 'Invalid id supplied'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: 'Van not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+  '/van':
+    post: 
+      tags: 
+        - Vans
+      summary: Create a new van
+      description: Creates a new van with the given properties
+      operationId: createVan
+      requestBody:
+        description: "Van object that needs to be created"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Van"
+      responses:
+        '201':
+          description: 'Van {id} created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '422':
+          description: 'Validation exception'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+    put: 
+      tags: 
+        - Vans
+      summary: Update an existing van
+      description: Updates an existing van, if found by the given id
+      operationId: updateVan
+      requestBody:
+        description: "Van object that needs to be updated"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Van"
+      responses:
+        '204':
+          description: 'Van updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: 'Invalid id supplied'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '404':
+          description: 'Van not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '422':
+          description: 'Validation exception'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+components:
+  schemas: 
+    Location:
+      type: object
+      required:
+        - id
+        - type
+        - street_address
+        - city
+        - state
+        - zip
+        - capacity
+        - status
+      properties:
+        id:
+          type: string
+          format: uuid
+        type: 
+          type: string
+          enum:
+            - pick up
+            - drop off
+            - overnight
+        street_address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+          pattern: '^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY]))$'
+        zip:
+          type: string
+          pattern: '(^\d{5}$)|(^\d{5}-\d{4}$)'
+        status:
+          type: string
+          enum:
+            - open
+            - in use
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    Reservation:
+      type: object
+      required: 
+        - id
+        - user_id
+        - start_date
+        - end_date
+        - pick_up_location
+        - drop_off_location
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    User:
+      type: object
+      required:
+        - id
+        - given_name
+        - family_name
+        - email
+        - phone_number
+        - terms_acceptance
+      properties:
+        id:
+          type: string
+          format: uuid
+        given_name:
+          type: string
+        middle_name:
+          type: string
+        family_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone_number:
+          type: string
+          pattern: '^\d{3}-\d{3}-\d{4}$'
+        picture:
+          type: string
+          format: binary
+        terms_acceptance:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - pending
+            - active
+            - inactive
+        phone_verified:
+          type: string
+          format: date-time
+        email_verified:
+          type: string
+          format: date-time
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    Van:
+      type: object
+      required:
+        - id
+        - make
+        - model
+        - model_year
+        - vin
+        - mileage
+        - waste_catridges
+        - accommodations
+        - current_location
+        - current_state
+      properties:
+        id:
+          type: string
+          format: uuid
+        make:
+          type: string
+        model:
+          type: string
+        model_year:
+          type: number
+          pattern: '^\d{4}$'
+        vin:
+          type: string
+        mileage:
+          type: number
+        chipmunks:
+          type: array
+          items:
+            type: string
+            format: uuid
+        waste_catridges:
+          type: number
+        accommodations:
+          type: object
+          properties:
+            sleeps:
+              type: number
+            pet_friendly:
+              type: boolean
+        current_location:
+          type: object
+          properties:
+            lat:
+              type: number
+              format: float
+            lng:
+              type: number
+              format: float
+        current_state:
+          type: string
+          pattern: '^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY]))$'
+        status:
+          type: string
+          enum:
+            - available
+            - preparation
+            - in use
+            - out of service
+            - retired
+            - sold
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    ResponseMessage:
+      type: object
+      properties:
+        message: 
+          type: string
+  securitySchemes: 
+    MyUserPool: 
+      type: apiKey
+      name: Authorization
+      in: header
+      "x-amazon-apigateway-authtype": cognito_user_pools
+      "x-amazon-apigateway-authorizer": 
+        type: cognito_user_pools
+        providerARNs: 
+          - "arn:aws:cognito-idp:{region}:{account_id}:userpool/{user_pool_id}"

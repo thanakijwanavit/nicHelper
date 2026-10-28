@@ -3,13 +3,17 @@
 __all__ = ['compressDict', 'decompressDict', 'compressString', 'decompressString']
 
 # Cell
-import gzip, zlib, base64, pickle
+import gzip, zlib, base64, json
 from typing import Callable, Optional, List, Dict
 from beartype import beartype
 
+# json, not pickle: decompressDict must never unpickle data it is handed
+def _jsonEncode(data)->bytes: return json.dumps(data).encode()
+def _jsonDecode(data:bytes): return json.loads(data)
+
 # Cell
 @beartype
-def compressDict(data:(List,Dict),encoder:Callable= pickle.dumps,
+def compressDict(data:(List,Dict),encoder:Callable= _jsonEncode,
                  compressor:Callable=zlib.compress,
                  stringifier:Callable = base64.b64encode)->bytes:
   compressedData =  compressor(encoder(data))
@@ -18,7 +22,7 @@ def compressDict(data:(List,Dict),encoder:Callable= pickle.dumps,
 # Cell
 @beartype
 def decompressDict( data:(bytes,str),
-                   decoder = pickle.loads,
+                   decoder = _jsonDecode,
                    decompressor:Callable= zlib.decompress,
                    destringifier:Callable = base64.b64decode)->(List,Dict):
   compressedData = destringifier(data)

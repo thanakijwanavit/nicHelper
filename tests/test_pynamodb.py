@@ -57,7 +57,7 @@ class TestSchemaAttribute:
         del os.environ[DUMMY_ENV_VAR]
 
     @patch("requests.get")
-    @patch("yaml.load")
+    @patch("yaml.safe_load")
     def test_initialization_success_yaml(self, mock_yaml_load, mock_get):
         # Mock the requests.get call
         mock_response = MagicMock()
@@ -74,9 +74,7 @@ class TestSchemaAttribute:
         mock_get.assert_called_once_with(
             DUMMY_SCHEMA_URL, headers={"Cache-Control": "no-cache"}
         )
-        mock_yaml_load.assert_called_once_with(
-            mock_response.text, Loader=yaml.FullLoader
-        )
+        mock_yaml_load.assert_called_once_with(mock_response.text)
         assert attribute.schema == DUMMY_SCHEMA
         assert os.environ.get(DUMMY_ENV_VAR) == json.dumps(DUMMY_SCHEMA)
         del os.environ[DUMMY_ENV_VAR]

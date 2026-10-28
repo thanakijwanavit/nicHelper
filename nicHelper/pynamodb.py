@@ -22,7 +22,7 @@ from datetime import datetime, timezone
 from awsSchema.apigateway import Event, Response
 from jsonschema import ValidationError
 from typing import Optional
-from .schema import validateUrl
+from .schema import validateUrl, readSchemaText, squirrelSchemaPath
 from beartype import beartype
 
 
@@ -49,7 +49,7 @@ class SchemaAttribute(Attribute):
         **kwargs: Any,
     ) -> None:
         """
-        schemaUrl:str,
+        schemaUrl:str, url or local file path of the schema (yaml local files only)
         path:str = '/',
         isYaml=True,  :yaml::Bool:: whether the schema is in yaml or json
         headers={'Cache-Control': 'no-cache'},
@@ -59,10 +59,7 @@ class SchemaAttribute(Attribute):
         super().__init__(**kwargs)
         try:
             if isYaml:  # yaml schema
-                schema: dict = yaml.load(
-                    requests.get(schemaUrl, headers=headers).text,
-                    Loader=yaml.FullLoader,
-                )
+                schema: dict = yaml.safe_load(readSchemaText(schemaUrl, headers=headers))
             else:  # probably json
                 schema: dict = requests.get(schemaUrl, headers).json()
         except Exception as e:
@@ -127,7 +124,7 @@ class SuperModel(Model):
   """
     # id_ = UnicodeAttribute(hash_key=True)
     data = SchemaAttribute(
-        schemaUrl="https://gist.githubusercontent.com/thanakijwanavit/e2720d091ae0cef710a49b57c0c9cd4c/raw/ed2d322eac4900ee0f95b431d0f9067a40f3e0f0/squirrelOpenApiV0.0.3.yaml",
+        schemaUrl=squirrelSchemaPath,  # vendored in the package; nothing is fetched at import
         null=True,
     )
     lastEdited = NumberAttribute()

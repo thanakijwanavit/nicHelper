@@ -91,7 +91,8 @@ def saveDictToFile(data: dict, path: str):
 def loadDictFromFile(path: str):
     """
     returns the dictionary that is saved in the file \n
-    path: str: the path taken to the file of the dictionary
+    path: str: the path taken to the file of the dictionary \n
+    the file is unpickled: only load files you saved yourself with saveDictToFile, never untrusted input
     """
     with open(path, "rb") as f:
         return pickle.load(f)
@@ -146,7 +147,7 @@ def printYaml(input_: dict, returnYaml=False) -> (str, None):
 
 # Cell
 @beartype
-def loadYaml(path: str, loader=yaml.FullLoader) -> dict:
+def loadYaml(path: str, loader=yaml.SafeLoader) -> dict:
     """load yaml string
     input:
       path:str: path of the data to load
