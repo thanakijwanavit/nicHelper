@@ -2,5 +2,6 @@ include settings.ini
 include LICENSE
 include CONTRIBUTING.md
 include README.md
+include CHANGELOG.md
 recursive-include nicHelper/schemas *.yaml
 recursive-exclude * __pycache__

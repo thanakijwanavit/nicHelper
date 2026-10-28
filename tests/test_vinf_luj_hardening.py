@@ -138,6 +138,34 @@ def test_compress_defaults_to_json_and_never_unpickles():
         decompressDict(pickled)
 
 
+def test_old_pickle_blob_fails_with_the_migration_and_is_never_unpickled(monkeypatch):
+    from nicHelper.compress import decompressDict
+    def boom(*args, **kwargs):
+        raise AssertionError("decompressDict unpickled its input")
+    monkeypatch.setattr(pickle, "loads", boom)
+    monkeypatch.setattr(pickle, "load", boom)
+    monkeypatch.setattr(pickle, "Unpickler", boom)
+    for protocol in (2, 4, 5):  # the old default was pickle.dumps, protocol 4 or 5
+        blob = base64.b64encode(zlib.compress(pickle.dumps({"keys": [{"kid": "k"}]}, protocol=protocol)))
+        with pytest.raises(ValueError, match=r"nicHelper<=0\.0\.120.*never unpickles.*CHANGELOG\.md 0\.1\.0"):
+            decompressDict(blob)
+        with pytest.raises(ValueError, match="never unpickles"):
+            decompressDict(blob.decode())  # env vars arrive as str
+
+
+def test_compress_change_is_released_as_breaking():
+    import nicHelper
+    assert nicHelper.__version__ == "0.1.0"
+    assert "version = 0.1.0" in (REPO / "settings.ini").read_text()
+    changelog = (REPO / "CHANGELOG.md").read_text()
+    assert "## 0.1.0" in changelog and "BREAKING: compress uses JSON, not pickle" in changelog
+    assert "include CHANGELOG.md" in (REPO / "MANIFEST.in").read_text()
+    readme = (REPO / "README.md").read_text()
+    index = json.loads((REPO / "index.ipynb").read_text(encoding="utf-8"))
+    note = next("".join(c["source"]) for c in index["cells"] if "Breaking changes in 0.1.0" in "".join(c["source"]))
+    assert note in readme  # README is built from index.ipynb, so the note must be in both
+
+
 def test_osrm_default_endpoint_is_https(monkeypatch):
     from nicHelper.distance import getDistanceOsrm
     urls = []

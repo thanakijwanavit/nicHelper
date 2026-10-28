@@ -9,7 +9,11 @@ from beartype import beartype
 
 # json, not pickle: decompressDict must never unpickle data it is handed
 def _jsonEncode(data)->bytes: return json.dumps(data).encode()
-def _jsonDecode(data:bytes): return json.loads(data)
+def _jsonDecode(data:bytes):
+  if data[:1] == b'\x80': # pickle protocol 2+ header: written by compressDict in nicHelper<=0.0.120
+    raise ValueError('this blob was compressed with pickle by nicHelper<=0.0.120 and nicHelper>=0.1.0 never unpickles; '
+                     're-encode it with compressDict from nicHelper>=0.1.0 (json), see CHANGELOG.md 0.1.0')
+  return json.loads(data)
 
 # Cell
 @beartype

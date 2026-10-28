@@ -13,6 +13,10 @@ from nicHelper.wrappers import add_method
 
 `pip install nicHelper`
 
+## Breaking changes in 0.1.0
+
+`compressDict`/`decompressDict` use JSON instead of pickle, and `decompressDict` refuses pickle blobs made by 0.0.120 or older. Re-encode stored blobs before upgrading; see [CHANGELOG.md](CHANGELOG.md).
+
 # How to use
 
 ## method module
